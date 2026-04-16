@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>For district &amp; Perkins — Applied Tech</title>
+<meta name="description" content="Applied Tech at a district level: dual-credit courses, proficiency design, teacher load, and POS-completer alignment across CVHS and CHS." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="index.html">Map</a>
+    <a href="explore.html">Explore</a>
+    <a href="courses.html">Courses</a>
+    <a href="teachers.html">Teachers</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main id="page-main" class="page">
+
+  <section class="hero">
+    <p class="hero__overline">00 / For the district</p>
+    <h1 class="hero__title display-lg">Applied Tech at a district level.</h1>
+    <p class="hero__subdeck">
+      Dual-credit courses, proficiency design, and teacher load across CVHS and CHS.
+    </p>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>At a glance</span></p>
+      <h2 class="section-header__title">Three numbers that set the frame.</h2>
+    </header>
+    <div class="grid grid-3" id="stats"></div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>Dual credit</span></p>
+      <h2 class="section-header__title">Courses that carry more than CTE credit.</h2>
+      <p class="section-header__lede">
+        Today the program has two dual-credit courses. Additional dual-credit
+        options are under discussion in the 2027+ POS work.
+      </p>
+    </header>
+
+    <table class="ctable course-table" id="dual-table">
+      <caption class="sr-only" style="position:absolute; left:-10000px;">Dual-credit courses in Applied Tech.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">Credit type</th>
+          <th scope="col">Teacher(s)</th>
+          <th scope="col">Building</th>
+        </tr>
+      </thead>
+      <tbody id="dual-tbody"></tbody>
+    </table>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>Proficiency approach</span></p>
+      <h2 class="section-header__title">Proficiencies per course, aligned to Perkins V TSA.</h2>
+    </header>
+
+    <div class="card stack-lg" style="max-width: 75ch;">
+      <p class="body">
+        Every course on this site lists four to six proficiencies &mdash;
+        measurable competencies a student demonstrates, not activities they
+        participate in. The committee&rsquo;s proposal is to use those
+        proficiencies as the backbone of Perkins V Technical Skill Assessment
+        (TSA) alignment, and as the basis for the Program-of-Study completer
+        requirement. The full thinking is in the POS plan.
+      </p>
+      <p class="body">
+        Courses marked with a <span class="chip chip--draft">Draft</span> chip
+        are in normal working-document state &mdash; the content is accurate,
+        but the teaching team is still polishing wording and proficiency
+        phrasing. Draft is the default while a course is being pair-reviewed;
+        it is not a flag that anything is wrong.
+      </p>
+      <p class="body">
+        The broader POS work layers industry certifications on top of
+        proficiencies (candidates include CSWA, AWS SENSE, EPA 609, and NCCER
+        Core) so a completer can leave with portable, third-party credentials
+        in addition to local credit.
+      </p>
+      <p class="body">
+        <a href="pos-plan.pdf" download>Download the full POS plan (PDF) &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">04</span><span>Teacher load</span></p>
+      <h2 class="section-header__title">What each teacher is carrying today.</h2>
+    </header>
+
+    <table class="ctable course-table" id="load-table">
+      <caption class="sr-only" style="position:absolute; left:-10000px;">
+        Applied Tech teacher load: building, focus, course count, pathway count.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Teacher</th>
+          <th scope="col">Building</th>
+          <th scope="col">Focus</th>
+          <th scope="col">Courses</th>
+          <th scope="col">Pathways</th>
+        </tr>
+      </thead>
+      <tbody id="load-tbody"></tbody>
+    </table>
+
+    <p class="body-sm" style="margin-top: var(--space-16); max-width: 70ch; color: var(--ink-soft);">
+      Raw counts. The committee is working on a prep-load sustainability
+      rule; stats shown without judgment.
+    </p>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">05</span><span>POS completer</span></p>
+      <h2 class="section-header__title">What a completer needs.</h2>
+    </header>
+
+    <div class="card" style="max-width: 75ch;">
+      <p class="body">
+        In the committee&rsquo;s proposal, a Program-of-Study completer demonstrates
+        at least three credits in the pathway, with at least 0.5 credit at the
+        intermediate or advanced level, plus a recorded Work-Based Learning
+        (WBL) experience. The specifics &mdash; which courses count toward
+        which pathway, how WBL is documented, and how certifications stack on
+        top &mdash; live in the POS plan.
+      </p>
+      <p class="body" style="margin-top: var(--space-16);">
+        <a href="pos-plan.pdf" download>Download the full POS plan (PDF) &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--ruled" id="wbl">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">06</span><span>Work-Based Learning</span></p>
+      <h2 class="section-header__title">WBL status, named honestly.</h2>
+      <p class="section-header__lede">
+        Every POS completer needs a recorded WBL experience. Today, WBL is
+        embedded in some pathways and absent from others. This is a gap we&rsquo;re
+        working on, not a finished system.
+      </p>
+    </header>
+
+    <table class="ctable" style="margin-top: var(--space-24);">
+      <thead>
+        <tr>
+          <th scope="col">Pathway</th>
+          <th scope="col">WBL status</th>
+          <th scope="col">Where it lives (or would live)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Woods &amp; Carpentry</strong></td>
+          <td><span class="chip chip--subtle">In place</span></td>
+          <td>Carpentry runs community builds (Unity Shelter tiny homes) that generate documentable jobsite hours.</td>
+        </tr>
+        <tr>
+          <td><strong>Automotive</strong></td>
+          <td><span class="chip chip--subtle">Planned</span></td>
+          <td>Autos 3 would anchor WBL via a capstone repair or restoration project with documentation.</td>
+        </tr>
+        <tr>
+          <td><strong>Vehicular / Drone</strong></td>
+          <td><span class="chip chip--subtle">Planned</span></td>
+          <td>Capstone-style course includes a build log and run/flight test data &mdash; frames cleanly as WBL.</td>
+        </tr>
+        <tr>
+          <td><strong>Computer Science</strong></td>
+          <td><span class="chip chip--subtle">Planned</span></td>
+          <td>Capstone CS final project with public showcase could count, but needs a community or employer partner to qualify as WBL.</td>
+        </tr>
+        <tr>
+          <td><strong>Industrial Design</strong></td>
+          <td><span class="chip chip--subtle">Planned</span></td>
+          <td>Industrial Design II&rsquo;s self-directed project is designed to connect with a community or client partner.</td>
+        </tr>
+        <tr>
+          <td><strong>Metals</strong></td>
+          <td><span class="chip chip--subtle">Gap</span></td>
+          <td>No WBL embedded today. A senior-year capstone continuation or cross-pathway placement would close it.</td>
+        </tr>
+        <tr>
+          <td><strong>Engineering</strong></td>
+          <td><span class="chip chip--subtle">Gap</span></td>
+          <td>Engineering Science is anchored in experiments, not WBL. A future capstone extension is the fix.</td>
+        </tr>
+        <tr>
+          <td><strong>Architecture</strong></td>
+          <td><span class="chip chip--subtle">Gap</span></td>
+          <td>No WBL in the current pipeline. A partnership with a local architecture firm is the obvious move.</td>
+        </tr>
+        <tr>
+          <td><strong>Real World Math</strong></td>
+          <td><span class="chip chip--subtle">N/A</span></td>
+          <td>Credit-bearing support course, not a standalone pathway.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="body-sm ink-soft" style="margin-top: var(--space-16); max-width: 75ch;">
+      &ldquo;In place&rdquo; means students can already document WBL hours today.
+      &ldquo;Planned&rdquo; means the course exists and could be shaped toward WBL with modest curriculum work.
+      &ldquo;Gap&rdquo; means there&rsquo;s no WBL-capable course in the pathway and it will need new course design or a cross-pathway solution.
+    </p>
+  </section>
+
+  <section class="section section--ruled" id="articulation">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">07</span><span>LBCC College Now articulation</span></p>
+      <h2 class="section-header__title">College credit, today vs. planned.</h2>
+      <p class="section-header__lede">
+        This is the thinnest part of the program and we&rsquo;re not going to pretend otherwise.
+        Only one course historically carried documented LBCC credit;
+        the 2027+ courses will need re-articulation.
+      </p>
+    </header>
+
+    <table class="ctable" style="margin-top: var(--space-24);">
+      <thead>
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">LBCC equivalent</th>
+          <th scope="col">Credit</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Intro to Engineering</strong></td>
+          <td>EG 4.407 (historical IDEA articulation)</td>
+          <td>4 credits</td>
+          <td><span class="chip chip--subtle">Needs re-articulation</span></td>
+        </tr>
+        <tr>
+          <td><strong>Computer Science (Intro / Advanced / Capstone)</strong></td>
+          <td>CS 160 / CS 161 candidates</td>
+          <td>TBD</td>
+          <td><span class="chip chip--subtle">Not yet articulated</span></td>
+        </tr>
+        <tr>
+          <td><strong>Industrial Design I &amp; II</strong></td>
+          <td>MFG / CADD program fit</td>
+          <td>TBD</td>
+          <td><span class="chip chip--subtle">Not yet articulated</span></td>
+        </tr>
+        <tr>
+          <td><strong>Autos 1, 2, 3</strong></td>
+          <td>AUT program fit</td>
+          <td>TBD</td>
+          <td><span class="chip chip--subtle">Not yet articulated</span></td>
+        </tr>
+        <tr>
+          <td><strong>Metals II</strong></td>
+          <td>WLD / MT program fit</td>
+          <td>TBD</td>
+          <td><span class="chip chip--subtle">Not yet articulated</span></td>
+        </tr>
+        <tr>
+          <td><strong>Woods II, Carpentry</strong></td>
+          <td>Construction / NCCER path</td>
+          <td>TBD</td>
+          <td><span class="chip chip--subtle">Not yet articulated</span></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="padding-top: var(--space-16); color: var(--ink-soft); font-style: italic;">
+            Engineering Science, Architecture, Vehicular/Drone Design, and Real World Math have no current LBCC crosswalk identified.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="body-sm ink-soft" style="margin-top: var(--space-16); max-width: 75ch;">
+      Re-articulation is the ask we carry to LBCC once the course catalog lands for 2027&ndash;28.
+      Until then, assume &ldquo;candidate&rdquo; rather than &ldquo;articulated&rdquo; in any advising conversation.
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="index.html">Pathway map</a></li>
+        <li><a href="explore.html">Explore by interest</a></li>
+        <li><a href="courses.html">All courses</a></li>
+        <li><a href="teachers.html">Teachers</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="counselors.html">For counselors</a></li>
+        <li><a href="for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const { D, siteLabel, siteChip, fmtCredit, escapeHtml } = window.APP;
+
+  // ---- Stats (computed, not hardcoded) ----
+  const totalCourses = D.courses.length;
+  const dualCredit = D.courses.filter(c => (c.credit && (c.credit.science || c.credit.math))).length;
+  const teacherCount = Object.keys(D.teachers).length;
+
+  const stats = [
+    { big: totalCourses, label: "Total courses across both buildings" },
+    { big: dualCredit,   label: "Courses with dual credit (science or math)" },
+    { big: teacherCount, label: "Teachers staffing Applied Tech" },
+  ];
+
+  document.getElementById("stats").innerHTML = stats.map(s => `
+    <div class="card">
+      <p class="tile__overline">Count</p>
+      <p style="font-family: var(--font-display); font-size: clamp(3rem, 6vw, 4.5rem); font-weight:500; line-height:1; margin: var(--space-8) 0 var(--space-16);">
+        ${s.big}
+      </p>
+      <p class="body" style="color: var(--ink-soft);">${s.label}</p>
+    </div>
+  `).join("");
+
+  // ---- Dual-credit table ----
+  const dualRows = D.courses.filter(c => c.credit && (c.credit.science || c.credit.math));
+  document.getElementById("dual-tbody").innerHTML = dualRows.map(c => {
+    const creditBits = [];
+    if (c.credit.cte)     creditBits.push(`${c.credit.cte} CTE`);
+    if (c.credit.science) creditBits.push(`${c.credit.science} Science`);
+    if (c.credit.math)    creditBits.push(`${c.credit.math} Math`);
+    const teacherNames = c.teachers.map(id => escapeHtml(D.teachers[id].name)).join(", ");
+    return `
+      <tr>
+        <td><a href="pages/course.html?slug=${encodeURIComponent(c.slug)}"><strong>${escapeHtml(c.title)}</strong></a></td>
+        <td><span class="mono-meta">${escapeHtml(creditBits.join(" + "))}</span></td>
+        <td class="body-sm">${teacherNames}</td>
+        <td>${siteChip(c.site)}</td>
+      </tr>
+    `;
+  }).join("");
+
+  // ---- Teacher-load table (raw counts) ----
+  const order = ["ak", "am", "rm", "sr", "jj"];
+  document.getElementById("load-tbody").innerHTML = order.map(id => {
+    const t = D.teachers[id];
+    const courses = D.courses.filter(c => (c.teachers || []).includes(id));
+    const pathways = new Set(courses.map(c => c.pathway)).size;
+    return `
+      <tr>
+        <td><a href="pages/teacher.html?id=${encodeURIComponent(t.id)}"><strong>${escapeHtml(t.name)}</strong></a></td>
+        <td>${siteChip(t.site)}</td>
+        <td class="body-sm">${escapeHtml(t.focus)}</td>
+        <td class="mono">${courses.length}</td>
+        <td class="mono">${pathways}</td>
+      </tr>
+    `;
+  }).join("");
+})();
+</script>
+
+</body>
+</html>

@@ -1,4 +1,6 @@
-// Shared rendering helpers used across every page.
+// Applied Tech v2 — shared rendering helpers.
+// Public surface on window.APP is kept STABLE from v1 so sibling builders
+// don't have to coordinate. New helpers added; none renamed or removed.
 
 (function () {
   const D = window.DATA;
@@ -11,6 +13,7 @@
   // ---------- formatters ----------
   function fmtCredit(credit) {
     const parts = [];
+    if (!credit) return "";
     if (credit.cte) parts.push(`${credit.cte} CTE`);
     if (credit.science) parts.push(`${credit.science} Science`);
     if (credit.math) parts.push(`${credit.math} Math`);
@@ -28,56 +31,70 @@
     return { cvhs: "CVHS", chs: "CHS", either: "Either", split: "Split" }[site] || site;
   }
 
-  // ---------- badges ----------
-  function siteBadge(site) {
-    return `<span class="badge badge-site-${site}">${siteLabel(site)}</span>`;
+  // ---------- chips / badges (v2 classes) ----------
+  function siteChip(site) {
+    const label = siteLabel(site);
+    return `<span class="chip chip--${site}">${label}</span>`;
   }
-  function creditBadges(credit) {
+  function creditChips(credit) {
     const bits = [];
-    if (credit.science) bits.push(`<span class="badge badge-credit-science">Science credit</span>`);
-    if (credit.math) bits.push(`<span class="badge badge-credit-math">Math credit</span>`);
+    if (!credit) return "";
+    if (credit.science) bits.push(`<span class="chip chip--science">Science credit</span>`);
+    if (credit.math)    bits.push(`<span class="chip chip--math">Math credit</span>`);
     return bits.join(" ");
   }
-  function statusBadge(status) {
-    if (status === "draft") return `<span class="badge badge-status-draft">Draft</span>`;
+  function statusChip(status) {
+    if (status === "draft") return `<span class="chip chip--draft">Draft</span>`;
     return "";
   }
+  function pathwayChip(pathwayId) {
+    const p = D.pathways[pathwayId];
+    if (!p) return "";
+    return `<span class="chip chip--pathway p-${pathwayId}">${escapeHtml(p.title)}</span>`;
+  }
+
+  // ---------- v1 compatibility shims (old names — kept so existing HTML works
+  // until siblings rewrite their pages) ----------
+  function siteBadge(site)        { return siteChip(site); }
+  function creditBadges(credit)   { return creditChips(credit); }
+  function statusBadge(status)    { return statusChip(status); }
 
   // ---------- components ----------
+  // Full-fill pathway tile. Used on the pathway map (index.html),
+  // on pathway detail, and in course grids.
   function courseTile(course, opts = {}) {
-    const creditBit = creditBadges(course.credit);
-    const siteBit = course.site !== "either" ? siteBadge(course.site) : "";
+    if (!course) return "";
+    const cls = ["tile"];
+    if (opts.dim) cls.push("tile--dim");
+    if (opts.neutral) cls.push("tile--neutral");
+    const pathwayAttr = course.pathway ? ` data-pathway="${escapeAttr(course.pathway)}"` : "";
+    const overline = opts.overline !== undefined
+      ? opts.overline
+      : (course.pathway && D.pathways[course.pathway] ? D.pathways[course.pathway].title : "");
+    const metaBits = [];
+    metaBits.push(siteLabel(course.site));
+    metaBits.push(fmtGrade(course.grade));
+    const creditText = fmtCredit(course.credit);
+    if (creditText) metaBits.push(creditText);
+    const description = course.description
+      ? `<p class="tile__desc">${escapeHtml(firstSentence(course.description))}</p>`
+      : "";
     return `
-      <a class="course-tile${opts.dim ? " dim" : ""}" data-pathway="${course.pathway}" href="pages/course.html?slug=${course.slug}">
-        <div class="course-tile-title">${course.title}</div>
-        <div class="course-tile-meta">
-          ${siteBit}
-          ${creditBit}
-          ${statusBadge(course.status)}
-        </div>
+      <a class="${cls.join(" ")}"${pathwayAttr} href="pages/course.html?slug=${encodeURIComponent(course.slug)}">
+        ${overline ? `<p class="tile__overline">${escapeHtml(overline)}</p>` : ""}
+        <h3 class="tile__title">${escapeHtml(course.title)}</h3>
+        ${description}
+        <div class="tile__meta">${metaBits.filter(Boolean).map(escapeHtml).join(" · ")}</div>
       </a>
     `;
   }
 
   function teacherAvatar(t) {
-    return `<span class="teacher-avatar" title="${t.name}">${t.initials}</span>`;
+    if (!t) return "";
+    return `<span class="teacher-avatar" title="${escapeAttr(t.name)}">${escapeHtml(t.initials)}</span>`;
   }
 
-  // ---------- nav active state ----------
-  function markActiveNav() {
-    const path = location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll(".nav a").forEach(a => {
-      const href = a.getAttribute("href").split("/").pop();
-      if (href === path) a.classList.add("active");
-    });
-  }
-
-  // ---------- query string ----------
-  function qs(name) {
-    return new URLSearchParams(location.search).get(name);
-  }
-
-  // ---------- sort courses by whiteboard order within a pathway ----------
+  // ---------- sort / grouping ----------
   function coursesInPathway(pathwayId) {
     const p = D.pathways[pathwayId];
     if (p && p.courses && p.courses.length) {
@@ -86,24 +103,77 @@
     return D.courses.filter(c => c.pathway === pathwayId);
   }
 
-  // Export
+  // ---------- nav active state ----------
+  function markActiveNav() {
+    const path = location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll(".site-header__nav a, .nav a").forEach(a => {
+      const href = (a.getAttribute("href") || "").split("/").pop();
+      if (href === path) {
+        a.setAttribute("aria-current", "page");
+        a.classList.add("active");
+      }
+    });
+  }
+
+  // Mobile nav toggle (progressive enhancement — nav works without JS,
+  // this just opens/closes on tap at mobile widths).
+  function bindNavToggle() {
+    const toggle = document.querySelector(".site-header__toggle");
+    const nav = document.querySelector(".site-header__nav");
+    if (!toggle || !nav) return;
+    toggle.addEventListener("click", () => {
+      const open = nav.classList.toggle("site-header__nav--open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  // ---------- query string ----------
+  function qs(name) {
+    return new URLSearchParams(location.search).get(name);
+  }
+
+  // ---------- helpers ----------
+  function escapeHtml(s) {
+    if (s == null) return "";
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  function firstSentence(text) {
+    if (!text) return "";
+    const m = String(text).match(/^[^.!?]+[.!?]/);
+    return (m ? m[0] : text).trim();
+  }
+
+  // ---------- Export ----------
+  // Stable v1 surface + v2 additions. Nothing removed.
   window.APP = {
     D,
-    courseBySlug,
-    pathway,
-    teacher,
-    fmtCredit,
-    fmtGrade,
-    siteLabel,
-    siteBadge,
-    creditBadges,
-    statusBadge,
-    courseTile,
-    teacherAvatar,
-    markActiveNav,
-    qs,
+    // lookups
+    courseBySlug, pathway, teacher,
+    // formatters
+    fmtCredit, fmtGrade, siteLabel,
+    // badges (v1 names — still work)
+    siteBadge, creditBadges, statusBadge,
+    // chips (v2 names)
+    siteChip, creditChips, statusChip, pathwayChip,
+    // components
+    courseTile, teacherAvatar,
+    // structure
     coursesInPathway,
+    // nav + routing
+    markActiveNav, qs,
+    // utilities
+    escapeHtml, escapeAttr, firstSentence,
   };
 
-  document.addEventListener("DOMContentLoaded", markActiveNav);
+  document.addEventListener("DOMContentLoaded", () => {
+    markActiveNav();
+    bindNavToggle();
+  });
 })();

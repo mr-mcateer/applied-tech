@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>For counselors — Applied Tech</title>
+<meta name="description" content="Pre-filtered views and quick-reference tables for the advising questions counselors get asked most about Applied Tech at CVHS and CHS." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="index.html">Map</a>
+    <a href="explore.html">Explore</a>
+    <a href="courses.html">Courses</a>
+    <a href="teachers.html">Teachers</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main id="page-main" class="page">
+
+  <section class="hero">
+    <p class="hero__overline">00 / For counselors</p>
+    <h1 class="hero__title display-lg">Answers for advising conversations.</h1>
+    <p class="hero__subdeck">
+      Pre-filtered views and quick-reference tables for the questions
+      counselors get asked most. Built from the same data as the rest of
+      the site &mdash; just faster to get to.
+    </p>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>Quick answers</span></p>
+      <h2 class="section-header__title">Four answers that come up every week.</h2>
+    </header>
+    <div class="grid grid-2" id="quick-answers"></div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>Worked example</span></p>
+      <h2 class="section-header__title">Getting a student to Capstone CS.</h2>
+      <p class="section-header__lede">
+        A 10th-grader wanting to end senior year in Capstone CS would typically
+        take the path below. Computer Skills in 9th is <em>recommended</em>, not required.
+      </p>
+    </header>
+
+    <ol class="grid grid-4" style="list-style:none; padding:0; margin:0;">
+      <li class="card">
+        <p class="tile__overline">9th &middot; recommended</p>
+        <h3 class="h3" style="font-size:1.25rem; margin-top: var(--space-8);">Computer Skills</h3>
+        <p class="body-sm" style="margin-top: var(--space-12);">CHS / CVHS &middot; Randy Macdonald. The soft on-ramp &mdash; strongly recommended, not a hard prereq.</p>
+      </li>
+      <li class="card">
+        <p class="tile__overline">10th</p>
+        <h3 class="h3" style="font-size:1.25rem; margin-top: var(--space-8);">Intro to CS</h3>
+        <p class="body-sm" style="margin-top: var(--space-12);">CHS &middot; Randy Macdonald. First full programming year; Python or JavaScript.</p>
+      </li>
+      <li class="card">
+        <p class="tile__overline">11th</p>
+        <h3 class="h3" style="font-size:1.25rem; margin-top: var(--space-8);">Advanced CS</h3>
+        <p class="body-sm" style="margin-top: var(--space-12);">CHS &middot; Randy Macdonald. Data structures, algorithms, collaborative git-based work.</p>
+      </li>
+      <li class="card">
+        <p class="tile__overline">12th &middot; capstone</p>
+        <h3 class="h3" style="font-size:1.25rem; margin-top: var(--space-8);">Capstone CS</h3>
+        <p class="body-sm" style="margin-top: var(--space-12);">CHS &middot; Randy Macdonald. Year-long self-directed software project.</p>
+      </li>
+    </ol>
+
+    <p class="body-sm" style="margin-top: var(--space-24); color: var(--ink-soft);">
+      Arrows between boxes represent the typical path (9th &rarr; 10th &rarr; 11th &rarr; 12th). A student who already programs can skip Computer Skills and start at Intro to CS in 10th.
+    </p>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>Cross-building &amp; scheduling</span></p>
+      <h2 class="section-header__title">One course at the other building is normal.</h2>
+    </header>
+    <div class="card">
+      <p class="body" style="max-width: 70ch;">
+        A student may take one course per year at the other building &mdash;
+        the program treats cross-site enrollment as a normal option, not an
+        exception. Scheduling is a real constraint, though: bell times,
+        transport, and period availability all have to line up. Talk to the
+        registrar early so the student&rsquo;s schedule survives the build.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">04</span><span>Full course list</span></p>
+      <h2 class="section-header__title">Every Applied Tech course.</h2>
+      <p class="section-header__lede">
+        Same data as <a href="courses.html">the full courses page</a> &mdash; readable here for quick reference.
+      </p>
+    </header>
+
+    <table class="ctable course-table" id="mini-table">
+      <caption class="sr-only" style="position:absolute; left:-10000px;">All Applied Tech courses at CVHS and CHS.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">Pathway</th>
+          <th scope="col">Building</th>
+          <th scope="col">Grade</th>
+          <th scope="col">Credit</th>
+          <th scope="col">Teachers</th>
+        </tr>
+      </thead>
+      <tbody id="mini-tbody"></tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="index.html">Pathway map</a></li>
+        <li><a href="explore.html">Explore by interest</a></li>
+        <li><a href="courses.html">All courses</a></li>
+        <li><a href="teachers.html">Teachers</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="counselors.html">For counselors</a></li>
+        <li><a href="for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const { D, fmtCredit, fmtGrade, siteLabel, siteChip, creditChips, pathwayChip, escapeHtml } = window.APP;
+
+  // --- Quick-answer tiles (neutral / white) ---
+  // Per content plan §4: tiles are hairline white, NOT pathway-colored.
+  function courseLink(slug, label) {
+    return `<a href="pages/course.html?slug=${encodeURIComponent(slug)}">${escapeHtml(label)}</a>`;
+  }
+
+  const siteCourses = (site) => D.courses.filter(c => c.site === site || c.site === "either");
+
+  const tiles = [
+    {
+      overline: "Science credit",
+      title: "CTE courses with a science credit",
+      body: (function () {
+        const c = D.courses.find(x => x.slug === "engineering-science");
+        const teachers = c.teachers.map(id => D.teachers[id].name).join(" or ");
+        const grade = window.APP.fmtGrade(c.grade);
+        return `
+          <p class="body" style="margin-top: var(--space-12);">
+            <strong>Engineering Science</strong> &mdash; CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, 0.5 CTE + 0.5 science.
+          </p>
+          <p class="body-sm" style="margin-top: var(--space-12);">
+            Grades 11&ndash;12 only &mdash; not available to 10th-graders. Intro to Engineering is the suggested prerequisite.
+            A second science-credit course is under discussion.
+          </p>`;
+      })(),
+      cta: { href: "pages/course.html?slug=engineering-science", label: "Full details &rarr;" }
+    },
+    {
+      overline: "Math credit",
+      title: "CTE courses with a math credit",
+      body: (function () {
+        const c = D.courses.find(x => x.slug === "real-world-math");
+        const teachers = c.teachers.map(id => D.teachers[id].name).join(" or ");
+        const grade = window.APP.fmtGrade(c.grade);
+        return `
+          <p class="body" style="margin-top: var(--space-12);">
+            <strong>Real World Math</strong> &mdash; CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, 0.5 CTE + 0.5 math.
+          </p>`;
+      })(),
+      cta: { href: "pages/course.html?slug=real-world-math", label: "Full details &rarr;" }
+    },
+    {
+      overline: "CVHS offerings",
+      title: "CVHS year-long CTE offerings",
+      body: (function () {
+        const items = siteCourses("cvhs")
+          .map(c => `<li style="margin: var(--space-4) 0;">${courseLink(c.slug, c.title)} <span class="mono-meta">&middot; ${escapeHtml(fmtGrade(c.grade))}</span></li>`)
+          .join("");
+        return `<ul style="list-style:none; padding:0; margin: var(--space-12) 0 0;">${items}</ul>`;
+      })(),
+      cta: { href: "courses.html#cvhs", label: "Filter the full table &rarr;" }
+    },
+    {
+      overline: "CHS offerings",
+      title: "CHS year-long CTE offerings",
+      body: (function () {
+        const items = siteCourses("chs")
+          .map(c => `<li style="margin: var(--space-4) 0;">${courseLink(c.slug, c.title)} <span class="mono-meta">&middot; ${escapeHtml(fmtGrade(c.grade))}</span></li>`)
+          .join("");
+        return `<ul style="list-style:none; padding:0; margin: var(--space-12) 0 0;">${items}</ul>`;
+      })(),
+      cta: { href: "courses.html#chs", label: "Filter the full table &rarr;" }
+    },
+  ];
+
+  document.getElementById("quick-answers").innerHTML = tiles.map(t => `
+    <div class="tile tile--neutral">
+      <p class="tile__overline">${t.overline}</p>
+      <h3 class="tile__title" style="font-size:1.5rem;">${t.title}</h3>
+      ${t.body}
+      <p class="mono-meta" style="margin-top: var(--space-16);">
+        <a href="${t.cta.href}">${t.cta.label}</a>
+      </p>
+    </div>
+  `).join("");
+
+  // --- Mini course table ---
+  const tbody = document.getElementById("mini-tbody");
+  const rows = D.courses.slice().sort((a, b) => {
+    const pa = D.pathways[a.pathway].title;
+    const pb = D.pathways[b.pathway].title;
+    return pa.localeCompare(pb) || a.title.localeCompare(b.title);
+  });
+
+  tbody.innerHTML = rows.map(c => {
+    const teacherNames = c.teachers.map(id => escapeHtml(D.teachers[id].name)).join(", ");
+    return `
+      <tr>
+        <td><a href="pages/course.html?slug=${encodeURIComponent(c.slug)}"><strong>${escapeHtml(c.title)}</strong></a></td>
+        <td>${pathwayChip(c.pathway)}</td>
+        <td>${siteChip(c.site)}</td>
+        <td class="mono">${escapeHtml(fmtGrade(c.grade))}</td>
+        <td>${creditChips(c.credit) || `<span class="mono-meta">${escapeHtml(fmtCredit(c.credit))}</span>`}</td>
+        <td class="body-sm">${teacherNames}</td>
+      </tr>
+    `;
+  }).join("");
+})();
+</script>
+
+</body>
+</html>
