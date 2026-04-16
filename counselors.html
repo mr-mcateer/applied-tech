@@ -183,12 +183,14 @@
       body: (function () {
         const c = D.courses.find(x => x.slug === "engineering-science");
         const teachers = c.teachers.map(id => D.teachers[id].name).join(" or ");
+        const grade = window.APP.fmtGrade(c.grade);
         return `
           <p class="body" style="margin-top: var(--space-12);">
-            <strong>Engineering Science</strong> &mdash; CVHS, ${escapeHtml(teachers)}, 0.5 CTE + 0.5 science.
+            <strong>Engineering Science</strong> &mdash; CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, 0.5 CTE + 0.5 science.
           </p>
           <p class="body-sm" style="margin-top: var(--space-12);">
-            That&rsquo;s currently the only one. A second science-credit course is under discussion.
+            Grades 11&ndash;12 only &mdash; not available to 10th-graders. Intro to Engineering is the suggested prerequisite.
+            A second science-credit course is under discussion.
           </p>`;
       })(),
       cta: { href: "pages/course.html?slug=engineering-science", label: "Full details &rarr;" }
@@ -199,9 +201,10 @@
       body: (function () {
         const c = D.courses.find(x => x.slug === "real-world-math");
         const teachers = c.teachers.map(id => D.teachers[id].name).join(" or ");
+        const grade = window.APP.fmtGrade(c.grade);
         return `
           <p class="body" style="margin-top: var(--space-12);">
-            <strong>Real World Math</strong> &mdash; CVHS, ${escapeHtml(teachers)}, 0.5 CTE + 0.5 math.
+            <strong>Real World Math</strong> &mdash; CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, 0.5 CTE + 0.5 math.
           </p>`;
       })(),
       cta: { href: "pages/course.html?slug=real-world-math", label: "Full details &rarr;" }
