@@ -50,8 +50,11 @@
       <p class="section-header__eyebrow"><span class="idx">01</span><span>Pathway map</span></p>
       <h2 class="section-header__title">Nine pathways across two buildings.</h2>
       <p class="section-header__lede">
-        The top row is what every 9th-grader picks from. Everything below is a
-        year-long course. Dashed connectors are the typical path &mdash; not a rule.
+        The top row is the only prerequisite layer: every student picks at least
+        one of those three in 9th grade. Every pathway below is
+        <strong>flexible order</strong> &mdash; dashed connectors show the typical
+        sequence, but there are no hard prerequisites between them. A counselor can
+        help a student slot in wherever fits their schedule.
       </p>
     </header>
 
@@ -221,16 +224,20 @@
     const courses = coursesInPathway(pid);
     const tiles = courses.map((c, i) => {
       const arrow = i < courses.length - 1
-        ? `<div class="pathway-column__arrow" aria-hidden="true">&darr;</div>`
+        ? `<div class="pathway-column__arrow" aria-hidden="true">typically after</div>`
         : "";
       return columnCourseTile(c) + arrow;
     }).join("");
     const siteLabel = p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site);
+    const flexChip = courses.length > 1
+      ? `<span class="chip chip--flex" title="Take in any order that fits your schedule \u2014 no hard prerequisites.">Flexible order</span>`
+      : "";
     return `
       <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}">
         <a class="tile pathway-column__header" data-pathway="${escapeHtml(pid)}" href="pages/pathway.html?id=${encodeURIComponent(pid)}">
           <p class="tile__overline">Pathway &middot; ${escapeHtml(siteLabel)}</p>
           <h3 class="tile__title">${escapeHtml(p.title)}</h3>
+          ${flexChip ? `<div class="tile__meta" style="margin-top: var(--space-12);">${flexChip}</div>` : ""}
         </a>
         ${tiles}
       </div>
