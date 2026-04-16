@@ -3,81 +3,214 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Explore Pathways — Applied Tech</title>
+<title>Explore — Applied Tech</title>
+<meta name="description" content="Pick what sounds like you. We'll show you the three-year path, the teacher, and what you'd actually build." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <a href="index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
-    <nav class="nav">
-      <a href="index.html">Pathway Map</a>
-      <a href="explore.html">Explore</a>
-      <a href="courses.html">All Courses</a>
-      <a href="teachers.html">Teachers</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
+  <a href="index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="index.html">Map</a>
+    <a href="explore.html">Explore</a>
+    <a href="courses.html">Courses</a>
+    <a href="teachers.html">Teachers</a>
+    <a href="about.html">About</a>
+  </nav>
 </header>
 
-<main>
-  <h1>What are you into?</h1>
-  <p class="lede">
-    Pick a pathway that sounds interesting. Each one maps to a sequence of year-long
-    courses you can take from 10th grade onward, with the freshman shop and computing
-    classes as your starting point.
-  </p>
+<main id="page-main" class="page">
 
-  <div class="pathway-hero" id="pathways"></div>
+  <section class="hero">
+    <p class="hero__overline">00 / Explore</p>
+    <h1 class="hero__title display-lg">What do you like to make?</h1>
+    <p class="hero__subdeck">
+      Pick what sounds like you. We&rsquo;ll show you the three-year path,
+      the teacher, and what you&rsquo;d actually build.
+    </p>
+  </section>
 
-  <h2 style="margin-top:48px;">Start here: freshman classes</h2>
-  <p>Every Applied Tech pathway starts with one of these three 9th-grade classes.</p>
-  <div class="card-grid" id="freshman"></div>
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>Pick what sounds like you</span></p>
+      <h2 class="section-header__title">Nine things you could actually build here.</h2>
+      <p class="section-header__lede">
+        Each tile is a pathway. Tap one to see the courses, the teacher,
+        and what kinds of projects students work on.
+      </p>
+    </header>
+
+    <div class="grid grid-3" id="interest-tiles"></div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>Not sure yet?</span></p>
+      <h2 class="section-header__title">Every pathway starts with one of three 9th-grade courses.</h2>
+      <p class="section-header__lede">
+        Most pathways open up from Woods 1 or Metals 1. Computer Skills is the on-ramp
+        to software. You can take all three freshman year if you want to try everything.
+      </p>
+    </header>
+    <div class="grid grid-3" id="freshman-tiles"></div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>Questions</span></p>
+      <h2 class="section-header__title">A few things students ask.</h2>
+    </header>
+
+    <div class="faq stack-lg">
+      <details class="faq__item">
+        <summary class="faq__summary">
+          <span class="faq__q">Can I switch pathways?</span>
+          <span class="faq__icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          <p class="body">
+            Yes. The 9th-grade courses keep your options open, and most upper-level
+            courses don&rsquo;t have hard prerequisites. If you decide sophomore or
+            junior year that metals fits better than CS, talk to your counselor &mdash;
+            they&rsquo;ll help you slot in.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__summary">
+          <span class="faq__q">Do I have to pick in 9th grade?</span>
+          <span class="faq__icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          <p class="body">
+            No. You pick a pathway in 10th grade. Freshman year is Woods 1, Metals 1,
+            or Computer Skills &mdash; all three are broad on purpose so you can try
+            things before you commit.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__summary">
+          <span class="faq__q">Can I take classes at the other school?</span>
+          <span class="faq__icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          <p class="body">
+            Yes, with scheduling help from your counselor. A lot of kids do &mdash;
+            a CVHS student who wants Metals II or the CS ladder takes it at CHS, and
+            vice versa. Bell times and transport are real, so plan it with your
+            counselor early.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
 </main>
 
-<footer class="site-footer">Applied Tech · Student explorer</footer>
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="index.html">Pathway map</a></li>
+        <li><a href="explore.html">Explore by interest</a></li>
+        <li><a href="courses.html">All courses</a></li>
+        <li><a href="teachers.html">Teachers</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="counselors.html">For counselors</a></li>
+        <li><a href="for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script>
 (function () {
-  const { D, courseBySlug } = window.APP;
+  const { D, courseBySlug, escapeHtml } = window.APP;
 
-  // Pathway hero cards — same order as map columns
-  const order = ["cs", "engineering", "architecture", "woods", "metals", "autos", "industrial-design", "vehicular", "math"];
-  document.getElementById("pathways").innerHTML = order.map(pid => {
-    const p = D.pathways[pid];
-    const courseCount = p.courses.length;
+  // ---- Interest tiles: interest → pathway mapping per content plan.
+  // Nine tiles so every pathway has a front door.
+  const INTERESTS = [
+    { interest: "cars",                pathway: "autos",             body: "Diagnose, service, and rebuild cars and light trucks. Three-year sequence at CHS with JJ Keim." },
+    { interest: "buildings",           pathway: "architecture",      body: "Design a house in Revit, from hand sketch to full model &mdash; with a little Arduino-powered smart-building work." },
+    { interest: "furniture",           pathway: "woods",             body: "From hand tools and safety in Woods 1 to real carpentry and community builds like Unity Shelter tiny homes." },
+    { interest: "software",            pathway: "cs",                body: "Learn to program, then ship a year-long capstone you can show to colleges. Three-year CS ladder at CHS." },
+    { interest: "products",            pathway: "industrial-design", body: "Sketch, CAD, 3D print, CNC, and laser-cut your own products. Two-year portfolio-building sequence at CVHS." },
+    { interest: "drones",              pathway: "vehicular",         body: "Design, build, and test a vehicle or drone from scratch &mdash; metals, electronics, and flight data." },
+    { interest: "welding",             pathway: "metals",            body: "Sheet-metal fabrication in Metals 1, then MIG / oxy-acetylene / arc welding and precision machining in Metals II." },
+    { interest: "math in the shop",    pathway: "math",              body: "Trig for trades, estimating materials, and spreadsheet budgets for real projects. Earns both CTE and math credit." },
+    { interest: "engineering",         pathway: "engineering",       body: "Run the full engineering design process &mdash; CAD, prototyping, and physics-backed design in Engineering Science." },
+  ];
+
+  function pathwayLen(p) {
+    const n = (p && p.courses && p.courses.length) || 0;
+    if (n >= 3) return "3-year path";
+    if (n === 2) return "2-year path";
+    return "1-year path";
+  }
+
+  document.getElementById("interest-tiles").innerHTML = INTERESTS.map(item => {
+    const p = D.pathways[item.pathway];
+    if (!p) return "";
     return `
-      <a class="pathway-hero-card" style="--pathway-color: ${p.color}" href="pages/pathway.html?id=${pid}">
-        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:${p.color};">
-          ${p.site === "split" ? "CVHS + CHS" : p.site.toUpperCase()}
-        </div>
-        <h3>${p.title}</h3>
-        <p style="font-size:14px; margin:0 0 12px;">${p.description}</p>
-        <div style="font-size:12px; color: var(--text-muted);">
-          ${courseCount} ${courseCount === 1 ? "course" : "courses"} · year-long
-        </div>
+      <a class="tile" data-pathway="${escapeHtml(item.pathway)}" href="pages/pathway.html?id=${encodeURIComponent(item.pathway)}">
+        <p class="tile__overline">Like ${escapeHtml(item.interest)}?</p>
+        <h3 class="tile__title">${escapeHtml(p.title)}</h3>
+        <p class="tile__desc">${item.body}</p>
+        <div class="tile__meta">${escapeHtml(pathwayLen(p))} &middot; ${escapeHtml(p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site))}</div>
       </a>
     `;
   }).join("");
 
-  // Freshman cards
-  const freshman = ["computer-skills", "woods-1", "metals-1"].map(courseBySlug);
-  document.getElementById("freshman").innerHTML = freshman.map(c => `
-    <div class="card">
-      <a href="pages/course.html?slug=${c.slug}">
-        <h3>${c.title}</h3>
+  // ---- Freshman "not sure yet" tiles (neutral white, not pathway-colored)
+  const FRESHMAN_DESCS = {
+    "woods-1":         "Tools, safety, and your first real projects in wood.",
+    "metals-1":        "Tools, safety, sheet-metal fabrication, and an intro to welding.",
+    "computer-skills": "Typing, files, productivity software, and a first look at code.",
+  };
+  const freshmanOrder = ["woods-1", "metals-1", "computer-skills"];
+  document.getElementById("freshman-tiles").innerHTML = freshmanOrder.map(slug => {
+    const c = courseBySlug(slug);
+    if (!c) return "";
+    return `
+      <a class="tile tile--neutral" href="pages/course.html?slug=${encodeURIComponent(c.slug)}">
+        <p class="tile__overline">9th grade</p>
+        <h3 class="tile__title">${escapeHtml(c.title)}</h3>
+        <p class="tile__desc">${escapeHtml(FRESHMAN_DESCS[slug] || window.APP.firstSentence(c.description))}</p>
+        <div class="tile__meta">${escapeHtml(window.APP.siteLabel(c.site))} &middot; Year-long</div>
       </a>
-      <p>${c.description.split(".")[0]}.</p>
-      <div class="card-footer">
-        <span class="badge badge-site-${c.site}">${window.APP.siteLabel(c.site)}</span>
-        <span class="badge">9th grade</span>
-        <span class="badge">Year-long</span>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 })();
 </script>
 

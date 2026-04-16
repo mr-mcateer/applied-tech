@@ -3,105 +3,226 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title id="pageTitle">Pathway — Applied Tech</title>
+<title>Pathway — Applied Tech</title>
+<meta name="description" content="Pathway detail — starting point, course sequence, and teachers." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/main.css" />
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <a href="../index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
-    <nav class="nav">
-      <a href="../index.html">Pathway Map</a>
-      <a href="../explore.html">Explore</a>
-      <a href="../courses.html">All Courses</a>
-      <a href="../teachers.html">Teachers</a>
-      <a href="../about.html">About</a>
-    </nav>
-  </div>
+  <a href="../index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="../index.html">Map</a>
+    <a href="../explore.html">Explore</a>
+    <a href="../courses.html">Courses</a>
+    <a href="../teachers.html">Teachers</a>
+    <a href="../about.html">About</a>
+  </nav>
 </header>
 
-<main id="root"></main>
-<footer class="site-footer">Applied Tech</footer>
+<main id="page-main" class="page">
+  <div id="root"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="../index.html">Pathway map</a></li>
+        <li><a href="../explore.html">Explore by interest</a></li>
+        <li><a href="../courses.html">All courses</a></li>
+        <li><a href="../teachers.html">Teachers</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="../counselors.html">For counselors</a></li>
+        <li><a href="../for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="../pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
 
 <script src="../js/data.js"></script>
 <script src="../js/app.js"></script>
 <script>
 (function () {
-  const { D, pathway, courseBySlug, qs, courseTile, siteLabel, coursesInPathway } = window.APP;
-  const id = qs("id");
-  const p = pathway(id);
+  const {
+    D, pathway, courseBySlug, coursesInPathway, teacher, qs,
+    siteLabel, siteChip, fmtGrade, fmtCredit,
+    escapeHtml, escapeAttr, firstSentence,
+  } = window.APP;
+
   const root = document.getElementById("root");
+  const id = qs("id");
+  const p = id ? pathway(id) : null;
 
   if (!p) {
-    root.innerHTML = `<h1>Pathway not found</h1><p><a href="../index.html">Back to map</a></p>`;
+    document.title = "Pathway not found — Applied Tech";
+    root.innerHTML = `
+      <section class="hero">
+        <p class="hero__overline">404 / Pathway</p>
+        <h1 class="hero__title display-lg">Pathway not found.</h1>
+        <p class="hero__subdeck">
+          No pathway matches <code>${escapeHtml(id || "")}</code>.
+          <a href="../index.html">Back to the pathway map &rarr;</a>
+        </p>
+      </section>
+    `;
     return;
   }
 
-  document.getElementById("pageTitle").textContent = `${p.title} Pathway — Applied Tech`;
+  document.title = `${p.title} pathway — Applied Tech`;
 
   const entryCourses = (p.entry || []).map(courseBySlug).filter(Boolean);
-  const courses = coursesInPathway(id);
+  const courses = coursesInPathway(p.id);
 
-  const isMultiStep = courses.length > 1;
+  // Teachers across the pathway (deduped).
+  const teacherIds = new Set();
+  courses.forEach(c => (c.teachers || []).forEach(tid => teacherIds.add(tid)));
+  const teachers = Array.from(teacherIds).map(teacher).filter(Boolean);
+
+  const siteLabelForPathway = p.site === "split" ? "CVHS + CHS" : siteLabel(p.site);
+
+  function courseMetaLine(c) {
+    const bits = [siteLabel(c.site), fmtGrade(c.grade) + " grade"];
+    const credit = fmtCredit(c.credit);
+    if (credit) bits.push(credit);
+    return bits.map(escapeHtml).join(" · ");
+  }
 
   root.innerHTML = `
-    <div style="margin-bottom: 8px;">
-      <a href="../index.html" style="font-size: 13px; color: var(--text-muted);">← Pathway map</a>
-    </div>
+    <section class="hero p-${escapeAttr(p.id)}" style="padding-bottom: var(--space-32);">
+      <p class="hero__overline">${escapeHtml(siteLabelForPathway)} &middot; Pathway</p>
+      <div style="display:flex; align-items:flex-start; gap: var(--space-24);">
+        <span aria-hidden="true" style="display:inline-block; width: 0.75rem; min-width: 0.75rem; align-self: stretch; border-radius: var(--radius-pill); background: var(--panel-bg, var(--ink));"></span>
+        <h1 class="hero__title display-lg" style="margin:0;">${escapeHtml(p.title)}</h1>
+      </div>
+      <p class="hero__subdeck" style="margin-top: var(--space-24);">
+        ${escapeHtml(p.description)}
+      </p>
+    </section>
 
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
-      <div style="width:12px; height:40px; border-radius:4px; background:${p.color};"></div>
-      <div>
-        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color: var(--text-muted);">
-          ${p.site === "split" ? "CVHS + CHS" : siteLabel(p.site)} · Pathway
+    <div class="detail" style="margin-top: var(--space-48);">
+      <article class="detail-main stack-lg">
+
+        <section>
+          <p class="overline">Pipeline note</p>
+          <p class="body" style="margin-top: var(--space-8); max-width: 65ch; color: var(--ink-soft);">
+            Sequencing above the freshman row is suggested, not locked.
+            Most upper-level courses don&rsquo;t have hard prerequisites &mdash;
+            talk to your counselor if the order here doesn&rsquo;t fit your schedule.
+          </p>
+        </section>
+
+        ${entryCourses.length ? `
+          <section>
+            <h2 class="h2">Starting point</h2>
+            <p class="body-sm ink-soft" style="margin-top: var(--space-8);">
+              Freshman-level entry courses that lead into this pathway.
+            </p>
+            <div class="grid grid-2" style="margin-top: var(--space-24);">
+              ${entryCourses.map(c => `
+                <a class="tile tile--neutral" href="course.html?slug=${encodeURIComponent(c.slug)}">
+                  <p class="tile__overline">Freshman row</p>
+                  <h3 class="tile__title">${escapeHtml(c.title)}</h3>
+                  <p class="tile__desc">${escapeHtml(firstSentence(c.description))}</p>
+                  <div class="tile__meta">${courseMetaLine(c)}</div>
+                </a>
+              `).join("")}
+            </div>
+          </section>
+        ` : ""}
+
+        <section>
+          <h2 class="h2">Course sequence</h2>
+          <p class="body-sm ink-soft" style="margin-top: var(--space-8);">
+            ${courses.length > 1
+              ? "Typical order, top to bottom. Not a fixed prerequisite chain."
+              : "One course in this pathway today."}
+          </p>
+          <ol class="stack" style="margin-top: var(--space-24); list-style: none; padding: 0; counter-reset: seq;">
+            ${courses.map((c, i) => `
+              <li style="counter-increment: seq;">
+                <a class="tile" data-pathway="${escapeAttr(c.pathway)}" href="course.html?slug=${encodeURIComponent(c.slug)}">
+                  <p class="tile__overline">Step ${i + 1}</p>
+                  <h3 class="tile__title">${escapeHtml(c.title)}</h3>
+                  <p class="tile__desc">${escapeHtml(firstSentence(c.description))}</p>
+                  <div class="tile__meta">${courseMetaLine(c)}</div>
+                </a>
+              </li>
+            `).join("")}
+          </ol>
+        </section>
+
+        ${teachers.length ? `
+          <section>
+            <h2 class="h2">Teachers in this pathway</h2>
+            <div class="grid grid-2" style="margin-top: var(--space-24);">
+              ${teachers.map(t => `
+                <a class="card" href="teacher.html?id=${encodeURIComponent(t.id)}" style="text-decoration: none;">
+                  <div style="display:flex; align-items:center; gap: var(--space-16);">
+                    <span class="chip chip--subtle" style="min-width: 2.5rem; justify-content: center;">${escapeHtml(t.initials)}</span>
+                    <div>
+                      <p class="h3" style="margin:0;">${escapeHtml(t.name)}</p>
+                      <p class="mono-meta" style="margin:0;">${escapeHtml(siteLabel(t.site))} &middot; ${escapeHtml(t.focus)}</p>
+                    </div>
+                  </div>
+                </a>
+              `).join("")}
+            </div>
+          </section>
+        ` : ""}
+
+      </article>
+
+      <aside class="detail-sidebar">
+        <div class="meta-block">
+          <dl>
+            <dt>Building</dt>
+            <dd>${escapeHtml(siteLabelForPathway)}</dd>
+
+            <dt>Courses</dt>
+            <dd>${courses.length}</dd>
+
+            <dt>Teachers</dt>
+            <dd>${teachers.length}</dd>
+
+            ${p.capstone ? (() => {
+              const cap = courseBySlug(p.capstone);
+              return cap ? `
+                <dt>Capstone</dt>
+                <dd><a href="course.html?slug=${encodeURIComponent(cap.slug)}">${escapeHtml(cap.title)}</a></dd>
+              ` : "";
+            })() : ""}
+
+            <dt>Back to</dt>
+            <dd><a href="../index.html">Pathway map</a></dd>
+          </dl>
         </div>
-        <h1 style="margin:0;">${p.title}</h1>
-      </div>
-    </div>
-
-    <p class="lede" style="margin-top:16px;">${p.description}</p>
-
-    ${isMultiStep ? `
-      <div class="pipeline-note">
-        <strong>Pipeline note:</strong> The direct prerequisite chain between
-        non-freshman courses in this pathway is still under discussion. Courses
-        below are shown in the order implied by the whiteboard, but students
-        may take them in a different order with counselor approval.
-      </div>
-    ` : ""}
-
-    ${entryCourses.length ? `
-      <h3>Starting point</h3>
-      <div class="card-grid">
-        ${entryCourses.map(c => `
-          <div class="card">
-            <a href="course.html?slug=${c.slug}"><h3>${c.title}</h3></a>
-            <p>${c.description.split(".")[0]}.</p>
-            <div class="card-footer">
-              <span class="badge badge-site-${c.site}">${siteLabel(c.site)}</span>
-              <span class="badge">9th grade</span>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    ` : ""}
-
-    <h3>${isMultiStep ? "Course sequence" : "Course"}</h3>
-    <div style="display:flex; flex-direction: column; gap: 10px; max-width: 620px;">
-      ${courses.map((c, i) => `
-        <a class="course-tile" data-pathway="${c.pathway}" href="course.html?slug=${c.slug}" style="border-left-width: 6px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-            <div>
-              <div class="course-tile-title" style="font-size: 16px;">${isMultiStep ? `${i + 1}. ` : ""}${c.title}</div>
-              <div style="font-size:13px; color: var(--text-muted); margin-top:4px;">${c.description.split(".").slice(0, 2).join(".")}.</div>
-            </div>
-            <div class="course-tile-meta">
-              <span class="badge badge-site-${c.site}">${siteLabel(c.site)}</span>
-            </div>
-          </div>
-        </a>
-      `).join("")}
+      </aside>
     </div>
   `;
 })();

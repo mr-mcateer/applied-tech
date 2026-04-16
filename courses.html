@@ -3,106 +3,202 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>All Courses — Applied Tech</title>
+<title>All courses — Applied Tech</title>
+<meta name="description" content="Every Applied Tech course at CVHS and CHS. Filter by building, grade, credit type, teacher, or pathway. Every course links to its full description and proficiencies." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <a href="index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
-    <nav class="nav">
-      <a href="index.html">Pathway Map</a>
-      <a href="explore.html">Explore</a>
-      <a href="courses.html">All Courses</a>
-      <a href="teachers.html">Teachers</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
+  <a href="index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="index.html">Map</a>
+    <a href="explore.html">Explore</a>
+    <a href="courses.html">Courses</a>
+    <a href="teachers.html">Teachers</a>
+    <a href="about.html">About</a>
+  </nav>
 </header>
 
-<main>
-  <h1>All Courses</h1>
-  <p class="lede">
-    Sortable reference table of every Applied Tech course across CVHS and CHS.
-    Click any column header to sort. Print-friendly.
-  </p>
+<main id="page-main" class="page">
 
-  <div class="filters" id="filters">
-    <div class="filter-group">
-      <span class="filter-label">Building</span>
-      <button class="filter-chip active" data-filter="site" data-value="all">All</button>
-      <button class="filter-chip" data-filter="site" data-value="cvhs">CVHS</button>
-      <button class="filter-chip" data-filter="site" data-value="chs">CHS</button>
-    </div>
-    <div class="filter-group">
-      <span class="filter-label">Grade</span>
-      <button class="filter-chip active" data-filter="grade" data-value="all">All</button>
-      <button class="filter-chip" data-filter="grade" data-value="9">9th</button>
-      <button class="filter-chip" data-filter="grade" data-value="10">10th</button>
-      <button class="filter-chip" data-filter="grade" data-value="11">11th</button>
-      <button class="filter-chip" data-filter="grade" data-value="12">12th</button>
-    </div>
-    <div class="filter-group">
-      <span class="filter-label">Credit</span>
-      <button class="filter-chip active" data-filter="credit" data-value="all">All</button>
-      <button class="filter-chip" data-filter="credit" data-value="science">Science</button>
-      <button class="filter-chip" data-filter="credit" data-value="math">Math</button>
-    </div>
-    <div class="filter-group">
-      <span class="filter-label">Teacher</span>
-      <button class="filter-chip active" data-filter="teacher" data-value="all">All</button>
-      <button class="filter-chip" data-filter="teacher" data-value="ak">Adam K.</button>
-      <button class="filter-chip" data-filter="teacher" data-value="am">Andy M.</button>
-      <button class="filter-chip" data-filter="teacher" data-value="rm">Randy M.</button>
-      <button class="filter-chip" data-filter="teacher" data-value="sr">Stephanie R.</button>
-      <button class="filter-chip" data-filter="teacher" data-value="jj">JJ K.</button>
-    </div>
-    <button class="filter-chip" id="printBtn" style="margin-left: auto;">Print</button>
-  </div>
+  <section class="hero">
+    <p class="hero__overline">00 / Courses</p>
+    <h1 class="hero__title display-lg">Every Applied Tech course.</h1>
+    <p class="hero__subdeck">
+      Filter by building, grade, credit type, or teacher. Every course links
+      to its full description and proficiencies.
+    </p>
+  </section>
 
-  <table class="course-table" id="table">
-    <thead>
-      <tr>
-        <th data-sort="title">Course</th>
-        <th data-sort="pathway">Pathway</th>
-        <th data-sort="site">Building</th>
-        <th data-sort="grade">Grade</th>
-        <th data-sort="credit">Credit</th>
-        <th data-sort="teachers">Teachers</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>Filter</span></p>
+      <h2 class="section-header__title">Narrow the list.</h2>
+    </header>
+
+    <div class="map-filters" id="filters" role="group" aria-label="Filter the course list"
+         style="display:flex; flex-wrap:wrap; gap: var(--space-24); align-items:center;">
+
+      <div class="map-filters__group" style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
+        <span class="mono-meta" style="margin-right: var(--space-8);">Building</span>
+        <button class="chip chip--solid is-active" data-filter="site" data-value="all" type="button">All</button>
+        <button class="chip" data-filter="site" data-value="cvhs" type="button">CVHS</button>
+        <button class="chip" data-filter="site" data-value="chs" type="button">CHS</button>
+      </div>
+
+      <div class="map-filters__group" style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
+        <span class="mono-meta" style="margin-right: var(--space-8);">Grade</span>
+        <button class="chip chip--solid is-active" data-filter="grade" data-value="all" type="button">All</button>
+        <button class="chip" data-filter="grade" data-value="9"  type="button">9th</button>
+        <button class="chip" data-filter="grade" data-value="10" type="button">10th</button>
+        <button class="chip" data-filter="grade" data-value="11" type="button">11th</button>
+        <button class="chip" data-filter="grade" data-value="12" type="button">12th</button>
+      </div>
+
+      <div class="map-filters__group" style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
+        <span class="mono-meta" style="margin-right: var(--space-8);">Credit</span>
+        <button class="chip chip--solid is-active" data-filter="credit" data-value="all" type="button">All</button>
+        <button class="chip" data-filter="credit" data-value="science" type="button">Science</button>
+        <button class="chip" data-filter="credit" data-value="math"    type="button">Math</button>
+      </div>
+
+      <div class="map-filters__group" style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
+        <span class="mono-meta" style="margin-right: var(--space-8);">Teacher</span>
+        <button class="chip chip--solid is-active" data-filter="teacher" data-value="all" type="button">All</button>
+        <button class="chip" data-filter="teacher" data-value="ak" type="button">Adam K.</button>
+        <button class="chip" data-filter="teacher" data-value="am" type="button">Andy M.</button>
+        <button class="chip" data-filter="teacher" data-value="rm" type="button">Randy M.</button>
+        <button class="chip" data-filter="teacher" data-value="sr" type="button">Stephanie R.</button>
+        <button class="chip" data-filter="teacher" data-value="jj" type="button">JJ K.</button>
+      </div>
+
+      <div class="map-filters__group" id="pathway-filter-group"
+           style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
+        <span class="mono-meta" style="margin-right: var(--space-8);">Pathway</span>
+        <button class="chip chip--solid is-active" data-filter="pathway" data-value="all" type="button">All</button>
+      </div>
+
+      <button class="btn btn--ghost" id="printBtn" type="button" style="margin-left:auto;">Print</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <table class="ctable course-table" id="table">
+      <caption class="sr-only" style="position:absolute; left:-10000px;">
+        Applied Tech courses, filterable and sortable.
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-sort="title"    scope="col">Course</th>
+          <th class="sortable" data-sort="pathway"  scope="col">Pathway</th>
+          <th class="sortable" data-sort="site"     scope="col">Building</th>
+          <th class="sortable" data-sort="grade"    scope="col">Grade</th>
+          <th class="sortable" data-sort="credit"   scope="col">Credit</th>
+          <th class="sortable" data-sort="teachers" scope="col">Teachers</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <p class="body-sm" id="empty" hidden
+       style="padding: var(--space-24); text-align:center; color: var(--ink-soft);">
+      No courses match these filters.
+    </p>
+  </section>
+
 </main>
 
-<footer class="site-footer">Applied Tech</footer>
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="index.html">Pathway map</a></li>
+        <li><a href="explore.html">Explore by interest</a></li>
+        <li><a href="courses.html">All courses</a></li>
+        <li><a href="teachers.html">Teachers</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="counselors.html">For counselors</a></li>
+        <li><a href="for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script>
 (function () {
-  const { D, fmtCredit, fmtGrade, siteLabel, teacher } = window.APP;
-  const state = { site: "all", grade: "all", credit: "all", teacher: "all", sort: "pathway", sortDir: 1 };
+  const { D, fmtCredit, fmtGrade, siteChip, creditChips, pathwayChip, escapeHtml } = window.APP;
+
+  const state = { site: "all", grade: "all", credit: "all", teacher: "all", pathway: "all",
+                  sort: "pathway", sortDir: 1 };
+
+  // Populate the pathway filter chips from data
+  const pathwayGroup = document.getElementById("pathway-filter-group");
+  Object.keys(D.pathways).forEach(pid => {
+    const p = D.pathways[pid];
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.type = "button";
+    btn.dataset.filter = "pathway";
+    btn.dataset.value = pid;
+    btn.textContent = p.title;
+    pathwayGroup.appendChild(btn);
+  });
+
+  // ---- Read state from URL hash (#cvhs, #chs, etc. — simple bookmarking)
+  (function hydrateFromHash() {
+    const h = (location.hash || "").replace(/^#/, "").toLowerCase();
+    if (!h) return;
+    if (h === "cvhs" || h === "chs") state.site = h;
+    else if (h === "science" || h === "math") state.credit = h;
+  })();
 
   function matches(c) {
     if (state.site !== "all" && c.site !== state.site && c.site !== "either") return false;
     if (state.grade !== "all" && !c.grade.includes(Number(state.grade))) return false;
-    if (state.credit === "science" && !c.credit.science) return false;
-    if (state.credit === "math" && !c.credit.math) return false;
+    if (state.credit === "science" && !(c.credit && c.credit.science)) return false;
+    if (state.credit === "math"    && !(c.credit && c.credit.math))    return false;
     if (state.teacher !== "all" && !c.teachers.includes(state.teacher)) return false;
+    if (state.pathway !== "all" && c.pathway !== state.pathway) return false;
     return true;
   }
 
   function sortValue(c, key) {
     switch (key) {
-      case "title": return c.title;
-      case "pathway": return D.pathways[c.pathway].title;
-      case "site": return c.site;
-      case "grade": return c.grade[0];
-      case "credit": return fmtCredit(c.credit);
+      case "title":    return c.title;
+      case "pathway":  return D.pathways[c.pathway].title;
+      case "site":     return c.site;
+      case "grade":    return c.grade[0];
+      case "credit":   return fmtCredit(c.credit);
       case "teachers": return c.teachers.map(t => D.teachers[t].name).join(",");
     }
+    return "";
   }
 
   function render() {
@@ -112,37 +208,76 @@
         const av = sortValue(a, state.sort);
         const bv = sortValue(b, state.sort);
         if (av < bv) return -1 * state.sortDir;
-        if (av > bv) return 1 * state.sortDir;
+        if (av > bv) return  1 * state.sortDir;
         return 0;
       });
 
-    document.getElementById("tbody").innerHTML = rows.map(c => {
-      const p = D.pathways[c.pathway];
+    const tbody = document.getElementById("tbody");
+    const emptyEl = document.getElementById("empty");
+
+    tbody.innerHTML = rows.map(c => {
+      const teacherNames = c.teachers.map(t => escapeHtml(D.teachers[t].name)).join(", ");
+      const creditCell = creditChips(c.credit) ||
+        `<span class="mono-meta">${escapeHtml(fmtCredit(c.credit))}</span>`;
       return `
         <tr>
-          <td><a href="pages/course.html?slug=${c.slug}"><strong>${c.title}</strong></a></td>
-          <td><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:${p.color}; margin-right:6px; vertical-align:middle;"></span>${p.title}</td>
-          <td><span class="badge badge-site-${c.site}">${siteLabel(c.site)}</span></td>
-          <td>${fmtGrade(c.grade)}</td>
-          <td>${fmtCredit(c.credit)}</td>
-          <td>${c.teachers.map(t => `<span class="teacher-avatar" title="${D.teachers[t].name}" style="width:22px; height:22px; font-size:10px; margin-right:2px;">${D.teachers[t].initials}</span>`).join("")}</td>
+          <td><a href="pages/course.html?slug=${encodeURIComponent(c.slug)}"><strong>${escapeHtml(c.title)}</strong></a></td>
+          <td>${pathwayChip(c.pathway)}</td>
+          <td>${siteChip(c.site)}</td>
+          <td class="mono">${escapeHtml(fmtGrade(c.grade))}</td>
+          <td>${creditCell}</td>
+          <td class="body-sm">${teacherNames}</td>
         </tr>
       `;
-    }).join("") || `<tr><td colspan="6" style="padding:24px; text-align:center; color: var(--text-muted);">No courses match these filters.</td></tr>`;
+    }).join("");
+
+    emptyEl.hidden = rows.length > 0;
+
+    // Sort-indicator classes on the active th
+    document.querySelectorAll("#table th.sortable").forEach(th => {
+      th.classList.remove("sorted-asc", "sorted-desc");
+      if (th.dataset.sort === state.sort) {
+        th.classList.add(state.sortDir > 0 ? "sorted-asc" : "sorted-desc");
+      }
+    });
   }
 
-  document.querySelectorAll(".filter-chip[data-filter]").forEach(btn => {
+  // --- Wire up filter chips
+  document.querySelectorAll("#filters .chip[data-filter]").forEach(btn => {
     btn.addEventListener("click", () => {
       const group = btn.dataset.filter;
       state[group] = btn.dataset.value;
-      document.querySelectorAll(`.filter-chip[data-filter="${group}"]`).forEach(b => {
-        b.classList.toggle("active", b.dataset.value === state[group]);
+      document.querySelectorAll(`#filters .chip[data-filter="${group}"]`).forEach(b => {
+        const active = b.dataset.value === state[group];
+        b.classList.toggle("is-active", active);
+        b.classList.toggle("chip--solid", active);
       });
+      // Keep URL hash roughly in sync for simple bookmarking on site+credit.
+      if (group === "site" && (state.site === "cvhs" || state.site === "chs")) {
+        history.replaceState(null, "", `#${state.site}`);
+      } else if (group === "credit" && (state.credit === "science" || state.credit === "math")) {
+        history.replaceState(null, "", `#${state.credit}`);
+      } else if (state.site === "all" && state.credit === "all") {
+        history.replaceState(null, "", location.pathname);
+      }
       render();
     });
   });
 
-  document.querySelectorAll("#table th").forEach(th => {
+  // If we hydrated from hash, reflect in chip classes
+  function reflectState() {
+    ["site", "grade", "credit", "teacher", "pathway"].forEach(group => {
+      document.querySelectorAll(`#filters .chip[data-filter="${group}"]`).forEach(b => {
+        const active = b.dataset.value === String(state[group]);
+        b.classList.toggle("is-active", active);
+        b.classList.toggle("chip--solid", active);
+      });
+    });
+  }
+  reflectState();
+
+  // --- Sort headers
+  document.querySelectorAll("#table th.sortable").forEach(th => {
     th.addEventListener("click", () => {
       const key = th.dataset.sort;
       if (state.sort === key) state.sortDir *= -1;
@@ -151,6 +286,7 @@
     });
   });
 
+  // --- Print
   document.getElementById("printBtn").addEventListener("click", () => window.print());
 
   render();
