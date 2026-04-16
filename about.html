@@ -4,77 +4,229 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>About — Applied Tech</title>
+<meta name="description" content="A living map of the Applied Tech program of study at Crescent Valley and Corvallis High. Drafted by teachers, reviewed by counselors, shared with families and district." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <a href="index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
-    <nav class="nav">
-      <a href="index.html">Pathway Map</a>
-      <a href="explore.html">Explore</a>
-      <a href="courses.html">All Courses</a>
-      <a href="teachers.html">Teachers</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
+  <a href="index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="index.html">Map</a>
+    <a href="explore.html">Explore</a>
+    <a href="courses.html">Courses</a>
+    <a href="teachers.html">Teachers</a>
+    <a href="about.html">About</a>
+  </nav>
 </header>
 
-<main>
-  <h1>About this site</h1>
+<main id="page-main" class="page">
 
-  <p class="lede">
-    A shared reference for the Applied Tech program of study at CVHS and CHS,
-    built for counselors, teachers, students, and families.
-  </p>
+  <section class="hero">
+    <p class="hero__overline">00 / About</p>
+    <h1 class="hero__title display-lg">What this site is, and isn&rsquo;t.</h1>
+    <p class="hero__subdeck">
+      A living map of the Applied Tech program of study.
+      Drafted by teachers, reviewed by counselors, shared with families and district.
+    </p>
+  </section>
 
-  <h2>Who it's for</h2>
-  <ul>
-    <li><strong>Counselors</strong> — use the <a href="index.html">Pathway Map</a> and the <a href="courses.html">All Courses</a> table to advise students on course selection, credit types, and sequencing.</li>
-    <li><strong>Teachers</strong> — share course-level proficiencies and descriptions with your department and committee reviewers.</li>
-    <li><strong>Students &amp; families</strong> — start on <a href="explore.html">Explore</a> to see what each pathway leads to.</li>
-  </ul>
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>What this is</span></p>
+      <h2 class="section-header__title">A shared reference, not a replacement for talking to people.</h2>
+    </header>
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="tile__overline">What</p>
+        <h3 class="h3" style="margin-top: var(--space-8);">A map of the Applied Tech program of study.</h3>
+        <p class="body" style="margin-top: var(--space-16); color: var(--ink-soft);">
+          Nine pathways, five teachers, two buildings &mdash; Crescent Valley and Corvallis High.
+          Every course on this site carries CTE credit; two carry dual credit
+          (Engineering Science for science, Real World Math for math).
+        </p>
+      </div>
+      <div class="card">
+        <p class="tile__overline">Why</p>
+        <h3 class="h3" style="margin-top: var(--space-8);">Because the whiteboard only lives in one room.</h3>
+        <p class="body" style="margin-top: var(--space-16); color: var(--ink-soft);">
+          Counselors need the whole map without walking to the shop.
+          Families need to see what each pathway actually leads to.
+          District needs dual-credit and Perkins alignment in one place.
+          This site is that place.
+        </p>
+      </div>
+      <div class="card">
+        <p class="tile__overline">Who maintains it</p>
+        <h3 class="h3" style="margin-top: var(--space-8);">The teachers named on each course.</h3>
+        <p class="body" style="margin-top: var(--space-16); color: var(--ink-soft);">
+          All content lives in a single file,
+          <code>js/data.js</code>, in the
+          <a href="https://github.com/mr-mcateer/applied-tech">public GitHub repo</a>.
+          Every edit is a commit &mdash; so there&rsquo;s an auditable trail of who changed what.
+        </p>
+      </div>
+      <div class="card">
+        <p class="tile__overline">Who it&rsquo;s not for</p>
+        <h3 class="h3" style="margin-top: var(--space-8);">Policy, graduation requirements, or course-change paperwork.</h3>
+        <p class="body" style="margin-top: var(--space-16); color: var(--ink-soft);">
+          For credit rules beyond CTE, for handbook policy, or to actually
+          change a schedule &mdash; talk to a counselor. This site answers
+          &ldquo;what would I learn?&rdquo; not &ldquo;am I allowed to?&rdquo;
+        </p>
+      </div>
+    </div>
+  </section>
 
-  <h2>How to read the map</h2>
-  <ul>
-    <li>The top row is the <strong>9th-grade entry layer</strong>. Every Applied Tech student takes one (or more) of these three courses.</li>
-    <li>Columns below are year-long pathways. The typical sequence within a pathway is shown top-to-bottom.</li>
-    <li><strong>Pipeline note:</strong> Only the freshman row is locked as a prerequisite layer. Non-freshman sequences on the whiteboard are <em>suggestions</em>, not hard prerequisites — the committee is still deciding final prereq rules.</li>
-  </ul>
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>How to read this site</span></p>
+      <h2 class="section-header__title">Four things to know before you click around.</h2>
+    </header>
 
-  <h2>Building assignments</h2>
-  <p>
-    <strong>CHS hosts:</strong> Computer Science (Intro, Advanced, Capstone), Automotive ladder (Autos 1–3), Advanced Metals (Metals II), Vehicular / Drone Design.
-  </p>
-  <p>
-    <strong>CVHS hosts:</strong> Intro to Engineering, Engineering Science, Architecture, Industrial Design I &amp; II, Carpentry, Woods II, Real World Math.
-  </p>
-  <p>
-    <strong>Freshman row</strong> (Computer Skills, Woods 1, Metals 1) is taught at either building depending on the year.
-  </p>
+    <ol class="stack-lg" style="list-style: none; padding: 0; margin: 0;">
+      <li>
+        <p class="tile__overline">01 &middot; The freshman row</p>
+        <p class="h3" style="margin-top: var(--space-8);">The top row is the entry layer.</p>
+        <p class="body" style="margin-top: var(--space-12); max-width: 70ch; color: var(--ink-soft);">
+          Every Applied Tech student takes at least one of
+          <strong>Woods&nbsp;1</strong>, <strong>Metals&nbsp;1</strong>, or
+          <strong>Computer Skills</strong> in 9th grade. These are the on-ramps to
+          everything else. You can take all three if you want to try everything.
+        </p>
+      </li>
+      <li>
+        <p class="tile__overline">02 &middot; Pathway columns</p>
+        <p class="h3" style="margin-top: var(--space-8);">Each color is a pathway.</p>
+        <p class="body" style="margin-top: var(--space-12); max-width: 70ch; color: var(--ink-soft);">
+          Columns below the freshman row are year-long 10th&ndash;12th grade courses,
+          grouped by pathway. The suggested sequence runs top to bottom;
+          dashed connectors are typical paths, not hard prerequisites.
+        </p>
+      </li>
+      <li>
+        <p class="tile__overline">03 &middot; Credit badges</p>
+        <p class="h3" style="margin-top: var(--space-8);">CTE is implied. Science and Math are called out.</p>
+        <p class="body" style="margin-top: var(--space-12); max-width: 70ch; color: var(--ink-soft);">
+          Every year-long course on this site carries 1.0 CTE credit, so we don&rsquo;t
+          badge it. Courses that <em>also</em> carry science credit or math credit show
+          those badges in the header. Today that&rsquo;s
+          <a href="pages/course.html?slug=engineering-science">Engineering Science</a>
+          (science) and <a href="pages/course.html?slug=real-world-math">Real World Math</a>
+          (math).
+        </p>
+      </li>
+      <li>
+        <p class="tile__overline">04 &middot; Draft vs. reviewed</p>
+        <p class="h3" style="margin-top: var(--space-8);">A <span class="chip chip--draft">Draft</span> chip means the wording is still being reviewed.</p>
+        <p class="body" style="margin-top: var(--space-12); max-width: 70ch; color: var(--ink-soft);">
+          The content is accurate, but the teaching team hasn&rsquo;t finished their
+          polish pass. Courses without a draft chip have been teacher-reviewed
+          against department descriptions.
+        </p>
+      </li>
+    </ol>
+  </section>
 
-  <h2>Credit types</h2>
-  <ul>
-    <li>Every year-long Applied Tech course carries <strong>1.0 CTE credit</strong>.</li>
-    <li><strong>Engineering Science</strong> carries a dual CTE + <strong>science</strong> credit.</li>
-    <li><strong>Real World Math</strong> carries a dual CTE + <strong>math</strong> credit — useful as a second path through the math graduation requirement for hands-on learners.</li>
-  </ul>
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>Credits &amp; data source</span></p>
+      <h2 class="section-header__title">One file, five authors, every change a commit.</h2>
+    </header>
+    <div class="card">
+      <p class="body" style="max-width: 70ch;">
+        All course, pathway, and teacher content lives in
+        <code>js/data.js</code> in the
+        <a href="https://github.com/mr-mcateer/applied-tech">applied-tech</a>
+        repository on GitHub. The site has no backend and no database &mdash;
+        the data file <em>is</em> the source of truth. To propose a change,
+        open a pull request or
+        <a href="mailto:mcateerandy@gmail.com?subject=Applied%20Tech%20site%20edit">email Andy McAteer</a>.
+      </p>
+      <p class="body" style="margin-top: var(--space-16); max-width: 70ch;">
+        Pathway colors are a visual shorthand and have no authority; the data
+        model carries the meaning. Proficiencies on each course page are drawn
+        from teacher-authored drafts aligned against Perkins V Technical Skill Assessment
+        language &mdash; see the
+        <a href="for-district.html">district &amp; Perkins page</a> for the full approach.
+      </p>
+    </div>
+  </section>
 
-  <h2>Status and proposing changes</h2>
-  <p>
-    Courses marked <span class="badge badge-status-draft">Draft</span> are working drafts — proficiencies and prose will be refined by the teaching team before publication. Courses without a draft tag have been reviewed against existing handbook or department descriptions.
-  </p>
-  <p>
-    The canonical content lives in a single file, <code>js/data.js</code>, in this site's repository. Propose edits by opening a pull request on GitHub, or contact the Applied Tech teachers directly.
-  </p>
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">04</span><span>Pick a door</span></p>
+      <h2 class="section-header__title">Jump to the view that matches why you&rsquo;re here.</h2>
+    </header>
+    <div class="grid grid-4">
+      <a class="persona-door" href="counselors.html">
+        <span class="persona-door__overline">For counselors</span>
+        <h3 class="persona-door__title">Advising answers</h3>
+        <p class="persona-door__body">Pre-filtered views for science credit, math credit, building, and grade.</p>
+        <span class="persona-door__arrow">&rarr;</span>
+      </a>
+      <a class="persona-door" href="teachers.html">
+        <span class="persona-door__overline">For teachers</span>
+        <h3 class="persona-door__title">Review &amp; edit</h3>
+        <p class="persona-door__body">Your course list, your proficiencies, and how to propose a change.</p>
+        <span class="persona-door__arrow">&rarr;</span>
+      </a>
+      <a class="persona-door" href="explore.html">
+        <span class="persona-door__overline">For students &amp; families</span>
+        <h3 class="persona-door__title">Explore by interest</h3>
+        <p class="persona-door__body">Start with what you like to make. We&rsquo;ll show you the three-year path.</p>
+        <span class="persona-door__arrow">&rarr;</span>
+      </a>
+      <a class="persona-door" href="for-district.html">
+        <span class="persona-door__overline">For district &amp; Perkins</span>
+        <h3 class="persona-door__title">Program-level view</h3>
+        <p class="persona-door__body">Dual credit, proficiency design, and POS completer alignment.</p>
+        <span class="persona-door__arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
 
-  <h2>Teaching team</h2>
-  <p>See the <a href="teachers.html">Teachers page</a> for the five teachers staffing this program.</p>
 </main>
 
 <footer class="site-footer">
-  Applied Tech · CVHS &amp; CHS · Open source · See <code>README.md</code> for editing instructions
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="index.html">Pathway map</a></li>
+        <li><a href="explore.html">Explore by interest</a></li>
+        <li><a href="courses.html">All courses</a></li>
+        <li><a href="teachers.html">Teachers</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="counselors.html">For counselors</a></li>
+        <li><a href="for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
 </footer>
 
 <script src="js/data.js"></script>

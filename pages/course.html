@@ -3,137 +3,248 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title id="pageTitle">Course — Applied Tech</title>
+<title>Course — Applied Tech</title>
+<meta name="description" content="Course detail — description, proficiencies, prerequisites, and teachers." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/main.css" />
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <a href="../index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
-    <nav class="nav">
-      <a href="../index.html">Pathway Map</a>
-      <a href="../explore.html">Explore</a>
-      <a href="../courses.html">All Courses</a>
-      <a href="../teachers.html">Teachers</a>
-      <a href="../about.html">About</a>
-    </nav>
-  </div>
+  <a href="../index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="../index.html">Map</a>
+    <a href="../explore.html">Explore</a>
+    <a href="../courses.html">Courses</a>
+    <a href="../teachers.html">Teachers</a>
+    <a href="../about.html">About</a>
+  </nav>
 </header>
 
-<main id="root"></main>
+<main id="page-main" class="page">
+  <div id="root"></div>
+</main>
 
-<footer class="site-footer">Applied Tech</footer>
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="../index.html">Pathway map</a></li>
+        <li><a href="../explore.html">Explore by interest</a></li>
+        <li><a href="../courses.html">All courses</a></li>
+        <li><a href="../teachers.html">Teachers</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="../counselors.html">For counselors</a></li>
+        <li><a href="../for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="../pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
 
 <script src="../js/data.js"></script>
 <script src="../js/app.js"></script>
 <script>
 (function () {
-  const { courseBySlug, pathway, teacher, qs, fmtCredit, fmtGrade, siteBadge, creditBadges, statusBadge, siteLabel } = window.APP;
+  const {
+    courseBySlug, pathway, teacher, qs,
+    fmtCredit, fmtGrade, siteLabel,
+    siteChip, creditChips, statusChip, pathwayChip,
+    escapeHtml, escapeAttr,
+  } = window.APP;
 
-  const slug = qs("slug");
-  const c = courseBySlug(slug);
   const root = document.getElementById("root");
+  const slug = qs("slug");
+  const c = slug ? courseBySlug(slug) : null;
 
   if (!c) {
-    root.innerHTML = `<h1>Course not found</h1><p>No course with slug <code>${slug}</code>. <a href="../index.html">Back to map</a>.</p>`;
+    document.title = "Course not found — Applied Tech";
+    root.innerHTML = `
+      <section class="hero">
+        <p class="hero__overline">404 / Course</p>
+        <h1 class="hero__title display-lg">Course not found.</h1>
+        <p class="hero__subdeck">
+          No course matches <code>${escapeHtml(slug || "")}</code>.
+          <a href="../index.html">Back to the pathway map &rarr;</a>
+        </p>
+      </section>
+    `;
     return;
   }
 
-  document.getElementById("pageTitle").textContent = `${c.title} — Applied Tech`;
+  document.title = `${c.title} — Applied Tech`;
 
   const p = pathway(c.pathway);
-  const teachers = c.teachers.map(teacher);
+  const teachers = (c.teachers || []).map(teacher).filter(Boolean);
+  const suggestedPrereqs = (c.suggestedPrereqs || []).map(courseBySlug).filter(Boolean);
+  const leadsTo = (c.leadsTo || []).map(courseBySlug).filter(Boolean);
+
+  const proficiencies = Array.isArray(c.proficiencies) ? c.proficiencies : [];
 
   const draftBanner = c.status === "draft"
-    ? `<div class="draft-banner"><strong>Draft:</strong> this description is a working draft. Proficiencies and prose will be refined by the teaching team before publication.</div>`
+    ? `<div class="card card--flat" style="margin-top: var(--space-24); border-left: 3px solid #a16207;">
+         <p class="overline" style="color:#a16207;">Draft</p>
+         <p class="body" style="margin-top: var(--space-8); color: var(--ink-soft);">
+           This course description is a working draft. Content is accurate, but the
+           teaching team is still polishing wording and proficiencies.
+         </p>
+       </div>`
     : "";
 
-  const suggestedPrereqs = (c.suggestedPrereqs || []).map(s => courseBySlug(s)).filter(Boolean);
-  const leadsTo = (c.leadsTo || []).map(s => courseBySlug(s)).filter(Boolean);
-
-  function courseLink(course) {
-    return `<a href="course.html?slug=${course.slug}">${course.title}</a>`;
+  function courseLinkList(list) {
+    return list.map(x =>
+      `<a href="course.html?slug=${encodeURIComponent(x.slug)}">${escapeHtml(x.title)}</a>`
+    ).join(" &middot; ");
   }
 
+  const chipRow = [
+    p ? pathwayChip(c.pathway) : "",
+    siteChip(c.site),
+    creditChips(c.credit),
+    statusChip(c.status),
+  ].filter(Boolean).join(" ");
+
+  const editUrl =
+    `https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js`;
+  const mailto =
+    `mailto:mcateerandy@gmail.com?subject=${encodeURIComponent("Applied Tech site edit — " + c.slug)}`;
+
   root.innerHTML = `
-    <div style="margin-bottom: 8px;">
-      <a href="../index.html" style="font-size: 13px; color: var(--text-muted);">← Pathway map</a>
-    </div>
-    <div class="course-detail-header">
-      ${siteBadge(c.site)}
-      ${creditBadges(c.credit)}
-      ${statusBadge(c.status)}
-      <span class="badge" style="background: color-mix(in srgb, ${p.color} 14%, transparent); color: ${p.color}; border-color: color-mix(in srgb, ${p.color} 35%, transparent);">
-        ${p.title}
-      </span>
-    </div>
-    <h1>${c.title}</h1>
+    <section class="hero ${p ? "p-" + escapeAttr(p.id) : ""}" style="padding-bottom: var(--space-32);">
+      <p class="hero__overline">
+        ${p ? escapeHtml(p.title) : "Course"} &middot; Course detail
+      </p>
+      <h1 class="hero__title display-lg">${escapeHtml(c.title)}</h1>
+      <div class="cluster" style="margin-top: var(--space-24);">
+        ${chipRow}
+      </div>
+    </section>
 
     ${draftBanner}
 
-    <div class="detail-layout">
-      <div class="detail-main">
-        <h3>Description</h3>
-        <p style="font-size: 16px; color: var(--text); line-height: 1.65;">${c.description}</p>
+    <div class="detail" style="margin-top: var(--space-48);">
+      <article class="detail-main stack-lg">
 
-        <h3>Proficiencies</h3>
-        <p style="font-size: 13px;">Measurable skills demonstrated by students who complete this course.</p>
-        <ol class="proficiencies">
-          ${c.proficiencies.map(pr => `<li>${pr}</li>`).join("")}
-        </ol>
+        <section>
+          <p class="lede">${escapeHtml(c.description)}</p>
+        </section>
+
+        <section>
+          <h2 class="h2">What you&rsquo;ll be able to do</h2>
+          <p class="body-sm ink-soft" style="margin-top: var(--space-8);">
+            Measurable proficiencies demonstrated by students who complete this course.
+          </p>
+          ${proficiencies.length ? `
+            <ol class="stack" style="margin-top: var(--space-16); padding-left: 1.25rem;">
+              ${proficiencies.map(pr => `<li class="body">${escapeHtml(pr)}</li>`).join("")}
+            </ol>
+          ` : `
+            <p class="body" style="margin-top: var(--space-16); color: var(--ink-soft);">
+              Proficiencies under review.
+            </p>
+          `}
+        </section>
 
         ${suggestedPrereqs.length ? `
-          <h3>Typically taken after</h3>
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Suggested, not required.</p>
-          <p>${suggestedPrereqs.map(courseLink).join(" · ")}</p>
+          <section>
+            <h2 class="h2">Suggested before this course</h2>
+            <p class="body-sm ink-soft" style="margin-top: var(--space-8);">
+              Suggestions, not requirements. Talk to your counselor if you&rsquo;re not sure.
+            </p>
+            <p class="body" style="margin-top: var(--space-16);">
+              ${courseLinkList(suggestedPrereqs)}
+            </p>
+          </section>
         ` : ""}
 
         ${leadsTo.length ? `
-          <h3>What comes next</h3>
-          <p>${leadsTo.map(courseLink).join(" · ")}</p>
+          <section>
+            <h2 class="h2">What comes next</h2>
+            <p class="body-sm ink-soft" style="margin-top: var(--space-8);">
+              Suggestions, not requirements. These are the courses students typically take after this one.
+            </p>
+            <p class="body" style="margin-top: var(--space-16);">
+              ${courseLinkList(leadsTo)}
+            </p>
+          </section>
         ` : ""}
-      </div>
+
+        <section>
+          <p class="body-sm ink-soft">
+            See something to fix?
+            <a href="${editUrl}">Propose an edit on GitHub</a>
+            &middot;
+            <a href="${mailto}">email Andy McAteer</a>.
+            Search for <code>${escapeHtml(c.slug)}</code> in the data file.
+          </p>
+        </section>
+
+      </article>
 
       <aside class="detail-sidebar">
-        <div class="field">
-          <h4>Building</h4>
-          ${siteLabel(c.site)}
+        <div class="meta-block">
+          <dl>
+            <dt>Building</dt>
+            <dd>${escapeHtml(siteLabel(c.site))}</dd>
+
+            <dt>Grade</dt>
+            <dd>${escapeHtml(fmtGrade(c.grade))} grade</dd>
+
+            <dt>Length</dt>
+            <dd>${c.yearLong ? "Year-long" : "Semester"}</dd>
+
+            <dt>Credit</dt>
+            <dd>${escapeHtml(fmtCredit(c.credit))}</dd>
+
+            <dt>Pathway</dt>
+            <dd>
+              ${p
+                ? `<a href="pathway.html?id=${encodeURIComponent(p.id)}">${escapeHtml(p.title)}</a>`
+                : "&mdash;"}
+            </dd>
+
+            <dt>Teachers</dt>
+            <dd>
+              ${teachers.length ? teachers.map(t => `
+                <div style="display:flex; align-items:center; gap: var(--space-12); margin-top: var(--space-8);">
+                  <span class="chip chip--subtle" aria-hidden="true" style="min-width: 2.25rem; justify-content: center;">${escapeHtml(t.initials)}</span>
+                  <span>
+                    <a href="teacher.html?id=${encodeURIComponent(t.id)}">${escapeHtml(t.name)}</a>
+                    <span class="mono-meta" style="display:block;">${escapeHtml(siteLabel(t.site))} &middot; ${escapeHtml(t.focus)}</span>
+                  </span>
+                </div>
+              `).join("") : "&mdash;"}
+            </dd>
+
+            ${c.source ? `
+              <dt>Source</dt>
+              <dd class="mono-meta">${escapeHtml(c.source)}</dd>
+            ` : ""}
+          </dl>
         </div>
-        <div class="field">
-          <h4>Grade</h4>
-          ${fmtGrade(c.grade)}
-        </div>
-        <div class="field">
-          <h4>Length</h4>
-          ${c.yearLong ? "Year-long" : "Semester"}
-        </div>
-        <div class="field">
-          <h4>Credit</h4>
-          ${fmtCredit(c.credit)}
-        </div>
-        <div class="field">
-          <h4>Pathway</h4>
-          <a href="pathway.html?id=${p.id}">${p.title}</a>
-        </div>
-        <div class="field">
-          <h4>Teachers</h4>
-          ${teachers.map(t => `
-            <div class="teacher-row">
-              <span class="teacher-avatar">${t.initials}</span>
-              <div>
-                <a href="teacher.html?id=${t.id}">${t.name}</a>
-                <div style="font-size: 12px; color: var(--text-muted);">${siteLabel(t.site)} · ${t.focus}</div>
-              </div>
-            </div>
-          `).join("")}
-        </div>
-        ${c.source ? `
-          <div class="field">
-            <h4>Source</h4>
-            <span style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">${c.source}</span>
-          </div>
-        ` : ""}
       </aside>
     </div>
   `;
