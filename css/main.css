@@ -1,0 +1,513 @@
+/* Applied Tech site — design system + layout + components */
+
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-soft: #475569;
+  --text-muted: #94a3b8;
+  --accent: #0f172a;
+  --accent-contrast: #ffffff;
+  --cvhs: #0d9488;
+  --chs: #b91c1c;
+  --either: #7c3aed;
+
+  --p-cs: #3b82f6;
+  --p-engineering: #10b981;
+  --p-architecture: #f59e0b;
+  --p-woods: #b45309;
+  --p-metals: #6b7280;
+  --p-autos: #dc2626;
+  --p-industrial-design: #8b5cf6;
+  --p-vehicular: #ec4899;
+  --p-math: #0ea5c4;
+
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.12);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --surface: #111827;
+    --surface-2: #1f2937;
+    --border: #1f2937;
+    --border-strong: #334155;
+    --text: #f1f5f9;
+    --text-soft: #cbd5e1;
+    --text-muted: #64748b;
+    --accent: #f1f5f9;
+    --accent-contrast: #0b1220;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============ LAYOUT ============ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(180%) blur(10px);
+}
+.site-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.brand {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--p-engineering), var(--p-industrial-design));
+}
+.nav { display: flex; gap: 20px; font-size: 14px; color: var(--text-soft); }
+.nav a { padding: 6px 0; }
+.nav a.active { color: var(--text); font-weight: 600; }
+.nav a:hover { color: var(--text); text-decoration: none; }
+
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.site-footer {
+  max-width: 1400px;
+  margin: 40px auto 0;
+  padding: 24px;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+/* ============ TYPOGRAPHY ============ */
+h1 {
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  line-height: 1.15;
+}
+h2 {
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin: 32px 0 12px;
+}
+h3 {
+  font-size: 16px;
+  margin: 20px 0 8px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+p { margin: 0 0 12px; color: var(--text-soft); }
+.lede {
+  font-size: 16px;
+  color: var(--text-soft);
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+
+/* ============ BADGES ============ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: var(--surface-2);
+  color: var(--text-soft);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+.badge-site-cvhs { background: color-mix(in srgb, var(--cvhs) 14%, transparent); color: var(--cvhs); border-color: color-mix(in srgb, var(--cvhs) 35%, transparent); }
+.badge-site-chs { background: color-mix(in srgb, var(--chs) 14%, transparent); color: var(--chs); border-color: color-mix(in srgb, var(--chs) 35%, transparent); }
+.badge-site-either { background: color-mix(in srgb, var(--either) 14%, transparent); color: var(--either); border-color: color-mix(in srgb, var(--either) 35%, transparent); }
+.badge-credit-science { background: color-mix(in srgb, #2563eb 14%, transparent); color: #2563eb; border-color: color-mix(in srgb, #2563eb 35%, transparent); }
+.badge-credit-math { background: color-mix(in srgb, #0ea5c4 14%, transparent); color: #0ea5c4; border-color: color-mix(in srgb, #0ea5c4 35%, transparent); }
+.badge-status-draft { background: color-mix(in srgb, #f59e0b 14%, transparent); color: #b45309; border-color: color-mix(in srgb, #f59e0b 35%, transparent); }
+
+/* ============ PATHWAY MAP ============ */
+.pathway-map {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+.map-section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+}
+.freshman-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 14px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 2px dashed var(--border-strong);
+}
+.pathway-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.pathway-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pathway-column-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+  text-align: center;
+}
+.pathway-column-header[data-pathway="cs"] { background: var(--p-cs); }
+.pathway-column-header[data-pathway="engineering"] { background: var(--p-engineering); }
+.pathway-column-header[data-pathway="architecture"] { background: var(--p-architecture); }
+.pathway-column-header[data-pathway="woods"] { background: var(--p-woods); }
+.pathway-column-header[data-pathway="metals"] { background: var(--p-metals); }
+.pathway-column-header[data-pathway="autos"] { background: var(--p-autos); }
+.pathway-column-header[data-pathway="industrial-design"] { background: var(--p-industrial-design); }
+.pathway-column-header[data-pathway="vehicular"] { background: var(--p-vehicular); }
+.pathway-column-header[data-pathway="math"] { background: var(--p-math); }
+
+.course-tile {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  text-decoration: none !important;
+  color: inherit;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+  position: relative;
+}
+.course-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: var(--border-strong);
+}
+.course-tile[data-pathway="cs"] { border-left-color: var(--p-cs); }
+.course-tile[data-pathway="engineering"] { border-left-color: var(--p-engineering); }
+.course-tile[data-pathway="architecture"] { border-left-color: var(--p-architecture); }
+.course-tile[data-pathway="woods"] { border-left-color: var(--p-woods); }
+.course-tile[data-pathway="metals"] { border-left-color: var(--p-metals); }
+.course-tile[data-pathway="autos"] { border-left-color: var(--p-autos); }
+.course-tile[data-pathway="industrial-design"] { border-left-color: var(--p-industrial-design); }
+.course-tile[data-pathway="vehicular"] { border-left-color: var(--p-vehicular); }
+.course-tile[data-pathway="math"] { border-left-color: var(--p-math); }
+.course-tile.dim { opacity: 0.28; }
+.course-tile-title { font-weight: 600; font-size: 14px; line-height: 1.3; margin-bottom: 6px; }
+.course-tile-meta { display: flex; flex-wrap: wrap; gap: 4px; font-size: 11px; }
+.course-tile-arrow {
+  align-self: center;
+  color: var(--text-muted);
+  font-size: 18px;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* ============ FILTER BAR ============ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.filter-group { display: flex; align-items: center; gap: 6px; }
+.filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+.filter-chip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-soft);
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 120ms ease;
+  font-family: inherit;
+}
+.filter-chip:hover { border-color: var(--border-strong); color: var(--text); }
+.filter-chip.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+}
+
+/* ============ COURSE CARDS (explorer/list) ============ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.card a { color: inherit; }
+.card h3 { margin: 0 0 8px; text-transform: none; font-size: 18px; letter-spacing: -0.01em; color: var(--text); }
+.card-footer { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+
+/* ============ PATHWAY EXPLORER CARDS ============ */
+.pathway-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.pathway-hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.pathway-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--pathway-color, var(--accent));
+}
+.pathway-hero-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); text-decoration: none; }
+.pathway-hero-card h3 {
+  margin: 4px 0 8px;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-size: 20px;
+}
+
+/* ============ COURSE DETAIL PAGE ============ */
+.course-detail-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 40px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .detail-layout { grid-template-columns: 1fr; }
+}
+.detail-main { min-width: 0; }
+.detail-sidebar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  font-size: 14px;
+  position: sticky;
+  top: 80px;
+}
+.detail-sidebar h4 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+}
+.detail-sidebar .field { margin-bottom: 16px; }
+.detail-sidebar .field:last-child { margin-bottom: 0; }
+.detail-sidebar a { color: var(--text); font-weight: 500; }
+
+.proficiencies {
+  list-style: none;
+  padding: 0;
+  counter-reset: prof;
+}
+.proficiencies li {
+  counter-increment: prof;
+  position: relative;
+  padding: 12px 12px 12px 48px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: var(--text);
+}
+.proficiencies li::before {
+  content: counter(prof);
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ============ TABLE (counselor view) ============ */
+.course-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 14px;
+}
+.course-table th,
+.course-table td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.course-table th {
+  background: var(--surface-2);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.course-table th:hover { color: var(--text); }
+.course-table tbody tr:hover { background: var(--surface-2); }
+.course-table tbody tr:last-child td { border-bottom: none; }
+.course-table a { font-weight: 500; }
+
+/* ============ UTILITY ============ */
+.pipeline-note {
+  background: color-mix(in srgb, #f59e0b 10%, transparent);
+  border: 1px solid color-mix(in srgb, #f59e0b 35%, transparent);
+  color: #92400e;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.pipeline-note strong { color: #78350f; }
+
+.draft-banner {
+  background: color-mix(in srgb, #f59e0b 14%, transparent);
+  border: 1px dashed color-mix(in srgb, #f59e0b 50%, transparent);
+  color: #92400e;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teacher-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+.teacher-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.teacher-row:last-child { border-bottom: none; }
+
+/* ============ PRINT (counselor page) ============ */
+@media print {
+  .site-header, .site-footer, .filters { display: none; }
+  main { max-width: none; padding: 0; }
+  .course-table { font-size: 11px; border: 1px solid #000; }
+  .course-table th { background: #f0f0f0; color: #000; }
+  .badge { border: 1px solid #ccc; color: #000; background: #fff; }
+  a { color: #000; }
+}

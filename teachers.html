@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Teachers — Applied Tech</title>
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
+    <nav class="nav">
+      <a href="index.html">Pathway Map</a>
+      <a href="explore.html">Explore</a>
+      <a href="courses.html">All Courses</a>
+      <a href="teachers.html">Teachers</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Teachers</h1>
+  <p class="lede">
+    The five teachers staffing Applied Tech across CVHS and CHS. Each card
+    shows their course count and how many distinct pathways they cover (preps).
+  </p>
+
+  <div class="card-grid" id="teacher-cards"></div>
+</main>
+
+<footer class="site-footer">Applied Tech</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const { D, siteLabel } = window.APP;
+  const order = ["ak", "am", "rm", "sr", "jj"];
+
+  document.getElementById("teacher-cards").innerHTML = order.map(id => {
+    const t = D.teachers[id];
+    const courses = D.courses.filter(c => c.teachers.includes(id));
+    const preps = new Set(courses.map(c => c.pathway)).size;
+    return `
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom: 8px;">
+          <span class="teacher-avatar" style="width:44px; height:44px; font-size:15px;">${t.initials}</span>
+          <div>
+            <a href="pages/teacher.html?id=${t.id}"><h3 style="margin:0;">${t.name}</h3></a>
+            <div style="font-size: 13px; color: var(--text-muted);">${t.focus}</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:16px; margin: 8px 0 12px; font-size: 13px;">
+          <div><strong>${courses.length}</strong> courses</div>
+          <div><strong>${preps}</strong> ${preps === 1 ? "pathway" : "pathways"}</div>
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-site-${t.site}">${siteLabel(t.site)}</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+})();
+</script>
+
+</body>
+</html>

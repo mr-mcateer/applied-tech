@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Applied Tech Pathways — CVHS &amp; CHS</title>
+<meta name="description" content="Counselor and teacher reference for the Applied Tech program of study across CVHS and CHS." />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
+    <nav class="nav">
+      <a href="index.html">Pathway Map</a>
+      <a href="explore.html">Explore</a>
+      <a href="courses.html">All Courses</a>
+      <a href="teachers.html">Teachers</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <h1>Applied Tech Pathways</h1>
+  <p class="lede">
+    A map of the proposed Applied Tech program of study across CVHS and CHS.
+    Top row is 9th-grade entry; the columns below are year-long 10th–12th courses,
+    grouped by pathway. Click any course for its description, proficiencies, and teacher.
+  </p>
+
+  <div class="pipeline-note">
+    <strong>Pipeline status:</strong>
+    Only the freshman row is locked as a prerequisite layer. Dashed arrows below
+    show the <em>typical</em> sequence within a pathway, not required ordering.
+    Non-freshman prerequisites are still under discussion.
+  </div>
+
+  <div class="filters" id="filters">
+    <div class="filter-group">
+      <span class="filter-label">Building</span>
+      <button class="filter-chip active" data-filter="site" data-value="all">All</button>
+      <button class="filter-chip" data-filter="site" data-value="cvhs">CVHS</button>
+      <button class="filter-chip" data-filter="site" data-value="chs">CHS</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Credit</span>
+      <button class="filter-chip active" data-filter="credit" data-value="all">All</button>
+      <button class="filter-chip" data-filter="credit" data-value="science">Science</button>
+      <button class="filter-chip" data-filter="credit" data-value="math">Math</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Teacher</span>
+      <button class="filter-chip active" data-filter="teacher" data-value="all">All</button>
+      <button class="filter-chip" data-filter="teacher" data-value="ak">Adam K.</button>
+      <button class="filter-chip" data-filter="teacher" data-value="am">Andy M.</button>
+      <button class="filter-chip" data-filter="teacher" data-value="rm">Randy M.</button>
+      <button class="filter-chip" data-filter="teacher" data-value="sr">Stephanie R.</button>
+      <button class="filter-chip" data-filter="teacher" data-value="jj">JJ K.</button>
+    </div>
+  </div>
+
+  <section class="pathway-map" id="map">
+    <div class="map-section-label">9th grade · prerequisite</div>
+    <div class="freshman-row" id="freshman-row"></div>
+
+    <div class="map-section-label">10th – 12th grade · pathways</div>
+    <div class="pathway-columns" id="pathway-columns"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  Applied Tech program map · CVHS &amp; CHS · Draft — content editable via <code>js/data.js</code>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const { D, courseBySlug, courseTile, coursesInPathway } = window.APP;
+
+  // Freshman row, left-to-right: computer-skills, woods-1, metals-1
+  const freshmanOrder = ["computer-skills", "woods-1", "metals-1"];
+  const freshmanRow = document.getElementById("freshman-row");
+  freshmanRow.innerHTML = freshmanOrder
+    .map(s => courseTile(courseBySlug(s)))
+    .join("");
+
+  // Column order, matching the whiteboard roughly left-to-right.
+  const columnOrder = [
+    "cs",
+    "engineering",
+    "woods",
+    "metals",
+    "math",
+    "autos",
+    "industrial-design",
+    "vehicular",
+    "architecture",
+  ];
+
+  const columnsEl = document.getElementById("pathway-columns");
+  columnsEl.innerHTML = columnOrder.map(pid => {
+    const p = D.pathways[pid];
+    const courses = coursesInPathway(pid);
+    // Render with arrow separators for ladders
+    const tiles = courses.map((c, i) => {
+      const arrow = i < courses.length - 1 ? `<div class="course-tile-arrow">↓</div>` : "";
+      return courseTile(c) + arrow;
+    }).join("");
+    return `
+      <div class="pathway-column" data-pathway-column="${pid}">
+        <a class="pathway-column-header" data-pathway="${pid}" href="pages/pathway.html?id=${pid}">${p.title}</a>
+        ${tiles}
+      </div>
+    `;
+  }).join("");
+
+  // ---------- filters ----------
+  const state = { site: "all", credit: "all", teacher: "all" };
+
+  function matches(course) {
+    if (state.site !== "all") {
+      // Freshman courses ("either") appear under any building filter.
+      if (course.site !== state.site && course.site !== "either") return false;
+    }
+    if (state.credit === "science" && !course.credit.science) return false;
+    if (state.credit === "math" && !course.credit.math) return false;
+    if (state.teacher !== "all" && !course.teachers.includes(state.teacher)) return false;
+    return true;
+  }
+
+  function applyFilters() {
+    document.querySelectorAll(".course-tile").forEach(tile => {
+      const slug = new URL(tile.href).searchParams.get("slug");
+      const course = courseBySlug(slug);
+      tile.classList.toggle("dim", course && !matches(course));
+    });
+  }
+
+  document.querySelectorAll(".filter-chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.dataset.filter;
+      state[group] = btn.dataset.value;
+      document.querySelectorAll(`.filter-chip[data-filter="${group}"]`).forEach(b => {
+        b.classList.toggle("active", b.dataset.value === state[group]);
+      });
+      applyFilters();
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
