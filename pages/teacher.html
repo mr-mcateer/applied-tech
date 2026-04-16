@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title id="pageTitle">Teacher — Applied Tech</title>
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
+    <nav class="nav">
+      <a href="../index.html">Pathway Map</a>
+      <a href="../explore.html">Explore</a>
+      <a href="../courses.html">All Courses</a>
+      <a href="../teachers.html">Teachers</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="root"></main>
+<footer class="site-footer">Applied Tech</footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+(function () {
+  const { D, teacher, qs, siteLabel } = window.APP;
+  const id = qs("id");
+  const t = teacher(id);
+  const root = document.getElementById("root");
+
+  if (!t) {
+    root.innerHTML = `<h1>Teacher not found</h1><p><a href="../teachers.html">Back to teachers</a></p>`;
+    return;
+  }
+
+  document.getElementById("pageTitle").textContent = `${t.name} — Applied Tech`;
+
+  const courses = D.courses.filter(c => c.teachers.includes(t.id));
+  // Count unique pathways ("preps") this teacher covers
+  const prepCount = new Set(courses.map(c => c.pathway)).size;
+
+  root.innerHTML = `
+    <div style="margin-bottom: 8px;">
+      <a href="../teachers.html" style="font-size: 13px; color: var(--text-muted);">← All teachers</a>
+    </div>
+    <div style="display:flex; align-items:center; gap: 18px; margin-bottom: 8px;">
+      <div class="teacher-avatar" style="width: 64px; height: 64px; font-size: 22px;">${t.initials}</div>
+      <div>
+        <h1 style="margin: 0;">${t.name}</h1>
+        <div style="color: var(--text-soft); font-size: 15px;">
+          <span class="badge badge-site-${t.site}">${siteLabel(t.site)}</span>
+          · ${t.focus}
+        </div>
+      </div>
+    </div>
+
+    <p class="lede" style="margin-top: 18px;">${t.bio || ""}</p>
+
+    <div style="display: flex; gap: 24px; margin: 20px 0;">
+      <div>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:.06em; color: var(--text-muted); font-weight:700;">Courses</div>
+        <div style="font-size: 28px; font-weight: 700;">${courses.length}</div>
+      </div>
+      <div>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:.06em; color: var(--text-muted); font-weight:700;">Pathways</div>
+        <div style="font-size: 28px; font-weight: 700;">${prepCount}</div>
+      </div>
+    </div>
+
+    <h3>Courses taught</h3>
+    <div class="card-grid">
+      ${courses.map(c => {
+        const p = D.pathways[c.pathway];
+        return `
+          <div class="card" style="border-left: 4px solid ${p.color};">
+            <a href="course.html?slug=${c.slug}"><h3>${c.title}</h3></a>
+            <div style="font-size:12px; color: var(--text-muted); margin-bottom: 8px;">${p.title}</div>
+            <p style="font-size: 14px;">${c.description.split(".")[0]}.</p>
+            <div class="card-footer">
+              <span class="badge badge-site-${c.site}">${siteLabel(c.site)}</span>
+              ${c.credit.science ? `<span class="badge badge-credit-science">Science</span>` : ""}
+              ${c.credit.math ? `<span class="badge badge-credit-math">Math</span>` : ""}
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+})();
+</script>
+
+</body>
+</html>

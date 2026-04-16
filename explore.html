@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Explore Pathways — Applied Tech</title>
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
+    <nav class="nav">
+      <a href="index.html">Pathway Map</a>
+      <a href="explore.html">Explore</a>
+      <a href="courses.html">All Courses</a>
+      <a href="teachers.html">Teachers</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>What are you into?</h1>
+  <p class="lede">
+    Pick a pathway that sounds interesting. Each one maps to a sequence of year-long
+    courses you can take from 10th grade onward, with the freshman shop and computing
+    classes as your starting point.
+  </p>
+
+  <div class="pathway-hero" id="pathways"></div>
+
+  <h2 style="margin-top:48px;">Start here: freshman classes</h2>
+  <p>Every Applied Tech pathway starts with one of these three 9th-grade classes.</p>
+  <div class="card-grid" id="freshman"></div>
+</main>
+
+<footer class="site-footer">Applied Tech · Student explorer</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const { D, courseBySlug } = window.APP;
+
+  // Pathway hero cards — same order as map columns
+  const order = ["cs", "engineering", "architecture", "woods", "metals", "autos", "industrial-design", "vehicular", "math"];
+  document.getElementById("pathways").innerHTML = order.map(pid => {
+    const p = D.pathways[pid];
+    const courseCount = p.courses.length;
+    return `
+      <a class="pathway-hero-card" style="--pathway-color: ${p.color}" href="pages/pathway.html?id=${pid}">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:${p.color};">
+          ${p.site === "split" ? "CVHS + CHS" : p.site.toUpperCase()}
+        </div>
+        <h3>${p.title}</h3>
+        <p style="font-size:14px; margin:0 0 12px;">${p.description}</p>
+        <div style="font-size:12px; color: var(--text-muted);">
+          ${courseCount} ${courseCount === 1 ? "course" : "courses"} · year-long
+        </div>
+      </a>
+    `;
+  }).join("");
+
+  // Freshman cards
+  const freshman = ["computer-skills", "woods-1", "metals-1"].map(courseBySlug);
+  document.getElementById("freshman").innerHTML = freshman.map(c => `
+    <div class="card">
+      <a href="pages/course.html?slug=${c.slug}">
+        <h3>${c.title}</h3>
+      </a>
+      <p>${c.description.split(".")[0]}.</p>
+      <div class="card-footer">
+        <span class="badge badge-site-${c.site}">${window.APP.siteLabel(c.site)}</span>
+        <span class="badge">9th grade</span>
+        <span class="badge">Year-long</span>
+      </div>
+    </div>
+  `).join("");
+})();
+</script>
+
+</body>
+</html>

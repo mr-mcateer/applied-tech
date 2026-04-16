@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title id="pageTitle">Course — Applied Tech</title>
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="brand"><span class="brand-dot"></span> Applied Tech</a>
+    <nav class="nav">
+      <a href="../index.html">Pathway Map</a>
+      <a href="../explore.html">Explore</a>
+      <a href="../courses.html">All Courses</a>
+      <a href="../teachers.html">Teachers</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="root"></main>
+
+<footer class="site-footer">Applied Tech</footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+(function () {
+  const { courseBySlug, pathway, teacher, qs, fmtCredit, fmtGrade, siteBadge, creditBadges, statusBadge, siteLabel } = window.APP;
+
+  const slug = qs("slug");
+  const c = courseBySlug(slug);
+  const root = document.getElementById("root");
+
+  if (!c) {
+    root.innerHTML = `<h1>Course not found</h1><p>No course with slug <code>${slug}</code>. <a href="../index.html">Back to map</a>.</p>`;
+    return;
+  }
+
+  document.getElementById("pageTitle").textContent = `${c.title} — Applied Tech`;
+
+  const p = pathway(c.pathway);
+  const teachers = c.teachers.map(teacher);
+
+  const draftBanner = c.status === "draft"
+    ? `<div class="draft-banner"><strong>Draft:</strong> this description is a working draft. Proficiencies and prose will be refined by the teaching team before publication.</div>`
+    : "";
+
+  const suggestedPrereqs = (c.suggestedPrereqs || []).map(s => courseBySlug(s)).filter(Boolean);
+  const leadsTo = (c.leadsTo || []).map(s => courseBySlug(s)).filter(Boolean);
+
+  function courseLink(course) {
+    return `<a href="course.html?slug=${course.slug}">${course.title}</a>`;
+  }
+
+  root.innerHTML = `
+    <div style="margin-bottom: 8px;">
+      <a href="../index.html" style="font-size: 13px; color: var(--text-muted);">← Pathway map</a>
+    </div>
+    <div class="course-detail-header">
+      ${siteBadge(c.site)}
+      ${creditBadges(c.credit)}
+      ${statusBadge(c.status)}
+      <span class="badge" style="background: color-mix(in srgb, ${p.color} 14%, transparent); color: ${p.color}; border-color: color-mix(in srgb, ${p.color} 35%, transparent);">
+        ${p.title}
+      </span>
+    </div>
+    <h1>${c.title}</h1>
+
+    ${draftBanner}
+
+    <div class="detail-layout">
+      <div class="detail-main">
+        <h3>Description</h3>
+        <p style="font-size: 16px; color: var(--text); line-height: 1.65;">${c.description}</p>
+
+        <h3>Proficiencies</h3>
+        <p style="font-size: 13px;">Measurable skills demonstrated by students who complete this course.</p>
+        <ol class="proficiencies">
+          ${c.proficiencies.map(pr => `<li>${pr}</li>`).join("")}
+        </ol>
+
+        ${suggestedPrereqs.length ? `
+          <h3>Typically taken after</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Suggested, not required.</p>
+          <p>${suggestedPrereqs.map(courseLink).join(" · ")}</p>
+        ` : ""}
+
+        ${leadsTo.length ? `
+          <h3>What comes next</h3>
+          <p>${leadsTo.map(courseLink).join(" · ")}</p>
+        ` : ""}
+      </div>
+
+      <aside class="detail-sidebar">
+        <div class="field">
+          <h4>Building</h4>
+          ${siteLabel(c.site)}
+        </div>
+        <div class="field">
+          <h4>Grade</h4>
+          ${fmtGrade(c.grade)}
+        </div>
+        <div class="field">
+          <h4>Length</h4>
+          ${c.yearLong ? "Year-long" : "Semester"}
+        </div>
+        <div class="field">
+          <h4>Credit</h4>
+          ${fmtCredit(c.credit)}
+        </div>
+        <div class="field">
+          <h4>Pathway</h4>
+          <a href="pathway.html?id=${p.id}">${p.title}</a>
+        </div>
+        <div class="field">
+          <h4>Teachers</h4>
+          ${teachers.map(t => `
+            <div class="teacher-row">
+              <span class="teacher-avatar">${t.initials}</span>
+              <div>
+                <a href="teacher.html?id=${t.id}">${t.name}</a>
+                <div style="font-size: 12px; color: var(--text-muted);">${siteLabel(t.site)} · ${t.focus}</div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+        ${c.source ? `
+          <div class="field">
+            <h4>Source</h4>
+            <span style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">${c.source}</span>
+          </div>
+        ` : ""}
+      </aside>
+    </div>
+  `;
+})();
+</script>
+
+</body>
+</html>
