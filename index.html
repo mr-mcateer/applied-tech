@@ -29,44 +29,37 @@
 
 <main id="page-main" class="page">
 
-  <section class="hero">
-    <p class="hero__overline">00 / Applied Tech</p>
-    <h1 class="hero__title display-xl">Start here. Pick where you want to go.</h1>
-    <p class="hero__subdeck">
-      Applied Tech isn&rsquo;t a major &mdash; it&rsquo;s a set of year-long courses you
-      pick <em>&agrave; la carte</em> at Crescent Valley and Corvallis High. Every student
-      starts with one of three freshman courses, then assembles a 10th&ndash;12th
-      grade plan around where they want to end up.
-    </p>
-    <p class="mono-meta" style="margin-top: var(--space-24); color: var(--ink-soft);">
-      20 courses &nbsp;&middot;&nbsp; 11 career destinations &nbsp;&middot;&nbsp; 5 teachers &nbsp;&middot;&nbsp; 2 buildings
-    </p>
-  </section>
-
-  <section class="section section--ruled" id="start-here">
-    <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">01</span><span>Start here &middot; 9th grade</span></p>
-      <h2 class="section-header__title">Every student starts with one of these three.</h2>
-      <p class="section-header__lede">
-        The only locked prerequisite in the whole program is the freshman row:
-        <strong>pick at least one</strong>. You can take all three if you want to
-        try everything. They open up every pathway and every career below.
-      </p>
-    </header>
+  <section class="hero hero--freshman">
+    <p class="hero__lede-above">Every freshman picks at least one.</p>
     <div class="freshman-row" id="freshman-row"></div>
+    <h1 class="hero__title hero__title--secondary">A course-of-study planner for Applied Tech at CVHS and CHS.</h1>
+    <p class="hero__subdeck hero__subdeck--compact">
+      Twenty year-long courses. Take one of the three 9th-grade courses above,
+      then assemble a 10th&ndash;12th grade plan around where you want to end up.
+    </p>
   </section>
 
-  <section class="section section--ruled" id="map">
+  <section class="section section--ruled" id="map" data-mode="pathway">
     <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">02</span><span>Then pick where you want to go</span></p>
-      <h2 class="section-header__title">Pick a career. Watch the courses that help you get there light up.</h2>
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>10th &ndash; 12th grade</span></p>
+      <h2 class="section-header__title">The catalog.</h2>
       <p class="section-header__lede">
-        Click any career below and the Applied Tech courses that point there
-        will highlight on the map. Bright outline = a must-have course for that
-        career; soft outline = a supporting course that strengthens the path.
-        Click it again to clear and see the full catalog.
+        Browse by subject (the department you'd take the class in) or by career
+        (the destination you're aiming at). Both views show the same courses &mdash;
+        different questions, same catalog.
       </p>
     </header>
+
+    <div class="mode-toggle" role="tablist" aria-label="Browse mode">
+      <button class="mode-toggle__btn is-active" role="tab" aria-selected="true" data-mode="pathway" type="button">
+        <span class="mode-toggle__label">By pathway</span>
+        <span class="mode-toggle__sub">the 9 subject columns</span>
+      </button>
+      <button class="mode-toggle__btn" role="tab" aria-selected="false" data-mode="career" type="button">
+        <span class="mode-toggle__label">By career</span>
+        <span class="mode-toggle__sub">see courses highlight toward a destination</span>
+      </button>
+    </div>
 
     <div class="map-filters map-filters--career" id="career-filter" role="group" aria-label="Highlight courses by career">
       <div class="map-filters__group" style="flex-wrap: wrap;">
@@ -84,6 +77,9 @@
         <button class="chip" data-career="trades-entrepreneur" type="button">Trades Entrepreneur</button>
         <button class="chip" data-career="construction-pm" type="button">Construction PM</button>
       </div>
+    </div>
+
+    <div class="map-filters map-filters--credit" id="credit-filter" role="group" aria-label="Filter by credit type">
       <div class="map-filters__group">
         <span class="map-filters__label">Credit</span>
         <button class="chip chip--solid is-active" data-filter="credit" data-value="all" type="button">All</button>
@@ -116,7 +112,7 @@
 
   <section class="section section--ruled" id="small-multiples-section">
     <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">03</span><span>See all 11 paths at a glance</span></p>
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>See all 11 paths at a glance</span></p>
       <h2 class="section-header__title">Eleven careers, eleven routes.</h2>
       <p class="section-header__lede">
         Each card is a schematic of the whole program of study, with one
@@ -138,7 +134,7 @@
 
   <section class="section section--ruled">
     <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">04</span><span>Role doors</span></p>
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>Role doors</span></p>
       <h2 class="section-header__title">If you&rsquo;re here for a specific reason, skip ahead.</h2>
     </header>
     <div class="grid grid-4">
@@ -650,6 +646,43 @@
       });
       applyState();
     });
+  });
+
+  // ---- Mode toggle: By pathway / By career
+  // Default = "pathway": plain catalog, no career chips visible, no
+  // route overlay. "career" mode reveals the career chip row and
+  // enables the highlight + subway-route behavior.
+  const mapSection = document.getElementById("map");
+  function setMode(mode) {
+    if (mode !== "pathway" && mode !== "career") mode = "pathway";
+    mapSection.setAttribute("data-mode", mode);
+    document.querySelectorAll(".mode-toggle__btn").forEach(btn => {
+      const active = btn.dataset.mode === mode;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    if (mode === "pathway") {
+      // Leaving career mode — reset career state + clear overlay + clear
+      // tile highlight. Credit filter state is preserved across modes.
+      state.career = "all";
+      document.querySelectorAll(`.map-filters .chip[data-career]`).forEach(b => {
+        const active = b.dataset.career === "all";
+        b.classList.toggle("is-active", active);
+        b.classList.toggle("chip--solid", active);
+      });
+    }
+    applyState();
+  }
+  document.querySelectorAll(".mode-toggle__btn").forEach(btn => {
+    btn.addEventListener("click", () => setMode(btn.dataset.mode));
+  });
+  // Initialize in pathway mode
+  setMode("pathway");
+
+  // When a mini-multiple is clicked, switch into career mode so the
+  // selection actually produces the route the user just requested.
+  document.querySelectorAll(".mini-career-card").forEach(card => {
+    card.addEventListener("click", () => setMode("career"), { capture: true });
   });
 })();
 </script>
