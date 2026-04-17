@@ -70,7 +70,7 @@
 <script>
 (function () {
   const {
-    courseBySlug, pathway, teacher, qs,
+    D, courseBySlug, pathway, teacher, qs,
     fmtCredit, fmtGrade, siteLabel,
     siteChip, creditChips, statusChip, pathwayChip,
     escapeHtml, escapeAttr,
@@ -151,6 +151,34 @@
         <section>
           <p class="lede">${escapeHtml(c.description)}</p>
         </section>
+
+        ${(() => {
+          // "Points to these careers" — derive from the careers collection.
+          // Show ALL careers that reference this course, no cap. Split into
+          // must-have (primary) and supporting (secondary).
+          const careers = D.careers || [];
+          const mustCareers = careers.filter(ca => (ca.must_have || []).includes(c.slug));
+          const supCareers = careers.filter(ca => (ca.supporting || []).includes(c.slug));
+          if (!mustCareers.length && !supCareers.length) return "";
+          function careerLink(ca, emph) {
+            const cls = emph === "must" ? "chip chip--solid" : "chip";
+            return `<a class="${cls}" href="career.html?slug=${encodeURIComponent(ca.slug)}">${escapeHtml(ca.title)}</a>`;
+          }
+          return `
+            <section>
+              <h2 class="h2">Points to these careers</h2>
+              <p class="body-sm ink-soft" style="margin-top: var(--space-8); max-width: 60ch;">
+                Every Applied Tech course prepares students for specific career destinations.
+                ${mustCareers.length ? "Solid chips are careers this course is a <strong>must-have</strong> for;" : ""}
+                ${supCareers.length ? " outline chips are careers it <strong>supports</strong>." : ""}
+              </p>
+              <div class="cluster" style="margin-top: var(--space-16);">
+                ${mustCareers.map(ca => careerLink(ca, "must")).join("")}
+                ${supCareers.map(ca => careerLink(ca, "support")).join("")}
+              </div>
+            </section>
+          `;
+        })()}
 
         <section>
           <h2 class="h2">What you&rsquo;ll be able to do</h2>

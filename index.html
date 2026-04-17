@@ -56,40 +56,33 @@
     <div class="freshman-row" id="freshman-row"></div>
   </section>
 
-  <section class="section section--ruled" id="careers">
-    <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">02</span><span>Then pick where you want to end up</span></p>
-      <h2 class="section-header__title">Eleven career destinations.</h2>
-      <p class="section-header__lede">
-        Each tile is a career &mdash; the Applied Tech courses that point there, the
-        certifications you&rsquo;d earn, and what the step after high school typically
-        looks like. Careers often pull courses from more than one department.
-      </p>
-    </header>
-    <div class="grid grid-3" id="career-grid"></div>
-    <p class="body-sm ink-soft" style="margin-top: var(--space-24); text-align: center;">
-      <a href="careers.html" class="u">See all 11 careers with filters &rarr;</a>
-    </p>
-  </section>
-
   <section class="section section--ruled" id="map">
     <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">03</span><span>Or browse by subject</span></p>
-      <h2 class="section-header__title">The pathway map.</h2>
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>Then pick where you want to go</span></p>
+      <h2 class="section-header__title">Pick a career. Watch the courses that help you get there light up.</h2>
       <p class="section-header__lede">
-        Nine pathways across two buildings, grouped by department. Four are
-        <strong>year-by-year sequences</strong> (dashed connectors show the progression);
-        the other five are <strong>collections of peer courses</strong> &mdash; take any
-        of them in any order. Filter by building, credit, or teacher.
+        Click any career below and the Applied Tech courses that point there
+        will highlight on the map. Bright outline = a must-have course for that
+        career; soft outline = a supporting course that strengthens the path.
+        Click it again to clear and see the full catalog.
       </p>
     </header>
 
-    <div class="map-filters" id="filters" role="group" aria-label="Filter the pathway map">
-      <div class="map-filters__group">
-        <span class="map-filters__label">Building</span>
-        <button class="chip chip--solid is-active" data-filter="site" data-value="all" type="button">All</button>
-        <button class="chip" data-filter="site" data-value="cvhs" type="button">CVHS</button>
-        <button class="chip" data-filter="site" data-value="chs" type="button">CHS</button>
+    <div class="map-filters map-filters--career" id="career-filter" role="group" aria-label="Highlight courses by career">
+      <div class="map-filters__group" style="flex-wrap: wrap;">
+        <span class="map-filters__label">Career</span>
+        <button class="chip chip--solid is-active" data-career="all" type="button">Show all</button>
+        <button class="chip" data-career="welder" type="button">Welder</button>
+        <button class="chip" data-career="auto-technician" type="button">Auto Tech</button>
+        <button class="chip" data-career="carpenter" type="button">Carpenter</button>
+        <button class="chip" data-career="machinist" type="button">Machinist</button>
+        <button class="chip" data-career="software-developer" type="button">Software Dev</button>
+        <button class="chip" data-career="engineer" type="button">Engineer</button>
+        <button class="chip" data-career="industrial-designer" type="button">Industrial Designer</button>
+        <button class="chip" data-career="architect" type="button">Architect</button>
+        <button class="chip" data-career="drone-pilot" type="button">Drone Pilot</button>
+        <button class="chip" data-career="trades-entrepreneur" type="button">Trades Entrepreneur</button>
+        <button class="chip" data-career="construction-pm" type="button">Construction PM</button>
       </div>
       <div class="map-filters__group">
         <span class="map-filters__label">Credit</span>
@@ -97,23 +90,23 @@
         <button class="chip" data-filter="credit" data-value="science" type="button">Science</button>
         <button class="chip" data-filter="credit" data-value="math" type="button">Math</button>
       </div>
-      <div class="map-filters__group">
-        <span class="map-filters__label">Teacher</span>
-        <button class="chip chip--solid is-active" data-filter="teacher" data-value="all" type="button">All</button>
-        <button class="chip" data-filter="teacher" data-value="ak" type="button">Adam K.</button>
-        <button class="chip" data-filter="teacher" data-value="am" type="button">Andy M.</button>
-        <button class="chip" data-filter="teacher" data-value="rm" type="button">Randy M.</button>
-        <button class="chip" data-filter="teacher" data-value="sr" type="button">Stephanie R.</button>
-        <button class="chip" data-filter="teacher" data-value="jj" type="button">JJ K.</button>
-      </div>
     </div>
 
-    <p class="map-empty" id="map-empty" hidden>No courses match these filters.</p>
+    <p class="map-empty" id="map-empty" hidden>No courses match this filter.</p>
+
+    <p id="career-legend" class="body-sm ink-soft" hidden
+       style="margin-top: var(--space-16); padding: var(--space-12) var(--space-16); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+      <span id="career-legend-text"></span>
+    </p>
 
     <div class="pathway-map">
       <p class="overline map-row-label">10th &ndash; 12th grade &middot; pathway columns</p>
       <div class="pathway-columns" id="pathway-columns"></div>
     </div>
+
+    <p class="body-sm ink-soft" style="margin-top: var(--space-24); text-align: center;">
+      Want the full career write-ups? <a href="careers.html" class="u">See all 11 careers with descriptions &rarr;</a>
+    </p>
   </section>
 
   <section class="section section--ruled">
@@ -222,36 +215,6 @@
   document.getElementById("freshman-row").innerHTML =
     freshmanOrder.map(s => freshmanTile(courseBySlug(s))).join("");
 
-  // ---- Career grid (homepage): 6 featured + link to full /careers.html
-  const DOMAIN_COLOR = {
-    "trades":       "p-metals",
-    "computing":    "p-cs",
-    "engineering":  "p-engineering",
-    "design":       "p-industrial-design",
-    "emerging":     "p-vehicular",
-    "construction": "p-woods",
-  };
-  function careerTile(career) {
-    const mustCourses = (career.must_have || []).map(courseBySlug).filter(Boolean);
-    const colorClass = DOMAIN_COLOR[career.domain] || "p-metals";
-    const courseNames = mustCourses.slice(0, 4).map(c => c.title).join(" &middot; ");
-    return `
-      <a class="tile ${colorClass}" data-career-domain="${escapeHtml(career.domain)}"
-         href="pages/career.html?slug=${encodeURIComponent(career.slug)}">
-        <p class="tile__overline">${escapeHtml((career.domain || "").toUpperCase())}</p>
-        <h3 class="tile__title">${escapeHtml(career.title)}</h3>
-        <p class="tile__desc">${escapeHtml(career.one_liner)}</p>
-        <div class="tile__meta" style="opacity: 0.85;">${courseNames}</div>
-      </a>
-    `;
-  }
-  // Featured 6: one per domain, spanning hands-on, computing, design,
-  // engineering, emerging, construction — so the homepage shows the
-  // breadth and the /careers.html page shows the full 11.
-  const featured = ["welder", "auto-technician", "software-developer", "engineer", "industrial-designer", "drone-pilot"];
-  const featuredCareers = featured.map(s => (D.careers || []).find(c => c.slug === s)).filter(Boolean);
-  document.getElementById("career-grid").innerHTML = featuredCareers.map(careerTile).join("");
-
   // ---- Pathway columns
   const columnOrder = [
     "cs", "engineering", "woods", "metals", "math",
@@ -260,14 +223,14 @@
 
   function columnCourseTile(course) {
     if (!course) return "";
-    const metaBits = [
-      window.APP.siteLabel(course.site),
-      window.APP.fmtGrade(course.grade),
-    ].filter(Boolean);
+    // School + teacher deliberately omitted from the tile per 2026-04-16
+    // redesign: careers are the new differentiator on the homepage map.
+    // Grade range stays (it's calendar context, not a differentiator).
+    const grade = window.APP.fmtGrade(course.grade);
     return `
       <a class="tile" data-slug="${escapeHtml(course.slug)}" data-pathway="${escapeHtml(course.pathway)}" href="pages/course.html?slug=${encodeURIComponent(course.slug)}">
         <h3 class="tile__title">${escapeHtml(course.title)}</h3>
-        <div class="tile__meta">${metaBits.map(escapeHtml).join(" &middot; ")}</div>
+        <div class="tile__meta">${escapeHtml(grade)}</div>
       </a>
     `;
   }
@@ -311,42 +274,101 @@
     `;
   }).join("");
 
-  // ---- Filter state + logic
-  const state = { site: "all", credit: "all", teacher: "all" };
+  // ---- Filter + highlight state
+  // - credit filter: hard filter (dims non-matching tiles)
+  // - career selector: highlight matcher (no hiding — bright outline on
+  //   must-have, soft outline on supporting, faint mute on non-matches)
+  const state = { credit: "all", career: "all" };
 
-  function matches(course) {
-    if (state.site !== "all") {
-      if (course.site !== state.site && course.site !== "either") return false;
-    }
+  function creditMatches(course) {
     if (state.credit === "science" && !(course.credit && course.credit.science)) return false;
     if (state.credit === "math" && !(course.credit && course.credit.math)) return false;
-    if (state.teacher !== "all" && !(course.teachers || []).includes(state.teacher)) return false;
     return true;
   }
 
-  function applyFilters() {
-    let anyVisible = false;
+  // Given a career slug, return {mustHave: Set<slug>, supporting: Set<slug>}.
+  function careerSets(careerSlug) {
+    const career = (D.careers || []).find(c => c.slug === careerSlug);
+    if (!career) return { mustHave: new Set(), supporting: new Set(), career: null };
+    return {
+      career,
+      mustHave: new Set(career.must_have || []),
+      supporting: new Set(career.supporting || []),
+    };
+  }
+
+  function applyState() {
+    const { mustHave, supporting, career } = careerSets(state.career);
+    const careerActive = state.career !== "all";
+    let anyCreditVisible = false;
+
     document.querySelectorAll(".tile[data-slug]").forEach(tile => {
       const slug = tile.getAttribute("data-slug");
       const course = courseBySlug(slug);
-      const ok = course && matches(course);
-      tile.classList.toggle("tile--dim", !ok);
-      if (ok) anyVisible = true;
+      if (!course) return;
+      const creditOk = creditMatches(course);
+
+      // Credit filter dims out tiles that don't match (hard filter).
+      tile.classList.toggle("tile--dim", !creditOk);
+      if (creditOk) anyCreditVisible = true;
+
+      // Clear prior match classes
+      tile.classList.remove("tile--match", "tile--match-soft", "tile--nomatch");
+
+      // Career highlighting (overlay, doesn't remove tile)
+      if (careerActive && creditOk) {
+        if (mustHave.has(slug)) {
+          tile.classList.add("tile--match");
+        } else if (supporting.has(slug)) {
+          tile.classList.add("tile--match-soft");
+        } else {
+          tile.classList.add("tile--nomatch");
+        }
+      }
     });
+
+    // Legend under the filter bar
+    const legend = document.getElementById("career-legend");
+    const legendText = document.getElementById("career-legend-text");
+    if (careerActive && career) {
+      const mustN = (career.must_have || []).length;
+      const supN = (career.supporting || []).length;
+      legendText.innerHTML =
+        `Highlighting courses that point to <strong>${escapeHtml(career.title)}</strong>: ` +
+        `${mustN} must-have and ${supN} supporting course${supN === 1 ? "" : "s"}. ` +
+        `<a href="pages/career.html?slug=${encodeURIComponent(career.slug)}">See the full career page &rarr;</a>`;
+      legend.hidden = false;
+    } else {
+      legend.hidden = true;
+    }
+
     const emptyEl = document.getElementById("map-empty");
-    if (emptyEl) emptyEl.hidden = anyVisible;
+    if (emptyEl) emptyEl.hidden = anyCreditVisible;
   }
 
-  document.querySelectorAll(".map-filters .chip").forEach(btn => {
+  // Credit filter chips (unchanged mechanism)
+  document.querySelectorAll(".map-filters .chip[data-filter]").forEach(btn => {
     btn.addEventListener("click", () => {
-      const group = btn.dataset.filter;
-      state[group] = btn.dataset.value;
-      document.querySelectorAll(`.map-filters .chip[data-filter="${group}"]`).forEach(b => {
-        const active = b.dataset.value === state[group];
+      state.credit = btn.dataset.value;
+      document.querySelectorAll(`.map-filters .chip[data-filter="credit"]`).forEach(b => {
+        const active = b.dataset.value === state.credit;
         b.classList.toggle("is-active", active);
         b.classList.toggle("chip--solid", active);
       });
-      applyFilters();
+      applyState();
+    });
+  });
+
+  // Career selector chips (new)
+  document.querySelectorAll(".map-filters .chip[data-career]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.career = btn.dataset.career;
+      document.querySelectorAll(`.map-filters .chip[data-career]`).forEach(b => {
+        const active = b.dataset.career === state.career;
+        b.classList.toggle("is-active", active);
+        b.classList.toggle("chip--solid", active);
+      });
+      applyState();
     });
   });
 })();
