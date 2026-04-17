@@ -101,7 +101,12 @@
 
     <div class="pathway-map">
       <p class="overline map-row-label">10th &ndash; 12th grade &middot; pathway columns</p>
-      <div class="pathway-columns" id="pathway-columns"></div>
+      <div class="pathway-columns-wrap">
+        <svg class="career-route" id="career-route" aria-hidden="true"></svg>
+        <div class="pathway-columns" id="pathway-columns"></div>
+      </div>
+      <p class="career-route-mobile" id="career-route-mobile" hidden
+         style="margin-top: var(--space-16); padding: var(--space-12) var(--space-16); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 0.875rem;"></p>
     </div>
 
     <p class="body-sm ink-soft" style="margin-top: var(--space-24); text-align: center;">
@@ -344,7 +349,158 @@
 
     const emptyEl = document.getElementById("map-empty");
     if (emptyEl) emptyEl.hidden = anyCreditVisible;
+
+    // Subway-map route drawing (desktop) + text fallback (mobile)
+    drawRoute(career);
   }
+
+  // ---- Career route overlay (Option B: subway-map lines)
+  // Draws two layers in the SVG overlay on the pathway-columns grid:
+  //   1. Solid orange polyline connecting must-have course tiles in
+  //      chronological order (must_have array order).
+  //   2. Dashed neutral branches from the nearest must-have tile to
+  //      each supporting tile.
+  // Skips freshman-row must-haves (those sit outside this SVG's parent);
+  // they still get the ring highlight via .tile--match.
+  const svg = document.getElementById("career-route");
+  const svgNS = "http://www.w3.org/2000/svg";
+  const mobileNote = document.getElementById("career-route-mobile");
+
+  function drawRoute(career) {
+    // Clear any prior paths
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    mobileNote.hidden = true;
+    mobileNote.innerHTML = "";
+    if (!career) return;
+
+    const wrap = svg.parentElement; // .pathway-columns-wrap
+    if (!wrap) return;
+    const wrapRect = wrap.getBoundingClientRect();
+    svg.setAttribute("viewBox", `0 0 ${wrapRect.width} ${wrapRect.height}`);
+    svg.setAttribute("width", wrapRect.width);
+    svg.setAttribute("height", wrapRect.height);
+
+    // Find tiles inside the pathway columns for each slug in must_have
+    // and supporting (ignoring freshman tiles outside this SVG's parent).
+    function tileIn(slug) {
+      return wrap.querySelector(`.tile[data-slug="${CSS.escape(slug)}"]`);
+    }
+    function anchor(tile, side) {
+      const r = tile.getBoundingClientRect();
+      const x = r.left + r.width / 2 - wrapRect.left;
+      const y = side === "top"
+        ? r.top - wrapRect.top
+        : r.bottom - wrapRect.top;
+      return { x, y };
+    }
+
+    const mustTiles = (career.must_have || [])
+      .map(slug => ({ slug, el: tileIn(slug) }))
+      .filter(x => x.el);
+    const supTiles = (career.supporting || [])
+      .map(slug => ({ slug, el: tileIn(slug) }))
+      .filter(x => x.el);
+
+    // --- Text fallback for mobile (always populated; CSS shows only on narrow viewports)
+    const mustNames = mustTiles.map(x => x.el.querySelector(".tile__title").textContent).filter(Boolean);
+    const supNames = supTiles.map(x => x.el.querySelector(".tile__title").textContent).filter(Boolean);
+    mobileNote.hidden = false;
+    mobileNote.innerHTML =
+      `<strong>Route to ${escapeHtml(career.title)}:</strong> ` +
+      (mustNames.length ? `must-take &mdash; ${mustNames.map(escapeHtml).join(" &rarr; ")}. ` : "") +
+      (supNames.length ? `Supporting &mdash; ${supNames.map(escapeHtml).join(", ")}.` : "");
+
+    // --- Main must-take polyline (solid orange)
+    if (mustTiles.length >= 1) {
+      // Chronological order = order in must_have array. Connect each tile
+      // to the next with a right-angle path: out the bottom of A, across,
+      // into the top of B.
+      let d = "";
+      for (let i = 0; i < mustTiles.length - 1; i++) {
+        const a = anchor(mustTiles[i].el, "bottom");
+        const b = anchor(mustTiles[i + 1].el, "top");
+        const midY = (a.y + b.y) / 2;
+        if (i === 0) d += `M ${a.x} ${a.y} `;
+        if (Math.abs(a.x - b.x) < 2) {
+          // Same column — straight line
+          d += `L ${b.x} ${b.y} `;
+        } else {
+          // Different columns — right angle via midpoint
+          d += `L ${a.x} ${midY} L ${b.x} ${midY} L ${b.x} ${b.y} `;
+        }
+      }
+      if (d) {
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute("class", "route-main");
+        path.setAttribute("d", d);
+        svg.appendChild(path);
+      }
+      // Start node + end node markers
+      const start = anchor(mustTiles[0].el, "bottom");
+      const startDot = document.createElementNS(svgNS, "circle");
+      startDot.setAttribute("class", "route-node route-node--start");
+      startDot.setAttribute("cx", start.x);
+      startDot.setAttribute("cy", start.y);
+      startDot.setAttribute("r", 6);
+      svg.appendChild(startDot);
+      if (mustTiles.length > 1) {
+        const end = anchor(mustTiles[mustTiles.length - 1].el, "top");
+        const endDot = document.createElementNS(svgNS, "circle");
+        endDot.setAttribute("class", "route-node");
+        endDot.setAttribute("cx", end.x);
+        endDot.setAttribute("cy", end.y);
+        endDot.setAttribute("r", 5);
+        svg.appendChild(endDot);
+      }
+    }
+
+    // --- Dashed branches from nearest must-have to each supporting course
+    function nearestMust(sx, sy) {
+      let best = null, bestD = Infinity;
+      for (const m of mustTiles) {
+        const r = m.el.getBoundingClientRect();
+        const cx = r.left + r.width / 2 - wrapRect.left;
+        const cy = r.top + r.height / 2 - wrapRect.top;
+        const d = Math.hypot(cx - sx, cy - sy);
+        if (d < bestD) { bestD = d; best = m.el; }
+      }
+      return best;
+    }
+
+    for (const s of supTiles) {
+      const sr = s.el.getBoundingClientRect();
+      const sx = sr.left + sr.width / 2 - wrapRect.left;
+      const sy = sr.top + sr.height / 2 - wrapRect.top;
+      const mustEl = nearestMust(sx, sy);
+      if (!mustEl) continue;
+      const mr = mustEl.getBoundingClientRect();
+      const mx = mr.left + mr.width / 2 - wrapRect.left;
+      const my = mr.top + mr.height / 2 - wrapRect.top;
+      // Entry point on supporting tile: nearest edge (top or left depending on relative position)
+      const entrySide = sy > my ? "top" : "bottom";
+      const entry = anchor(s.el, entrySide);
+      // Exit point on must tile
+      const exitSide = entrySide === "top" ? "bottom" : "top";
+      const exit = anchor(mustEl, exitSide);
+      // Simple curve: quadratic Bezier with control point at midpoint
+      const cx = (exit.x + entry.x) / 2;
+      const cy = (exit.y + entry.y) / 2;
+      const path = document.createElementNS(svgNS, "path");
+      path.setAttribute("class", "route-branch");
+      path.setAttribute("d", `M ${exit.x} ${exit.y} Q ${cx} ${cy} ${entry.x} ${entry.y}`);
+      svg.appendChild(path);
+    }
+  }
+
+  // Redraw on resize (debounced)
+  let resizeT = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => {
+      const career = (D.careers || []).find(c => c.slug === state.career);
+      drawRoute(career);
+    }, 150);
+  });
 
   // Credit filter chips (unchanged mechanism)
   document.querySelectorAll(".map-filters .chip[data-filter]").forEach(btn => {
