@@ -232,19 +232,19 @@
       return columnCourseTile(c) + sep;
     }).join("");
     const siteLabel = p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site);
-    // Header chip differs by type so the signal matches the content.
-    let headerChip = "";
+    // Quiet shape descriptor instead of a chip. Sits in the overline row,
+    // doesn't repeat across columns, doesn't bleed outside the rounded header.
+    let shapeLine = "";
     if (courses.length > 1) {
-      headerChip = isLadder
-        ? `<span class="chip chip--flex" title="Each course builds on the previous one.">Year-by-year sequence</span>`
-        : `<span class="chip chip--flex" title="Take any of these in any order \u2014 no prerequisites between them.">Pick what interests you</span>`;
+      shapeLine = isLadder
+        ? `${courses.length}-year sequence`
+        : `${courses.length} peer courses`;
     }
     return `
       <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}" data-pathway-type="${escapeHtml(p.type || "collection")}">
         <a class="tile pathway-column__header" data-pathway="${escapeHtml(pid)}" href="pages/pathway.html?id=${encodeURIComponent(pid)}">
-          <p class="tile__overline">Pathway &middot; ${escapeHtml(siteLabel)}</p>
+          <p class="tile__overline">${escapeHtml(siteLabel)}${shapeLine ? ` &middot; ${shapeLine}` : ""}</p>
           <h3 class="tile__title">${escapeHtml(p.title)}</h3>
-          ${headerChip ? `<div class="tile__meta" style="margin-top: var(--space-12);">${headerChip}</div>` : ""}
         </a>
         ${tiles}
       </div>
