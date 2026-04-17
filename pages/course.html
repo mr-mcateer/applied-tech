@@ -122,7 +122,6 @@
 
   const chipRow = [
     p ? pathwayChip(c.pathway) : "",
-    siteChip(c.site),
     creditChips(c.credit),
     statusChip(c.status),
   ].filter(Boolean).join(" ");
@@ -235,9 +234,6 @@
       <aside class="detail-sidebar">
         <div class="meta-block">
           <dl>
-            <dt>Building</dt>
-            <dd>${escapeHtml(siteLabel(c.site))}</dd>
-
             <dt>Grade</dt>
             <dd>${escapeHtml(fmtGrade(c.grade))} grade</dd>
 

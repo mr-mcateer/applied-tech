@@ -193,7 +193,7 @@
   const freshman = ["computer-skills", "woods-1", "metals-1"].map(courseBySlug).filter(Boolean);
   document.getElementById("freshman-tiles").innerHTML = freshman.map(co => `
     <a class="tile tile--neutral" href="pages/course.html?slug=${encodeURIComponent(co.slug)}">
-      <p class="tile__overline">9th grade &middot; ${escapeHtml(siteLabel(co.site))}</p>
+      <p class="tile__overline">9th grade</p>
       <h3 class="tile__title">${escapeHtml(co.title)}</h3>
       <p class="tile__desc">${escapeHtml(firstSentence(co.description))}</p>
       <div class="tile__meta">${escapeHtml(fmtGrade(co.grade))} &middot; 1 CTE</div>

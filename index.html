@@ -153,7 +153,6 @@
   function freshmanTile(course) {
     if (!course) return "";
     const metaBits = [
-      window.APP.siteLabel(course.site),
       window.APP.fmtGrade(course.grade),
       window.APP.fmtCredit(course.credit),
     ].filter(Boolean);
@@ -191,7 +190,6 @@
   document.getElementById("pathway-columns").innerHTML = columnOrder.map(pid => {
     const p = D.pathways[pid];
     const courses = coursesInPathway(pid);
-    const siteLabel = p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site);
 
     // Single-course pathway: render ONLY the course tile (no wrapper header).
     if (courses.length === 1) {
@@ -208,7 +206,7 @@
     return `
       <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}">
         <a class="tile pathway-column__header" data-pathway="${escapeHtml(pid)}" href="pages/pathway.html?id=${encodeURIComponent(pid)}">
-          <p class="tile__overline">${escapeHtml(siteLabel)}</p>
+          <p class="tile__overline">Pathway</p>
           <h3 class="tile__title">${escapeHtml(p.title)}</h3>
         </a>
         ${tiles}
