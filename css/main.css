@@ -1007,6 +1007,66 @@ hr {
   align-items: flex-start;
 }
 
+/* Career route SVG overlay — sits on top of the pathway columns grid
+   and draws a subway-map-style path connecting must-take courses in
+   industrial orange, with dashed neutral branches to supporting
+   courses. See drawRoute() in index.html for the path math. */
+.pathway-columns-wrap {
+  position: relative;
+}
+.career-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+.career-route .route-main {
+  stroke: #c7391f;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 1px rgba(199, 57, 31, 0.25));
+}
+.career-route .route-branch {
+  stroke: #58585d;
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+.career-route .route-node {
+  fill: #c7391f;
+  stroke: white;
+  stroke-width: 2;
+}
+.career-route .route-node--start {
+  fill: white;
+  stroke: #c7391f;
+  stroke-width: 3;
+}
+
+/* Below 720px the tiles stack and the SVG coordinates don't translate
+   cleanly — hide the overlay and reveal a text-based route summary. */
+@media (max-width: 720px) {
+  .career-route {
+    display: none;
+  }
+}
+.career-route-mobile {
+  display: none;
+}
+@media (max-width: 720px) {
+  .career-route-mobile:not([hidden]) {
+    display: block;
+  }
+}
+
 /* Freshman tile — slightly distinct treatment (neutral background, ink text) */
 .tile--freshman {
   background: var(--surface);
