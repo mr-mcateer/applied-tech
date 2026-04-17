@@ -223,27 +223,34 @@
     const p = D.pathways[pid];
     const courses = coursesInPathway(pid);
     const isLadder = p.type === "ladder";
-    // Ladders show a dashed "typically after" connector between tiles.
-    // Collections stack tiles with no connector — they're peers, not steps.
+    const siteLabel = p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site);
+
+    // Single-course pathway: render ONLY the course tile. A wrapper header
+    // for a solo course repeats information for zero gain — especially when
+    // pathway and course share a name (Architecture, Real World Math).
+    if (courses.length === 1) {
+      const c = courses[0];
+      return `
+        <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}" data-pathway-type="${escapeHtml(p.type || "collection")}">
+          ${columnCourseTile(c)}
+        </div>
+      `;
+    }
+
+    // Multi-course pathway: header + stacked tiles.
     const tiles = courses.map((c, i) => {
       const sep = (isLadder && i < courses.length - 1)
         ? `<div class="pathway-column__arrow" aria-hidden="true">typically after</div>`
         : "";
       return columnCourseTile(c) + sep;
     }).join("");
-    const siteLabel = p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site);
-    // Quiet shape descriptor instead of a chip. Sits in the overline row,
-    // doesn't repeat across columns, doesn't bleed outside the rounded header.
-    let shapeLine = "";
-    if (courses.length > 1) {
-      shapeLine = isLadder
-        ? `${courses.length}-year sequence`
-        : `${courses.length} peer courses`;
-    }
+    const shapeLine = isLadder
+      ? `${courses.length}-year sequence`
+      : `${courses.length} peer courses`;
     return `
       <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}" data-pathway-type="${escapeHtml(p.type || "collection")}">
         <a class="tile pathway-column__header" data-pathway="${escapeHtml(pid)}" href="pages/pathway.html?id=${encodeURIComponent(pid)}">
-          <p class="tile__overline">${escapeHtml(siteLabel)}${shapeLine ? ` &middot; ${shapeLine}` : ""}</p>
+          <p class="tile__overline">${escapeHtml(siteLabel)} &middot; ${shapeLine}</p>
           <h3 class="tile__title">${escapeHtml(p.title)}</h3>
         </a>
         ${tiles}
