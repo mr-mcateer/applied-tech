@@ -966,6 +966,47 @@ hr {
   letter-spacing: 0.01em;
 }
 
+/* Career-highlight states on homepage pathway map.
+   - .tile--match      : must-have course for the selected career.
+                         Bright ring + subtle lift.
+   - .tile--match-soft : supporting course — softer ring, still readable.
+   - .tile--nomatch    : course that doesn't relate to the selected
+                         career — muted so the matches pop, but still
+                         visible/clickable (NOT a hard filter).
+   Applied over .tile (which already has pathway fill). Transitions keep
+   the state changes from feeling jumpy. */
+.tile--match {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-2) 24%, transparent);
+  transform: translateY(-2px);
+}
+.tile--match-soft {
+  outline: 2px dashed color-mix(in srgb, var(--accent-2) 75%, var(--border));
+  outline-offset: 3px;
+}
+.tile--nomatch {
+  opacity: 0.42;
+  filter: saturate(0.55);
+}
+.tile--match,
+.tile--match-soft,
+.tile--nomatch {
+  transition: opacity var(--timing-fade) var(--easing-fade),
+              transform var(--timing-fade) var(--easing-fade),
+              filter var(--timing-fade) var(--easing-fade),
+              box-shadow var(--timing-fade) var(--easing-fade);
+}
+
+/* Career filter bar is denser than the other filter bars (11 chips);
+   give it a little extra breathing room and wrap gracefully. */
+.map-filters--career {
+  gap: var(--space-20, var(--space-16));
+}
+.map-filters--career .map-filters__group {
+  align-items: flex-start;
+}
+
 /* Freshman tile — slightly distinct treatment (neutral background, ink text) */
 .tile--freshman {
   background: var(--surface);
