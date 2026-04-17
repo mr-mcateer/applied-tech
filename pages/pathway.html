@@ -104,12 +104,11 @@
   courses.forEach(c => (c.teachers || []).forEach(tid => teacherIds.add(tid)));
   const teachers = Array.from(teacherIds).map(teacher).filter(Boolean);
 
-  const siteLabelForPathway = p.site === "split" ? "CVHS + CHS" : siteLabel(p.site);
   const isLadder = p.type === "ladder";
   const isCollection = p.type === "collection" || !p.type;
 
   function courseMetaLine(c) {
-    const bits = [siteLabel(c.site), fmtGrade(c.grade) + " grade"];
+    const bits = [fmtGrade(c.grade) + " grade"];
     const credit = fmtCredit(c.credit);
     if (credit) bits.push(credit);
     return bits.map(escapeHtml).join(" · ");
@@ -117,7 +116,7 @@
 
   root.innerHTML = `
     <section class="hero p-${escapeAttr(p.id)}" style="padding-bottom: var(--space-32);">
-      <p class="hero__overline">${escapeHtml(siteLabelForPathway)} &middot; Pathway</p>
+      <p class="hero__overline">Pathway</p>
       <div style="display:flex; align-items:flex-start; gap: var(--space-24);">
         <span aria-hidden="true" style="display:inline-block; width: 0.75rem; min-width: 0.75rem; align-self: stretch; border-radius: var(--radius-pill); background: var(--panel-bg, var(--ink));"></span>
         <h1 class="hero__title display-lg" style="margin:0;">${escapeHtml(p.title)}</h1>
@@ -217,9 +216,6 @@
       <aside class="detail-sidebar">
         <div class="meta-block">
           <dl>
-            <dt>Building</dt>
-            <dd>${escapeHtml(siteLabelForPathway)}</dd>
-
             <dt>Courses</dt>
             <dd>${courses.length}</dd>
 

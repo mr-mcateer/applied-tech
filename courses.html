@@ -48,13 +48,6 @@
          style="display:flex; flex-wrap:wrap; gap: var(--space-24); align-items:center;">
 
       <div class="map-filters__group" style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
-        <span class="mono-meta" style="margin-right: var(--space-8);">Building</span>
-        <button class="chip chip--solid is-active" data-filter="site" data-value="all" type="button">All</button>
-        <button class="chip" data-filter="site" data-value="cvhs" type="button">CVHS</button>
-        <button class="chip" data-filter="site" data-value="chs" type="button">CHS</button>
-      </div>
-
-      <div class="map-filters__group" style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
         <span class="mono-meta" style="margin-right: var(--space-8);">Grade</span>
         <button class="chip chip--solid is-active" data-filter="grade" data-value="all" type="button">All</button>
         <button class="chip" data-filter="grade" data-value="9"  type="button">9th</button>
@@ -99,7 +92,6 @@
         <tr>
           <th class="sortable" data-sort="title"    scope="col">Course</th>
           <th class="sortable" data-sort="pathway"  scope="col">Pathway</th>
-          <th class="sortable" data-sort="site"     scope="col">Building</th>
           <th class="sortable" data-sort="grade"    scope="col">Grade</th>
           <th class="sortable" data-sort="credit"   scope="col">Credit</th>
           <th class="sortable" data-sort="teachers" scope="col">Teachers</th>
@@ -223,7 +215,6 @@
         <tr>
           <td><a href="pages/course.html?slug=${encodeURIComponent(c.slug)}"><strong>${escapeHtml(c.title)}</strong></a></td>
           <td>${pathwayChip(c.pathway)}</td>
-          <td>${siteChip(c.site)}</td>
           <td class="mono">${escapeHtml(fmtGrade(c.grade))}</td>
           <td>${creditCell}</td>
           <td class="body-sm">${teacherNames}</td>

@@ -109,7 +109,7 @@
     const pathwayAttr = co.pathway ? ` data-pathway="${escapeAttr(co.pathway)}"` : "";
     const p = D.pathways[co.pathway];
     const overline = p ? p.title : "Course";
-    const metaBits = [siteLabel(co.site), window.APP.fmtGrade(co.grade)].map(escapeHtml).join(" · ");
+    const metaBits = [window.APP.fmtGrade(co.grade)].map(escapeHtml).join(" · ");
     return `
       <a class="${cls}"${pathwayAttr} href="course.html?slug=${encodeURIComponent(co.slug)}">
         <p class="tile__overline">${escapeHtml(overline)}</p>
