@@ -164,7 +164,7 @@ window.DATA = {
       prerequisites: [],
       suggestedPrereqs: [],
       leadsTo: ["intro-to-cs", "industrial-design"],
-      teachers: ["rm"],
+      teachers: ["rm", "am"],
       status: "draft",
       source: "pptx-learning-targets",
       proficiencies: [
