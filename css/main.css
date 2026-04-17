@@ -1024,31 +1024,28 @@ hr {
   overflow: visible;
 }
 .career-route .route-main {
-  stroke: #c7391f;
-  stroke-width: 3;
+  stroke: var(--ink);
+  stroke-width: 1.5;
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 1px 1px rgba(199, 57, 31, 0.25));
 }
 .career-route .route-branch {
-  stroke: #58585d;
-  stroke-width: 1.5;
-  stroke-dasharray: 5 4;
+  stroke: var(--ink-soft);
+  stroke-width: 1.25;
+  stroke-dasharray: 3 2;
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.75;
+  opacity: 1;
 }
 .career-route .route-node {
-  fill: #c7391f;
-  stroke: white;
-  stroke-width: 2;
+  fill: var(--ink);
 }
 .career-route .route-node--start {
-  fill: white;
-  stroke: #c7391f;
-  stroke-width: 3;
+  fill: var(--surface);
+  stroke: var(--ink);
+  stroke-width: 2;
 }
 
 /* Below 720px the tiles stack and the SVG coordinates don't translate
@@ -1066,6 +1063,176 @@ hr {
     display: block;
   }
 }
+
+/* ---- Small multiples: 11 mini career maps below the main map ----
+   Each card is a compact schematic of the 9-pathway + freshman-row
+   grid. Course cells are colored by pathway (no text — too small to
+   read). Must-take courses get a solid ink dot overlay; supporting
+   courses get an open ink dot. Clicking a card selects that career
+   in the main map above. */
+
+.small-multiples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-24);
+  margin-top: var(--space-32);
+}
+
+.mini-career-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-20, var(--space-16));
+  text-decoration: none !important;
+  color: inherit;
+  transition: transform var(--timing-fade) var(--easing-fade),
+              box-shadow var(--timing-fade) var(--easing-fade),
+              border-color var(--timing-fade) var(--easing-fade);
+}
+.mini-career-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--ink);
+  box-shadow: 0 6px 20px -8px rgba(17, 17, 24, 0.12);
+}
+.mini-career-card__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.mini-career-card__title {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  margin: var(--space-4) 0 var(--space-12);
+  color: var(--ink);
+}
+.mini-career-card__stats {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin: var(--space-12) 0 0;
+  letter-spacing: 0.02em;
+}
+
+/* The schematic itself */
+.mini-map {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0;
+}
+.mini-map__section-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 2px;
+}
+.mini-map__row {
+  display: grid;
+  gap: 3px;
+}
+.mini-map__row--freshman {
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 3px;
+}
+.mini-map__row--pathways {
+  /* 9 pathway columns. Each column may contain multiple courses stacked.
+     Implement as a horizontal flex of columns. */
+  display: flex;
+  gap: 3px;
+}
+.mini-map__col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.mini-cell {
+  position: relative;
+  height: 18px;
+  border-radius: 3px;
+  background: var(--surface-alt);
+  overflow: visible;
+}
+/* Pathway color fills — reuse the pathway CSS custom properties */
+.mini-cell.p-cs                { background: var(--p-cs); }
+.mini-cell.p-engineering       { background: var(--p-engineering); }
+.mini-cell.p-architecture      { background: var(--p-architecture); }
+.mini-cell.p-woods             { background: var(--p-woods); }
+.mini-cell.p-metals            { background: var(--p-metals); }
+.mini-cell.p-autos             { background: var(--p-autos); }
+.mini-cell.p-industrial-design { background: var(--p-industrial-design); }
+.mini-cell.p-vehicular         { background: var(--p-vehicular); }
+.mini-cell.p-math              { background: var(--p-math); }
+/* Freshman cells use the freshman purple */
+.mini-cell--freshman {
+  background: var(--either);
+}
+/* Non-route cells get dimmed when a career is applied to this mini */
+.mini-cell--off {
+  opacity: 0.22;
+}
+/* Must-take: solid ink dot in top-right */
+.mini-cell--must::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--surface);
+}
+/* Supporting: outlined ink dot */
+.mini-cell--support::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--ink-soft);
+}
+
+.mini-legend {
+  display: flex;
+  gap: var(--space-16);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-soft);
+  margin-top: var(--space-24);
+  padding: var(--space-12) var(--space-16);
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+  letter-spacing: 0.04em;
+}
+.mini-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+.mini-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.mini-legend__dot--must { background: var(--ink); }
+.mini-legend__dot--support { background: var(--surface); border: 2px solid var(--ink-soft); }
+.mini-legend__dot--off { background: var(--surface-alt); border: 1px solid var(--border); }
 
 /* Freshman tile — slightly distinct treatment (neutral background, ink text) */
 .tile--freshman {

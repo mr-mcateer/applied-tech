@@ -114,6 +114,28 @@
     </p>
   </section>
 
+  <section class="section section--ruled" id="small-multiples-section">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>See all 11 paths at a glance</span></p>
+      <h2 class="section-header__title">Eleven careers, eleven routes.</h2>
+      <p class="section-header__lede">
+        Each card is a schematic of the whole program of study, with one
+        career&rsquo;s route highlighted. Solid ink dot = must-take course for
+        that career. Outlined dot = supporting course. The faded cells are
+        every other course in the catalog &mdash; they don&rsquo;t apply to this path.
+        Click any card to load its route into the main map above.
+      </p>
+    </header>
+
+    <div class="mini-legend" aria-label="Legend">
+      <span class="mini-legend__item"><span class="mini-legend__dot mini-legend__dot--must"></span>must-take</span>
+      <span class="mini-legend__item"><span class="mini-legend__dot mini-legend__dot--support"></span>supporting</span>
+      <span class="mini-legend__item"><span class="mini-legend__dot mini-legend__dot--off"></span>not in route</span>
+    </div>
+
+    <div class="small-multiples-grid" id="small-multiples"></div>
+  </section>
+
   <section class="section section--ruled">
     <header class="section-header">
       <p class="section-header__eyebrow"><span class="idx">04</span><span>Role doors</span></p>
@@ -501,6 +523,108 @@
       drawRoute(career);
     }, 150);
   });
+
+  // ---- Small multiples: 11 miniature career schematics ----
+  // Each card shows the whole 9-pathway + freshman layout at tiny scale,
+  // with dot markers on must-take (solid) and supporting (outlined) cells.
+  // Clicking a card selects that career in the main map above.
+  const PATHWAY_ORDER = ["cs", "engineering", "woods", "metals", "math", "autos", "industrial-design", "vehicular", "architecture"];
+  const FRESHMAN_SLUGS = ["computer-skills", "woods-1", "metals-1"];
+
+  function renderMiniMap(career) {
+    const mustSet = new Set(career.must_have || []);
+    const supSet  = new Set(career.supporting || []);
+
+    function cellCls(course, pathwayKey) {
+      const cls = ["mini-cell"];
+      if (pathwayKey) cls.push("p-" + pathwayKey);
+      if (!course) return cls;
+      if (mustSet.has(course.slug)) cls.push("mini-cell--must");
+      else if (supSet.has(course.slug)) cls.push("mini-cell--support");
+      else cls.push("mini-cell--off");
+      return cls;
+    }
+
+    // Freshman row: three cells, purple, with potential dot overlays
+    const fresh = FRESHMAN_SLUGS.map(slug => {
+      const c = courseBySlug(slug);
+      const cls = ["mini-cell", "mini-cell--freshman"];
+      if (mustSet.has(slug)) cls.push("mini-cell--must");
+      else if (supSet.has(slug)) cls.push("mini-cell--support");
+      else cls.push("mini-cell--off");
+      return `<span class="${cls.join(" ")}" title="${escapeHtml(c.title)}"></span>`;
+    }).join("");
+
+    // Pathway columns: for each pathway, stack its courses as mini-cells
+    const cols = PATHWAY_ORDER.map(pid => {
+      const p = D.pathways[pid];
+      const courses = (p.courses || []).map(courseBySlug).filter(Boolean);
+      const cells = courses.map(c => {
+        const cls = cellCls(c, pid);
+        return `<span class="${cls.join(" ")}" title="${escapeHtml(c.title)}"></span>`;
+      }).join("");
+      return `<div class="mini-map__col" data-pathway="${escapeHtml(pid)}">${cells}</div>`;
+    }).join("");
+
+    return `
+      <div class="mini-map" aria-hidden="true">
+        <p class="mini-map__section-label">9th</p>
+        <div class="mini-map__row mini-map__row--freshman">${fresh}</div>
+        <p class="mini-map__section-label">10th &ndash; 12th</p>
+        <div class="mini-map__row mini-map__row--pathways">${cols}</div>
+      </div>
+    `;
+  }
+
+  const DOMAIN_LABEL = {
+    "trades": "TRADES",
+    "computing": "COMPUTING",
+    "engineering": "ENGINEERING",
+    "design": "DESIGN",
+    "emerging": "EMERGING",
+    "construction": "CONSTRUCTION",
+  };
+
+  function renderMiniCard(career) {
+    const mustN = (career.must_have || []).length;
+    const supN  = (career.supporting || []).length;
+    return `
+      <a class="mini-career-card" data-career="${escapeHtml(career.slug)}" href="#map"
+         aria-label="Load the ${escapeHtml(career.title)} route into the main map">
+        <p class="mini-career-card__eyebrow">${escapeHtml(DOMAIN_LABEL[career.domain] || career.domain)}</p>
+        <h3 class="mini-career-card__title">${escapeHtml(career.title)}</h3>
+        ${renderMiniMap(career)}
+        <p class="mini-career-card__stats">
+          ${mustN} must-take &middot; ${supN} supporting
+        </p>
+      </a>
+    `;
+  }
+
+  const smallMultiples = document.getElementById("small-multiples");
+  if (smallMultiples && D.careers) {
+    smallMultiples.innerHTML = D.careers.map(renderMiniCard).join("");
+
+    // Clicking a mini-card: set the main career state, scroll to the main
+    // map section so the user sees the full route with their choice loaded.
+    smallMultiples.querySelectorAll(".mini-career-card").forEach(card => {
+      card.addEventListener("click", (e) => {
+        e.preventDefault();
+        const slug = card.dataset.career;
+        state.career = slug;
+        // Update the main career chip active state
+        document.querySelectorAll(`.map-filters .chip[data-career]`).forEach(b => {
+          const active = b.dataset.career === slug;
+          b.classList.toggle("is-active", active);
+          b.classList.toggle("chip--solid", active);
+        });
+        applyState();
+        // Smooth-scroll to the main map section
+        const mapSection = document.getElementById("map");
+        if (mapSection) mapSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
 
   // Credit filter chips (unchanged mechanism)
   document.querySelectorAll(".map-filters .chip[data-filter]").forEach(btn => {
