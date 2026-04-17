@@ -51,10 +51,10 @@
       <h2 class="section-header__title">Nine pathways across two buildings.</h2>
       <p class="section-header__lede">
         The top row is the only prerequisite layer: every student picks at least
-        one of those three in 9th grade. Every pathway below is
-        <strong>flexible order</strong> &mdash; dashed connectors show the typical
-        sequence, but there are no hard prerequisites between them. A counselor can
-        help a student slot in wherever fits their schedule.
+        one of those three in 9th grade. Three of the pathways below are
+        <strong>year-by-year sequences</strong> (dashed connectors show the progression);
+        the other six are <strong>collections of peer courses</strong> &mdash; take any
+        of them in any order. A counselor can help a student slot in wherever fits.
       </p>
     </header>
 
@@ -222,22 +222,29 @@
   document.getElementById("pathway-columns").innerHTML = columnOrder.map(pid => {
     const p = D.pathways[pid];
     const courses = coursesInPathway(pid);
+    const isLadder = p.type === "ladder";
+    // Ladders show a dashed "typically after" connector between tiles.
+    // Collections stack tiles with no connector — they're peers, not steps.
     const tiles = courses.map((c, i) => {
-      const arrow = i < courses.length - 1
+      const sep = (isLadder && i < courses.length - 1)
         ? `<div class="pathway-column__arrow" aria-hidden="true">typically after</div>`
         : "";
-      return columnCourseTile(c) + arrow;
+      return columnCourseTile(c) + sep;
     }).join("");
     const siteLabel = p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site);
-    const flexChip = courses.length > 1
-      ? `<span class="chip chip--flex" title="Take in any order that fits your schedule \u2014 no hard prerequisites.">Flexible order</span>`
-      : "";
+    // Header chip differs by type so the signal matches the content.
+    let headerChip = "";
+    if (courses.length > 1) {
+      headerChip = isLadder
+        ? `<span class="chip chip--flex" title="Each course builds on the previous one.">Year-by-year sequence</span>`
+        : `<span class="chip chip--flex" title="Take any of these in any order \u2014 no prerequisites between them.">Pick what interests you</span>`;
+    }
     return `
-      <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}">
+      <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}" data-pathway-type="${escapeHtml(p.type || "collection")}">
         <a class="tile pathway-column__header" data-pathway="${escapeHtml(pid)}" href="pages/pathway.html?id=${encodeURIComponent(pid)}">
           <p class="tile__overline">Pathway &middot; ${escapeHtml(siteLabel)}</p>
           <h3 class="tile__title">${escapeHtml(p.title)}</h3>
-          ${flexChip ? `<div class="tile__meta" style="margin-top: var(--space-12);">${flexChip}</div>` : ""}
+          ${headerChip ? `<div class="tile__meta" style="margin-top: var(--space-12);">${headerChip}</div>` : ""}
         </a>
         ${tiles}
       </div>
