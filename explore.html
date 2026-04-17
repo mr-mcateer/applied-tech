@@ -44,12 +44,11 @@
       <h2 class="section-header__title">Nine things you could actually build here.</h2>
       <p class="section-header__lede">
         Each tile is a pathway. Tap one to see the courses, the teacher,
-        and what kinds of projects students work on. None of these pathways is a
-        fixed ladder &mdash; you can take the classes in any order that works for you.
+        and what kinds of projects students work on. Some pathways are
+        year-by-year sequences (cars, software, industrial design).
+        Most are collections of peer courses &mdash; take any of them in any order.
+        None of them have hard prerequisites above 9th grade.
       </p>
-      <div class="cluster" style="margin-top: var(--space-16);">
-        <span class="chip chip--flex">Flexible order &middot; no hard prerequisites above 9th grade</span>
-      </div>
     </header>
 
     <div class="grid grid-3" id="interest-tiles"></div>
@@ -165,22 +164,23 @@
   // ---- Interest tiles: interest → pathway mapping per content plan.
   // Nine tiles so every pathway has a front door.
   const INTERESTS = [
-    { interest: "cars",                pathway: "autos",             body: "Diagnose, service, and rebuild cars and light trucks. Three-year sequence at CHS with JJ Keim." },
+    { interest: "cars",                pathway: "autos",             body: "Diagnose, service, and rebuild cars and light trucks. A three-year sequence at CHS with JJ Keim." },
     { interest: "buildings",           pathway: "architecture",      body: "Design a house in Revit, from hand sketch to full model &mdash; with a little Arduino-powered smart-building work." },
-    { interest: "furniture",           pathway: "woods",             body: "From hand tools and safety in Woods 1 to real carpentry and community builds like Unity Shelter tiny homes." },
-    { interest: "software",            pathway: "cs",                body: "Learn to program, then ship a year-long capstone you can show to colleges. Three-year CS ladder at CHS." },
-    { interest: "products",            pathway: "industrial-design", body: "Sketch, CAD, 3D print, CNC, and laser-cut your own products. Two-year portfolio-building sequence at CVHS." },
+    { interest: "furniture &amp; building", pathway: "woods",         body: "Two separate courses: Woods II for furniture-grade joinery and finish work; Carpentry for construction and the Unity Shelter tiny-home build. Take either, both, or neither." },
+    { interest: "software",            pathway: "cs",                body: "Learn to program, then ship a year-long capstone you can show to colleges. A three-year CS sequence at CHS where each course builds on the previous." },
+    { interest: "products",            pathway: "industrial-design", body: "Sketch, CAD, 3D print, CNC, and laser-cut your own products. Two courses at CVHS &mdash; Industrial Design I builds the skills II&rsquo;s self-directed project needs." },
     { interest: "drones",              pathway: "vehicular",         body: "Design, build, and test a vehicle or drone from scratch &mdash; metals, electronics, and flight data." },
     { interest: "welding",             pathway: "metals",            body: "Sheet-metal fabrication in Metals 1, then MIG / oxy-acetylene / arc welding and precision machining in Metals II." },
-    { interest: "math in the shop",    pathway: "math",              body: "Trig for trades, estimating materials, and spreadsheet budgets for real projects. Earns both CTE and math credit." },
-    { interest: "engineering",         pathway: "engineering",       body: "Run the full engineering design process &mdash; CAD, prototyping, and physics-backed design in Engineering Science." },
+    { interest: "math in the shop",    pathway: "math",              body: "Trig for trades, estimating materials, and spreadsheet budgets for real projects. Standalone course &mdash; earns both CTE and math credit." },
+    { interest: "engineering",         pathway: "engineering",       body: "Two separate courses at CVHS: Intro to Engineering for design process and CAD, Engineering Science for physics-backed design with a science credit. Take either, both, or neither." },
   ];
 
-  function pathwayLen(p) {
-    const n = (p && p.courses && p.courses.length) || 0;
-    if (n >= 3) return "3-year path";
-    if (n === 2) return "2-year path";
-    return "1-year path";
+  function pathwayShape(p) {
+    if (!p) return "";
+    const n = (p.courses && p.courses.length) || 0;
+    if (n === 1) return "1 course";
+    if (p.type === "ladder") return `${n}-year sequence`;
+    return `${n} peer courses`;
   }
 
   document.getElementById("interest-tiles").innerHTML = INTERESTS.map(item => {
@@ -188,10 +188,10 @@
     if (!p) return "";
     return `
       <a class="tile" data-pathway="${escapeHtml(item.pathway)}" href="pages/pathway.html?id=${encodeURIComponent(item.pathway)}">
-        <p class="tile__overline">Like ${escapeHtml(item.interest)}?</p>
+        <p class="tile__overline">Like ${item.interest}?</p>
         <h3 class="tile__title">${escapeHtml(p.title)}</h3>
         <p class="tile__desc">${item.body}</p>
-        <div class="tile__meta">${escapeHtml(pathwayLen(p))} &middot; ${escapeHtml(p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site))}</div>
+        <div class="tile__meta">${escapeHtml(pathwayShape(p))} &middot; ${escapeHtml(p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site))}</div>
       </a>
     `;
   }).join("");

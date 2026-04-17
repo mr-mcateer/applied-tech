@@ -105,6 +105,8 @@
   const teachers = Array.from(teacherIds).map(teacher).filter(Boolean);
 
   const siteLabelForPathway = p.site === "split" ? "CVHS + CHS" : siteLabel(p.site);
+  const isLadder = p.type === "ladder";
+  const isCollection = p.type === "collection" || !p.type;
 
   function courseMetaLine(c) {
     const bits = [siteLabel(c.site), fmtGrade(c.grade) + " grade"];
@@ -125,7 +127,9 @@
       </p>
       ${courses.length > 1 ? `
       <div class="cluster" style="margin-top: var(--space-24);">
-        <span class="chip chip--flex">Flexible order &middot; no hard prerequisites</span>
+        <span class="chip chip--flex">${isLadder
+          ? "Year-by-year sequence &middot; each course builds on the previous"
+          : "Peer courses &middot; pick what interests you, any order"}</span>
       </div>` : ""}
     </section>
 
@@ -135,9 +139,9 @@
         <section>
           <p class="overline">Pipeline note</p>
           <p class="body" style="margin-top: var(--space-8); max-width: 65ch; color: var(--ink-soft);">
-            Sequencing above the freshman row is suggested, not locked.
-            Most upper-level courses don&rsquo;t have hard prerequisites &mdash;
-            talk to your counselor if the order here doesn&rsquo;t fit your schedule.
+            ${isLadder
+              ? "This pathway is a year-by-year sequence &mdash; each course builds directly on the one before it. No hard prerequisites, but the ordering matters for how the skills stack. A counselor can help a student who wants to jump in partway through."
+              : "These courses are peers, not steps. A student can take any of them in any order that fits their schedule &mdash; there are no hard prerequisites between them, and none of them assumes you&rsquo;ve taken the others first."}
           </p>
         </section>
 
@@ -161,17 +165,25 @@
         ` : ""}
 
         <section>
-          <h2 class="h2">${courses.length > 1 ? "Courses in this pathway" : "The course"}</h2>
+          <h2 class="h2">${courses.length > 1
+            ? (isLadder ? "Course sequence" : "Courses in this area")
+            : "The course"}</h2>
           <p class="body-sm ink-soft" style="margin-top: var(--space-8); max-width: 60ch;">
             ${courses.length > 1
-              ? "Shown in the order students typically take them. There are no hard prerequisites between these courses &mdash; a counselor can help a student take them in a different order if that fits the schedule better."
-              : "One course in this pathway today."}
+              ? (isLadder
+                ? "Shown in the order students typically take them. Each course builds on the previous. A counselor can help a student jump in partway through if needed."
+                : "Peer courses in the same area. Take any of them in any order that fits your schedule.")
+              : "One course in this pathway."}
           </p>
           <ul class="stack" style="margin-top: var(--space-24); list-style: none; padding: 0;">
             ${courses.map((c, i) => `
               <li>
                 <a class="tile" data-pathway="${escapeAttr(c.pathway)}" href="course.html?slug=${encodeURIComponent(c.slug)}">
-                  <p class="tile__overline">${courses.length > 1 ? `Typically year ${i + 1} of the pathway` : "Course"}</p>
+                  <p class="tile__overline">${
+                    courses.length > 1
+                      ? (isLadder ? `Year ${i + 1} of the sequence` : "Course in this area")
+                      : "Course"
+                  }</p>
                   <h3 class="tile__title">${escapeHtml(c.title)}</h3>
                   <p class="tile__desc">${escapeHtml(firstSentence(c.description))}</p>
                   <div class="tile__meta">${courseMetaLine(c)}</div>
