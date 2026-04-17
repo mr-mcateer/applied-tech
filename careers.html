@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Careers — Applied Tech</title>
+<meta name="description" content="Eleven career destinations the Applied Tech program at CVHS and CHS prepares students for. Find the one you want and see the courses that point there." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="careers.html">Careers</a>
+    <a href="courses.html">Courses</a>
+    <a href="teachers.html">Teachers</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main id="page-main" class="page">
+
+  <section class="hero">
+    <p class="hero__overline">00 / Careers</p>
+    <h1 class="hero__title display-lg">Where do you want to end up?</h1>
+    <p class="hero__subdeck">
+      Applied Tech isn&rsquo;t a major &mdash; it&rsquo;s a set of year-long courses you
+      pick <em>&agrave; la carte</em>. Find the career you&rsquo;re aiming at and we&rsquo;ll show
+      you which courses point there, what certifications you&rsquo;d earn, and what
+      the step after high school typically looks like.
+    </p>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>Filter by domain</span></p>
+      <h2 class="section-header__title">Eleven careers, grouped by type.</h2>
+      <p class="section-header__lede">
+        Click any tile to see the courses that point at that career,
+        the certs you&rsquo;d earn, and what comes after high school.
+      </p>
+    </header>
+
+    <div class="map-filters" id="filters" role="group" aria-label="Filter careers by domain"
+         style="display:flex; flex-wrap:wrap; gap: var(--space-16); align-items:center;">
+      <div class="map-filters__group" style="display:flex; flex-wrap:wrap; gap: var(--space-8); align-items:center;">
+        <span class="mono-meta" style="margin-right: var(--space-8);">Domain</span>
+        <button class="chip chip--solid is-active" data-filter="domain" data-value="all" type="button">All</button>
+        <button class="chip" data-filter="domain" data-value="trades" type="button">Trades</button>
+        <button class="chip" data-filter="domain" data-value="computing" type="button">Computing</button>
+        <button class="chip" data-filter="domain" data-value="engineering" type="button">Engineering</button>
+        <button class="chip" data-filter="domain" data-value="design" type="button">Design</button>
+        <button class="chip" data-filter="domain" data-value="emerging" type="button">Emerging</button>
+        <button class="chip" data-filter="domain" data-value="construction" type="button">Construction</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid grid-3" id="career-grid"></div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>Don&rsquo;t know yet?</span></p>
+      <h2 class="section-header__title">That&rsquo;s fine. The freshman row is broad on purpose.</h2>
+      <p class="section-header__lede">
+        If you&rsquo;re in 9th grade and not sure, start with one or more of
+        the freshman courses &mdash; they open up every pathway. You can take all
+        three freshman year if you want to try everything.
+      </p>
+    </header>
+    <div class="grid grid-3" id="freshman-tiles"></div>
+  </section>
+
+  <section class="section section--ruled">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>Or browse differently</span></p>
+      <h2 class="section-header__title">Two other ways in.</h2>
+    </header>
+    <div class="grid grid-2">
+      <a class="persona-door" href="index.html#map">
+        <span class="persona-door__overline">By subject</span>
+        <h3 class="persona-door__title">The pathway map</h3>
+        <p class="persona-door__body">Nine pathway columns: CS, Engineering, Woods &amp; Carpentry, Metals, Autos, Architecture, Industrial Design, Vehicular / Drone, Real World Math.</p>
+        <span class="persona-door__arrow">&rarr;</span>
+      </a>
+      <a class="persona-door" href="explore.html">
+        <span class="persona-door__overline">By what you like to make</span>
+        <h3 class="persona-door__title">Interest explorer</h3>
+        <p class="persona-door__body">&ldquo;I like cars&rdquo;, &ldquo;I like buildings&rdquo;, &ldquo;I like software&rdquo; &mdash; nine interest tiles pointing at the pathway you&rsquo;d live in.</p>
+        <span class="persona-door__arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="explore.html">Explore by interest</a></li>
+        <li><a href="courses.html">All courses</a></li>
+        <li><a href="teachers.html">Teachers</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="counselors.html">For counselors</a></li>
+        <li><a href="for-district.html">For district &amp; admin</a></li>
+        <li><a href="pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const { D, courseBySlug, siteLabel, escapeHtml, escapeAttr, firstSentence, fmtGrade } = window.APP;
+
+  // Domain → palette key (reuses pathway color tokens for visual consistency
+  // with the pathway map; trades = metals grey, computing = cs blue, etc.)
+  const DOMAIN_COLOR = {
+    "trades":       "p-metals",
+    "computing":    "p-cs",
+    "engineering":  "p-engineering",
+    "design":       "p-industrial-design",
+    "emerging":     "p-vehicular",
+    "construction": "p-woods",
+  };
+
+  function careerTile(career) {
+    const mustCourses = (career.must_have || []).map(courseBySlug).filter(Boolean);
+    const colorClass = DOMAIN_COLOR[career.domain] || "p-metals";
+    const courseNames = mustCourses.map(c => c.title).join(" &middot; ");
+    return `
+      <a class="tile ${colorClass}" data-career-domain="${escapeAttr(career.domain)}"
+         href="pages/career.html?slug=${encodeURIComponent(career.slug)}">
+        <p class="tile__overline">${escapeHtml((career.domain || "").toUpperCase())}</p>
+        <h3 class="tile__title">${escapeHtml(career.title)}</h3>
+        <p class="tile__desc">${escapeHtml(career.one_liner)}</p>
+        <div class="tile__meta" style="opacity: 0.85;">${courseNames}</div>
+      </a>
+    `;
+  }
+
+  const grid = document.getElementById("career-grid");
+  function render(domainFilter) {
+    const list = (D.careers || []).filter(c => domainFilter === "all" || c.domain === domainFilter);
+    grid.innerHTML = list.length
+      ? list.map(careerTile).join("")
+      : `<p class="body ink-soft">No careers in this domain yet.</p>`;
+  }
+  render("all");
+
+  document.querySelectorAll(".chip[data-filter='domain']").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".chip[data-filter='domain']").forEach(b => b.classList.remove("is-active", "chip--solid"));
+      btn.classList.add("is-active", "chip--solid");
+      render(btn.dataset.value);
+    });
+  });
+
+  // Freshman tiles (neutral) — the "don't know yet" on-ramp
+  const freshman = ["computer-skills", "woods-1", "metals-1"].map(courseBySlug).filter(Boolean);
+  document.getElementById("freshman-tiles").innerHTML = freshman.map(co => `
+    <a class="tile tile--neutral" href="pages/course.html?slug=${encodeURIComponent(co.slug)}">
+      <p class="tile__overline">9th grade &middot; ${escapeHtml(siteLabel(co.site))}</p>
+      <h3 class="tile__title">${escapeHtml(co.title)}</h3>
+      <p class="tile__desc">${escapeHtml(firstSentence(co.description))}</p>
+      <div class="tile__meta">${escapeHtml(fmtGrade(co.grade))} &middot; 1 CTE</div>
+    </a>
+  `).join("");
+})();
+</script>
+
+</body>
+</html>

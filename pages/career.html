@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Career — Applied Tech</title>
+<meta name="description" content="How Applied Tech at CVHS and CHS prepares students for specific career destinations." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../index.html" class="site-header__logo">
+    <span class="site-header__logo-dot"></span>
+    Applied Tech
+  </a>
+  <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
+  <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+    <a href="../index.html">Home</a>
+    <a href="../careers.html">Careers</a>
+    <a href="../courses.html">Courses</a>
+    <a href="../teachers.html">Teachers</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+
+<main id="page-main" class="page">
+  <div id="root"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__group">
+      <h4>Site</h4>
+      <ul class="site-footer__links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../careers.html">Careers</a></li>
+        <li><a href="../explore.html">Explore by interest</a></li>
+        <li><a href="../courses.html">All courses</a></li>
+        <li><a href="../teachers.html">Teachers</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>For stakeholders</h4>
+      <ul class="site-footer__links">
+        <li><a href="../counselors.html">For counselors</a></li>
+        <li><a href="../for-district.html">For district &amp; admin</a></li>
+        <li><a href="../pos-plan.pdf">POS plan (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__group">
+      <h4>Propose an edit</h4>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js">Edit data on GitHub</a></li>
+        <li><a href="https://github.com/mr-mcateer/applied-tech/issues/new">Open an issue</a></li>
+        <li><a href="mailto:mcateerandy@gmail.com">Email Andy McAteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__fineprint">
+    Applied Tech &middot; Crescent Valley &amp; Corvallis High &middot; Maintained by the teachers listed on this site.
+  </p>
+</footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+(function () {
+  const {
+    D, careerBySlug, courseBySlug, teacher, qs,
+    siteLabel, siteChip, escapeHtml, escapeAttr, firstSentence,
+  } = window.APP;
+
+  const root = document.getElementById("root");
+  const slug = qs("slug");
+  const c = slug ? careerBySlug(slug) : null;
+
+  if (!c) {
+    document.title = "Career not found — Applied Tech";
+    root.innerHTML = `
+      <section class="hero">
+        <p class="hero__overline">404 / Career</p>
+        <h1 class="hero__title display-lg">Career not found.</h1>
+        <p class="hero__subdeck">
+          No career matches <code>${escapeHtml(slug || "")}</code>.
+          <a href="../careers.html">Back to all careers &rarr;</a>
+        </p>
+      </section>
+    `;
+    return;
+  }
+
+  document.title = `${c.title} — Applied Tech`;
+
+  const mustHave = (c.must_have || []).map(courseBySlug).filter(Boolean);
+  const supporting = (c.supporting || []).map(courseBySlug).filter(Boolean);
+
+  // Teachers across required courses (deduped)
+  const tids = new Set();
+  mustHave.forEach(co => (co.teachers || []).forEach(t => tids.add(t)));
+  const teachersInvolved = Array.from(tids).map(teacher).filter(Boolean);
+
+  function courseTile(co, isSupporting) {
+    const cls = isSupporting ? "tile tile--neutral" : "tile";
+    const pathwayAttr = co.pathway ? ` data-pathway="${escapeAttr(co.pathway)}"` : "";
+    const p = D.pathways[co.pathway];
+    const overline = p ? p.title : "Course";
+    const metaBits = [siteLabel(co.site), window.APP.fmtGrade(co.grade)].map(escapeHtml).join(" · ");
+    return `
+      <a class="${cls}"${pathwayAttr} href="course.html?slug=${encodeURIComponent(co.slug)}">
+        <p class="tile__overline">${escapeHtml(overline)}</p>
+        <h3 class="tile__title">${escapeHtml(co.title)}</h3>
+        <p class="tile__desc">${escapeHtml(firstSentence(co.description))}</p>
+        <div class="tile__meta">${metaBits}</div>
+      </a>
+    `;
+  }
+
+  const postHsLabel = {
+    "four-year": "4-year degree",
+    "community-college": "Community college",
+    "apprenticeship": "Apprenticeship",
+    "direct-hire": "Direct hire",
+    "bootcamp": "Bootcamp",
+    "licensure-track": "Licensure track",
+    "direct-hire-then-business": "Trade first, then your own shop",
+    "business": "Start a business",
+  };
+
+  root.innerHTML = `
+    <section class="hero" style="padding-bottom: var(--space-32);">
+      <p class="hero__overline">Career &middot; ${escapeHtml((c.domain || "").toUpperCase())}</p>
+      <h1 class="hero__title display-lg">${escapeHtml(c.title)}</h1>
+      <p class="hero__subdeck" style="margin-top: var(--space-16);">
+        ${escapeHtml(c.one_liner)}
+      </p>
+    </section>
+
+    <div class="detail" style="margin-top: var(--space-48);">
+      <article class="detail-main stack-lg">
+
+        <section>
+          <p class="lede">${escapeHtml(c.description || "").split("\n\n").join("</p><p class=\"lede\" style=\"margin-top: var(--space-16);\">")}</p>
+        </section>
+
+        <section>
+          <h2 class="h2">Courses that point here</h2>
+          <p class="body-sm ink-soft" style="margin-top: var(--space-8); max-width: 60ch;">
+            The Applied Tech courses most directly preparing for this career. Available 10th&ndash;12th grade except where noted.
+          </p>
+          <div class="grid grid-2" style="margin-top: var(--space-24);">
+            ${mustHave.map(co => courseTile(co, false)).join("")}
+          </div>
+        </section>
+
+        ${supporting.length ? `
+        <section>
+          <h2 class="h2">Useful supporting courses</h2>
+          <p class="body-sm ink-soft" style="margin-top: var(--space-8); max-width: 60ch;">
+            Not required, but worth taking if your schedule allows &mdash; they strengthen the core.
+          </p>
+          <div class="grid grid-2" style="margin-top: var(--space-24);">
+            ${supporting.map(co => courseTile(co, true)).join("")}
+          </div>
+        </section>
+        ` : ""}
+
+        ${(c.certs || []).length ? `
+        <section>
+          <h2 class="h2">Certifications you&rsquo;d earn</h2>
+          <ul class="stack" style="margin-top: var(--space-16); padding-left: 1.25rem;">
+            ${c.certs.map(cert => `<li class="body">${escapeHtml(cert)}</li>`).join("")}
+          </ul>
+        </section>
+        ` : ""}
+
+        <section>
+          <h2 class="h2">What comes after high school</h2>
+          <p class="body-sm ink-soft" style="margin-top: var(--space-8); max-width: 60ch;">
+            Directional. Your counselor is the real source of truth for a specific student&rsquo;s next step.
+          </p>
+          <ul class="stack" style="margin-top: var(--space-16); padding-left: 1.25rem;">
+            ${(c.post_hs || []).map(step => `
+              <li class="body">
+                <strong>${escapeHtml(step.name)}</strong>
+                <span class="mono-meta" style="margin-left: var(--space-8);">${escapeHtml(postHsLabel[step.type] || step.type)}</span>
+                ${step.url ? ` &middot; <a href="${escapeAttr(step.url)}" target="_blank" rel="noopener">link &rarr;</a>` : ""}
+              </li>
+            `).join("")}
+          </ul>
+        </section>
+      </article>
+
+      <aside class="detail-sidebar">
+        <div class="meta-block">
+          <h4>Typical entry wage</h4>
+          <p class="body-sm">${escapeHtml(c.typical_wage_entry || "Varies widely")}</p>
+        </div>
+        ${c.outlook ? `
+          <div class="meta-block">
+            <h4>Outlook</h4>
+            <p class="body-sm">${escapeHtml(c.outlook)}</p>
+          </div>
+        ` : ""}
+        ${teachersInvolved.length ? `
+          <div class="meta-block">
+            <h4>Teachers to talk to</h4>
+            <ul class="stack" style="padding-left: 1.1rem; margin: 0;">
+              ${teachersInvolved.map(t => `
+                <li class="body-sm">
+                  <a href="teacher.html?id=${encodeURIComponent(t.id)}">${escapeHtml(t.name)}</a>
+                  <span class="mono-meta" style="margin-left: var(--space-4);">${escapeHtml(siteLabel(t.site))} &middot; ${escapeHtml(t.focus)}</span>
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        ` : ""}
+        <div class="meta-block">
+          <h4>Source</h4>
+          <p class="body-sm" style="font-size: 0.75rem;">${escapeHtml(c.source || "Drafted")}</p>
+        </div>
+        <div class="meta-block">
+          <h4>Back to</h4>
+          <p class="body-sm"><a href="../careers.html">All careers &rarr;</a></p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="section section--ruled" style="margin-top: var(--space-48);">
+      <p class="caption" style="color: var(--ink-soft); max-width: 70ch;">
+        Wage figures and post-HS routes were compiled from the US Bureau of Labor Statistics Occupational Outlook Handbook,
+        the O*NET database, and the Linn-Benton Community College 2024&ndash;25 catalog. Numbers drift and programs change.
+        Your counselor has current data for any specific conversation.
+      </p>
+    </section>
+  `;
+})();
+</script>
+
+</body>
+</html>
