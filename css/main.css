@@ -1007,6 +1007,119 @@ hr {
   align-items: flex-start;
 }
 
+/* ---- Homepage hero: freshman row as the visual anchor ----
+   Lifts the three freshman tiles above all other content on the
+   homepage. A single-sentence lede sits above the tiles; the rest
+   of the hero (shorter title + compact subdeck) comes BELOW. */
+.hero--freshman {
+  padding-top: var(--space-48);
+}
+.hero__lede-above {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-16);
+}
+.hero--freshman .freshman-row {
+  margin: 0 0 var(--space-64);
+}
+.hero__title--secondary {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  max-width: 30ch;
+  margin: 0;
+}
+.hero__subdeck--compact {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  max-width: 60ch;
+  margin-top: var(--space-16);
+}
+
+/* ---- Mode toggle: By pathway / By career ----
+   A two-option segmented control above the map. Default state:
+   pathway mode (advising-first). Career mode reveals the chip row.
+   The toggle is two equal-width buttons with a label + subtitle
+   inside each so the click target is generous and self-documenting. */
+.mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: var(--space-24);
+  margin-bottom: var(--space-24);
+  background: var(--surface);
+}
+.mode-toggle__btn {
+  background: var(--surface);
+  border: 0;
+  padding: var(--space-16) var(--space-20, var(--space-16));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--timing-fade) var(--easing-fade),
+              color var(--timing-fade) var(--easing-fade);
+  border-right: 1px solid var(--border);
+}
+.mode-toggle__btn:last-child {
+  border-right: 0;
+}
+.mode-toggle__btn:hover {
+  background: var(--surface-alt);
+}
+.mode-toggle__btn.is-active {
+  background: var(--ink);
+  color: var(--surface);
+}
+.mode-toggle__btn.is-active:hover {
+  background: var(--ink);
+}
+.mode-toggle__btn.is-active .mode-toggle__sub {
+  color: rgba(255, 255, 255, 0.65);
+}
+.mode-toggle__label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.mode-toggle__sub {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  text-transform: lowercase;
+}
+
+/* ---- Conditional filter visibility by mode ----
+   When in pathway mode, hide the career chip row entirely AND clear
+   any existing career highlight/route (handled in JS). The career
+   legend + route overlay + small multiples remain relevant only in
+   career mode. */
+#map[data-mode="pathway"] .map-filters--career,
+#map[data-mode="pathway"] #career-legend,
+#map[data-mode="pathway"] .career-route,
+#map[data-mode="pathway"] .career-route-mobile {
+  display: none !important;
+}
+#map[data-mode="pathway"] .section-header__lede::after {
+  /* No subtle caption needed — header says 'Browse by subject or by career' */
+}
+
 /* Career route SVG overlay — sits on top of the pathway columns grid
    and draws a subway-map-style path connecting must-take courses in
    industrial orange, with dashed neutral branches to supporting
