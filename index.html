@@ -56,10 +56,29 @@
       <p class="section-header__eyebrow"><span class="idx">02</span><span>10th &ndash; 12th grade</span></p>
       <h2 class="section-header__title">The pathway map.</h2>
       <p class="section-header__lede">
-        Nine pathways across two buildings. Year-long courses grouped by department.
-        Every course links to its detail page.
+        Nine pathways, year-long courses grouped by department. Every course
+        links to its detail page. Optional: pick a career below to dim the
+        courses that don&rsquo;t apply to that path.
       </p>
     </header>
+
+    <div class="map-filters map-filters--career" id="career-filter" role="group" aria-label="Dim courses that don't apply to a selected career">
+      <div class="map-filters__group" style="flex-wrap: wrap;">
+        <span class="map-filters__label">Career</span>
+        <button class="chip chip--solid is-active" data-career="all" type="button">Show all</button>
+        <button class="chip" data-career="welder" type="button">Welder</button>
+        <button class="chip" data-career="auto-technician" type="button">Auto Tech</button>
+        <button class="chip" data-career="carpenter" type="button">Carpenter</button>
+        <button class="chip" data-career="machinist" type="button">Machinist</button>
+        <button class="chip" data-career="software-developer" type="button">Software Dev</button>
+        <button class="chip" data-career="engineer" type="button">Engineer</button>
+        <button class="chip" data-career="industrial-designer" type="button">Industrial Designer</button>
+        <button class="chip" data-career="architect" type="button">Architect</button>
+        <button class="chip" data-career="drone-pilot" type="button">Drone Pilot</button>
+        <button class="chip" data-career="trades-entrepreneur" type="button">Trades Entrepreneur</button>
+        <button class="chip" data-career="construction-pm" type="button">Construction PM</button>
+      </div>
+    </div>
 
     <div class="pathway-map">
       <div class="pathway-columns" id="pathway-columns"></div>
@@ -213,6 +232,39 @@
       </div>
     `;
   }).join("");
+
+  // ---- Career filter: dim tiles that aren't in the selected career ----
+  // When a chip is clicked, add .tile--nomatch to every course tile whose
+  // slug isn't in the career's must_have or supporting list. No ring
+  // outlines or route overlays — just a clean grey-out of the courses
+  // that don't apply. Pathway header tiles stay unchanged (they aren't
+  // courses).
+  function applyCareerDim(careerSlug) {
+    const tiles = document.querySelectorAll(".tile[data-slug]");
+    if (!careerSlug || careerSlug === "all") {
+      tiles.forEach(t => t.classList.remove("tile--nomatch"));
+      return;
+    }
+    const career = (D.careers || []).find(c => c.slug === careerSlug);
+    if (!career) return;
+    const relevant = new Set([...(career.must_have || []), ...(career.supporting || [])]);
+    tiles.forEach(t => {
+      const slug = t.getAttribute("data-slug");
+      t.classList.toggle("tile--nomatch", !relevant.has(slug));
+    });
+  }
+
+  document.querySelectorAll(".map-filters--career .chip[data-career]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const slug = btn.dataset.career;
+      document.querySelectorAll(`.map-filters--career .chip[data-career]`).forEach(b => {
+        const active = b.dataset.career === slug;
+        b.classList.toggle("is-active", active);
+        b.classList.toggle("chip--solid", active);
+      });
+      applyCareerDim(slug);
+    });
+  });
 })();
 </script>
 
