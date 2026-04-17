@@ -9,6 +9,7 @@
   function courseBySlug(slug) { return D.courses.find(c => c.slug === slug); }
   function pathway(id) { return D.pathways[id]; }
   function teacher(id) { return D.teachers[id]; }
+  function careerBySlug(slug) { return (D.careers || []).find(c => c.slug === slug); }
 
   // ---------- formatters ----------
   function fmtCredit(credit) {
@@ -155,7 +156,7 @@
   window.APP = {
     D,
     // lookups
-    courseBySlug, pathway, teacher,
+    courseBySlug, pathway, teacher, careerBySlug,
     // formatters
     fmtCredit, fmtGrade, siteLabel,
     // badges (v1 names — still work)

@@ -19,8 +19,8 @@
   </a>
   <button class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" type="button">Menu</button>
   <nav class="site-header__nav" id="site-nav" aria-label="Primary">
-    <a href="index.html">Map</a>
-    <a href="explore.html">Explore</a>
+    <a href="index.html">Home</a>
+    <a href="careers.html">Careers</a>
     <a href="courses.html">Courses</a>
     <a href="teachers.html">Teachers</a>
     <a href="about.html">About</a>
@@ -31,30 +31,56 @@
 
   <section class="hero">
     <p class="hero__overline">00 / Applied Tech</p>
-    <h1 class="hero__title display-xl">Hands-on pathways through the trades, design, and code.</h1>
+    <h1 class="hero__title display-xl">Start here. Pick where you want to go.</h1>
     <p class="hero__subdeck">
-      A three-year course of study at Crescent Valley and Corvallis High &mdash;
-      built with teachers, mapped for counselors, shaped for what students
-      actually want to do after graduation.
+      Applied Tech isn&rsquo;t a major &mdash; it&rsquo;s a set of year-long courses you
+      pick <em>&agrave; la carte</em> at Crescent Valley and Corvallis High. Every student
+      starts with one of three freshman courses, then assembles a 10th&ndash;12th
+      grade plan around where they want to end up.
     </p>
     <p class="mono-meta" style="margin-top: var(--space-24); color: var(--ink-soft);">
-      9 pathways &nbsp;&middot;&nbsp; 5 teachers &nbsp;&middot;&nbsp; 2 buildings
+      20 courses &nbsp;&middot;&nbsp; 11 career destinations &nbsp;&middot;&nbsp; 5 teachers &nbsp;&middot;&nbsp; 2 buildings
     </p>
-    <p class="hero__cta-row" style="margin-top: var(--space-32);">
-      <a href="#map" class="u">See the pathway map &darr;</a>
+  </section>
+
+  <section class="section section--ruled" id="start-here">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>Start here &middot; 9th grade</span></p>
+      <h2 class="section-header__title">Every student starts with one of these three.</h2>
+      <p class="section-header__lede">
+        The only locked prerequisite in the whole program is the freshman row:
+        <strong>pick at least one</strong>. You can take all three if you want to
+        try everything. They open up every pathway and every career below.
+      </p>
+    </header>
+    <div class="freshman-row" id="freshman-row"></div>
+  </section>
+
+  <section class="section section--ruled" id="careers">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>Then pick where you want to end up</span></p>
+      <h2 class="section-header__title">Eleven career destinations.</h2>
+      <p class="section-header__lede">
+        Each tile is a career &mdash; the Applied Tech courses that point there, the
+        certifications you&rsquo;d earn, and what the step after high school typically
+        looks like. Careers often pull courses from more than one department.
+      </p>
+    </header>
+    <div class="grid grid-3" id="career-grid"></div>
+    <p class="body-sm ink-soft" style="margin-top: var(--space-24); text-align: center;">
+      <a href="careers.html" class="u">See all 11 careers with filters &rarr;</a>
     </p>
   </section>
 
   <section class="section section--ruled" id="map">
     <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">01</span><span>Pathway map</span></p>
-      <h2 class="section-header__title">Nine pathways across two buildings.</h2>
+      <p class="section-header__eyebrow"><span class="idx">03</span><span>Or browse by subject</span></p>
+      <h2 class="section-header__title">The pathway map.</h2>
       <p class="section-header__lede">
-        The top row is the only prerequisite layer: every student picks at least
-        one of those three in 9th grade. Four of the pathways below are
+        Nine pathways across two buildings, grouped by department. Four are
         <strong>year-by-year sequences</strong> (dashed connectors show the progression);
         the other five are <strong>collections of peer courses</strong> &mdash; take any
-        of them in any order. A counselor can help a student slot in wherever fits.
+        of them in any order. Filter by building, credit, or teacher.
       </p>
     </header>
 
@@ -85,18 +111,15 @@
     <p class="map-empty" id="map-empty" hidden>No courses match these filters.</p>
 
     <div class="pathway-map">
-      <p class="overline map-row-label">9th grade &middot; freshman row</p>
-      <div class="freshman-row" id="freshman-row"></div>
-
-      <p class="overline map-row-label" style="margin-top: var(--space-48);">10th &ndash; 12th grade &middot; pathways</p>
+      <p class="overline map-row-label">10th &ndash; 12th grade &middot; pathway columns</p>
       <div class="pathway-columns" id="pathway-columns"></div>
     </div>
   </section>
 
   <section class="section section--ruled">
     <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">02</span><span>Start here</span></p>
-      <h2 class="section-header__title">Pick the door that matches why you&rsquo;re here.</h2>
+      <p class="section-header__eyebrow"><span class="idx">04</span><span>Role doors</span></p>
+      <h2 class="section-header__title">If you&rsquo;re here for a specific reason, skip ahead.</h2>
     </header>
     <div class="grid grid-4">
       <a class="persona-door" href="explore.html">
@@ -198,6 +221,36 @@
   const freshmanOrder = ["computer-skills", "woods-1", "metals-1"];
   document.getElementById("freshman-row").innerHTML =
     freshmanOrder.map(s => freshmanTile(courseBySlug(s))).join("");
+
+  // ---- Career grid (homepage): 6 featured + link to full /careers.html
+  const DOMAIN_COLOR = {
+    "trades":       "p-metals",
+    "computing":    "p-cs",
+    "engineering":  "p-engineering",
+    "design":       "p-industrial-design",
+    "emerging":     "p-vehicular",
+    "construction": "p-woods",
+  };
+  function careerTile(career) {
+    const mustCourses = (career.must_have || []).map(courseBySlug).filter(Boolean);
+    const colorClass = DOMAIN_COLOR[career.domain] || "p-metals";
+    const courseNames = mustCourses.slice(0, 4).map(c => c.title).join(" &middot; ");
+    return `
+      <a class="tile ${colorClass}" data-career-domain="${escapeHtml(career.domain)}"
+         href="pages/career.html?slug=${encodeURIComponent(career.slug)}">
+        <p class="tile__overline">${escapeHtml((career.domain || "").toUpperCase())}</p>
+        <h3 class="tile__title">${escapeHtml(career.title)}</h3>
+        <p class="tile__desc">${escapeHtml(career.one_liner)}</p>
+        <div class="tile__meta" style="opacity: 0.85;">${courseNames}</div>
+      </a>
+    `;
+  }
+  // Featured 6: one per domain, spanning hands-on, computing, design,
+  // engineering, emerging, construction — so the homepage shows the
+  // breadth and the /careers.html page shows the full 11.
+  const featured = ["welder", "auto-technician", "software-developer", "engineer", "industrial-designer", "drone-pilot"];
+  const featuredCareers = featured.map(s => (D.careers || []).find(c => c.slug === s)).filter(Boolean);
+  document.getElementById("career-grid").innerHTML = featuredCareers.map(careerTile).join("");
 
   // ---- Pathway columns
   const columnOrder = [
