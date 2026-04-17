@@ -29,113 +29,47 @@
 
 <main id="page-main" class="page">
 
-  <section class="hero hero--freshman">
-    <p class="hero__lede-above">Every freshman picks at least one.</p>
-    <div class="freshman-row" id="freshman-row"></div>
-    <h1 class="hero__title hero__title--secondary">A course-of-study planner for Applied Tech at CVHS and CHS.</h1>
-    <p class="hero__subdeck hero__subdeck--compact">
-      Twenty year-long courses. Take one of the three 9th-grade courses above,
-      then assemble a 10th&ndash;12th grade plan around where you want to end up.
+  <section class="hero">
+    <p class="hero__overline">Applied Tech &middot; CVHS &amp; CHS</p>
+    <h1 class="hero__title display-lg">Hands-on pathways through the trades, design, and code.</h1>
+    <p class="hero__subdeck">
+      A three-year course of study at Crescent Valley and Corvallis High &mdash;
+      built with teachers, mapped for counselors, shaped for what students
+      actually want to do after graduation.
     </p>
   </section>
 
-  <section class="section section--ruled" id="map" data-mode="pathway">
+  <section class="section section--ruled" id="start-here">
     <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">01</span><span>10th &ndash; 12th grade</span></p>
-      <h2 class="section-header__title">The catalog.</h2>
+      <p class="section-header__eyebrow"><span class="idx">01</span><span>9th grade &middot; start here</span></p>
+      <h2 class="section-header__title">Every student starts with one of these three.</h2>
       <p class="section-header__lede">
-        Browse by subject (the department you'd take the class in) or by career
-        (the destination you're aiming at). Both views show the same courses &mdash;
-        different questions, same catalog.
+        The only locked prerequisite in the whole program is the freshman row.
+        You can take all three if you want to try everything.
       </p>
     </header>
+    <div class="freshman-row" id="freshman-row"></div>
+  </section>
 
-    <div class="mode-toggle" role="tablist" aria-label="Browse mode">
-      <button class="mode-toggle__btn is-active" role="tab" aria-selected="true" data-mode="pathway" type="button">
-        <span class="mode-toggle__label">By pathway</span>
-        <span class="mode-toggle__sub">the 9 subject columns</span>
-      </button>
-      <button class="mode-toggle__btn" role="tab" aria-selected="false" data-mode="career" type="button">
-        <span class="mode-toggle__label">By career</span>
-        <span class="mode-toggle__sub">see courses highlight toward a destination</span>
-      </button>
-    </div>
-
-    <div class="map-filters map-filters--career" id="career-filter" role="group" aria-label="Highlight courses by career">
-      <div class="map-filters__group" style="flex-wrap: wrap;">
-        <span class="map-filters__label">Career</span>
-        <button class="chip chip--solid is-active" data-career="all" type="button">Show all</button>
-        <button class="chip" data-career="welder" type="button">Welder</button>
-        <button class="chip" data-career="auto-technician" type="button">Auto Tech</button>
-        <button class="chip" data-career="carpenter" type="button">Carpenter</button>
-        <button class="chip" data-career="machinist" type="button">Machinist</button>
-        <button class="chip" data-career="software-developer" type="button">Software Dev</button>
-        <button class="chip" data-career="engineer" type="button">Engineer</button>
-        <button class="chip" data-career="industrial-designer" type="button">Industrial Designer</button>
-        <button class="chip" data-career="architect" type="button">Architect</button>
-        <button class="chip" data-career="drone-pilot" type="button">Drone Pilot</button>
-        <button class="chip" data-career="trades-entrepreneur" type="button">Trades Entrepreneur</button>
-        <button class="chip" data-career="construction-pm" type="button">Construction PM</button>
-      </div>
-    </div>
-
-    <div class="map-filters map-filters--credit" id="credit-filter" role="group" aria-label="Filter by credit type">
-      <div class="map-filters__group">
-        <span class="map-filters__label">Credit</span>
-        <button class="chip chip--solid is-active" data-filter="credit" data-value="all" type="button">All</button>
-        <button class="chip" data-filter="credit" data-value="science" type="button">Science</button>
-        <button class="chip" data-filter="credit" data-value="math" type="button">Math</button>
-      </div>
-    </div>
-
-    <p class="map-empty" id="map-empty" hidden>No courses match this filter.</p>
-
-    <p id="career-legend" class="body-sm ink-soft" hidden
-       style="margin-top: var(--space-16); padding: var(--space-12) var(--space-16); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
-      <span id="career-legend-text"></span>
-    </p>
+  <section class="section section--ruled" id="map">
+    <header class="section-header">
+      <p class="section-header__eyebrow"><span class="idx">02</span><span>10th &ndash; 12th grade</span></p>
+      <h2 class="section-header__title">The pathway map.</h2>
+      <p class="section-header__lede">
+        Nine pathways across two buildings. Year-long courses grouped by department.
+        Every course links to its detail page.
+      </p>
+    </header>
 
     <div class="pathway-map">
-      <p class="overline map-row-label">10th &ndash; 12th grade &middot; pathway columns</p>
-      <div class="pathway-columns-wrap">
-        <svg class="career-route" id="career-route" aria-hidden="true"></svg>
-        <div class="pathway-columns" id="pathway-columns"></div>
-      </div>
-      <p class="career-route-mobile" id="career-route-mobile" hidden
-         style="margin-top: var(--space-16); padding: var(--space-12) var(--space-16); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 0.875rem;"></p>
+      <div class="pathway-columns" id="pathway-columns"></div>
     </div>
-
-    <p class="body-sm ink-soft" style="margin-top: var(--space-24); text-align: center;">
-      Want the full career write-ups? <a href="careers.html" class="u">See all 11 careers with descriptions &rarr;</a>
-    </p>
-  </section>
-
-  <section class="section section--ruled" id="small-multiples-section">
-    <header class="section-header">
-      <p class="section-header__eyebrow"><span class="idx">02</span><span>See all 11 paths at a glance</span></p>
-      <h2 class="section-header__title">Eleven careers, eleven routes.</h2>
-      <p class="section-header__lede">
-        Each card is a schematic of the whole program of study, with one
-        career&rsquo;s route highlighted. Solid ink dot = must-take course for
-        that career. Outlined dot = supporting course. The faded cells are
-        every other course in the catalog &mdash; they don&rsquo;t apply to this path.
-        Click any card to load its route into the main map above.
-      </p>
-    </header>
-
-    <div class="mini-legend" aria-label="Legend">
-      <span class="mini-legend__item"><span class="mini-legend__dot mini-legend__dot--must"></span>must-take</span>
-      <span class="mini-legend__item"><span class="mini-legend__dot mini-legend__dot--support"></span>supporting</span>
-      <span class="mini-legend__item"><span class="mini-legend__dot mini-legend__dot--off"></span>not in route</span>
-    </div>
-
-    <div class="small-multiples-grid" id="small-multiples"></div>
   </section>
 
   <section class="section section--ruled">
     <header class="section-header">
       <p class="section-header__eyebrow"><span class="idx">03</span><span>Role doors</span></p>
-      <h2 class="section-header__title">If you&rsquo;re here for a specific reason, skip ahead.</h2>
+      <h2 class="section-header__title">Find your entry point.</h2>
     </header>
     <div class="grid grid-4">
       <a class="persona-door" href="explore.html">
@@ -179,7 +113,8 @@
     <div class="site-footer__group">
       <h4>Site</h4>
       <ul class="site-footer__links">
-        <li><a href="index.html">Pathway map</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="careers.html">Careers</a></li>
         <li><a href="explore.html">Explore by interest</a></li>
         <li><a href="courses.html">All courses</a></li>
         <li><a href="teachers.html">Teachers</a></li>
@@ -190,7 +125,7 @@
       <h4>For stakeholders</h4>
       <ul class="site-footer__links">
         <li><a href="counselors.html">For counselors</a></li>
-        <li><a href="for-district.html">For district &amp; Perkins</a></li>
+        <li><a href="for-district.html">For district &amp; admin</a></li>
         <li><a href="pos-plan.pdf">POS plan (PDF)</a></li>
       </ul>
     </div>
@@ -214,9 +149,7 @@
 (function () {
   const { D, courseBySlug, coursesInPathway, escapeHtml } = window.APP;
 
-  // ---- Freshman row: Computer Skills, Woods 1, Metals 1
-  // Render as full-fill tiles; freshman courses override pathway color with
-  // the "either" purple treatment per design spec.
+  // ---- Freshman row: Computer Skills, Woods 1, Metals 1 (full-fill tiles)
   function freshmanTile(course) {
     if (!course) return "";
     const metaBits = [
@@ -238,7 +171,7 @@
   document.getElementById("freshman-row").innerHTML =
     freshmanOrder.map(s => freshmanTile(courseBySlug(s))).join("");
 
-  // ---- Pathway columns
+  // ---- Pathway columns (plain — no arrows, no chips, no overlays)
   const columnOrder = [
     "cs", "engineering", "woods", "metals", "math",
     "autos", "industrial-design", "vehicular", "architecture",
@@ -246,9 +179,6 @@
 
   function columnCourseTile(course) {
     if (!course) return "";
-    // School + teacher deliberately omitted from the tile per 2026-04-16
-    // redesign: careers are the new differentiator on the homepage map.
-    // Grade range stays (it's calendar context, not a differentiator).
     const grade = window.APP.fmtGrade(course.grade);
     return `
       <a class="tile" data-slug="${escapeHtml(course.slug)}" data-pathway="${escapeHtml(course.pathway)}" href="pages/course.html?slug=${encodeURIComponent(course.slug)}">
@@ -261,429 +191,30 @@
   document.getElementById("pathway-columns").innerHTML = columnOrder.map(pid => {
     const p = D.pathways[pid];
     const courses = coursesInPathway(pid);
-    const isLadder = p.type === "ladder";
     const siteLabel = p.site === "split" ? "CVHS + CHS" : window.APP.siteLabel(p.site);
 
-    // Single-course pathway: render ONLY the course tile. A wrapper header
-    // for a solo course repeats information for zero gain — especially when
-    // pathway and course share a name (Architecture, Real World Math).
+    // Single-course pathway: render ONLY the course tile (no wrapper header).
     if (courses.length === 1) {
-      const c = courses[0];
       return `
-        <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}" data-pathway-type="${escapeHtml(p.type || "collection")}">
-          ${columnCourseTile(c)}
+        <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}">
+          ${columnCourseTile(courses[0])}
         </div>
       `;
     }
 
-    // Multi-course pathway: header + stacked tiles.
-    const tiles = courses.map((c, i) => {
-      const sep = (isLadder && i < courses.length - 1)
-        ? `<div class="pathway-column__arrow" aria-hidden="true">typically after</div>`
-        : "";
-      return columnCourseTile(c) + sep;
-    }).join("");
-    const shapeLine = isLadder
-      ? `${courses.length}-year sequence`
-      : `${courses.length} peer courses`;
+    // Multi-course pathway: colored header + stacked course tiles.
+    // No connector arrows between tiles. Stacking order alone conveys sequence.
+    const tiles = courses.map(columnCourseTile).join("");
     return `
-      <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}" data-pathway-type="${escapeHtml(p.type || "collection")}">
+      <div class="pathway-column" data-pathway-column="${escapeHtml(pid)}">
         <a class="tile pathway-column__header" data-pathway="${escapeHtml(pid)}" href="pages/pathway.html?id=${encodeURIComponent(pid)}">
-          <p class="tile__overline">${escapeHtml(siteLabel)} &middot; ${shapeLine}</p>
+          <p class="tile__overline">${escapeHtml(siteLabel)}</p>
           <h3 class="tile__title">${escapeHtml(p.title)}</h3>
         </a>
         ${tiles}
       </div>
     `;
   }).join("");
-
-  // ---- Filter + highlight state
-  // - credit filter: hard filter (dims non-matching tiles)
-  // - career selector: highlight matcher (no hiding — bright outline on
-  //   must-have, soft outline on supporting, faint mute on non-matches)
-  const state = { credit: "all", career: "all" };
-
-  function creditMatches(course) {
-    if (state.credit === "science" && !(course.credit && course.credit.science)) return false;
-    if (state.credit === "math" && !(course.credit && course.credit.math)) return false;
-    return true;
-  }
-
-  // Given a career slug, return {mustHave: Set<slug>, supporting: Set<slug>}.
-  function careerSets(careerSlug) {
-    const career = (D.careers || []).find(c => c.slug === careerSlug);
-    if (!career) return { mustHave: new Set(), supporting: new Set(), career: null };
-    return {
-      career,
-      mustHave: new Set(career.must_have || []),
-      supporting: new Set(career.supporting || []),
-    };
-  }
-
-  function applyState() {
-    const { mustHave, supporting, career } = careerSets(state.career);
-    const careerActive = state.career !== "all";
-    let anyCreditVisible = false;
-
-    document.querySelectorAll(".tile[data-slug]").forEach(tile => {
-      const slug = tile.getAttribute("data-slug");
-      const course = courseBySlug(slug);
-      if (!course) return;
-      const creditOk = creditMatches(course);
-
-      // Credit filter dims out tiles that don't match (hard filter).
-      tile.classList.toggle("tile--dim", !creditOk);
-      if (creditOk) anyCreditVisible = true;
-
-      // Clear prior match classes
-      tile.classList.remove("tile--match", "tile--match-soft", "tile--nomatch");
-
-      // Career highlighting (overlay, doesn't remove tile)
-      if (careerActive && creditOk) {
-        if (mustHave.has(slug)) {
-          tile.classList.add("tile--match");
-        } else if (supporting.has(slug)) {
-          tile.classList.add("tile--match-soft");
-        } else {
-          tile.classList.add("tile--nomatch");
-        }
-      }
-    });
-
-    // Legend under the filter bar
-    const legend = document.getElementById("career-legend");
-    const legendText = document.getElementById("career-legend-text");
-    if (careerActive && career) {
-      const mustN = (career.must_have || []).length;
-      const supN = (career.supporting || []).length;
-      legendText.innerHTML =
-        `Highlighting courses that point to <strong>${escapeHtml(career.title)}</strong>: ` +
-        `${mustN} must-have and ${supN} supporting course${supN === 1 ? "" : "s"}. ` +
-        `<a href="pages/career.html?slug=${encodeURIComponent(career.slug)}">See the full career page &rarr;</a>`;
-      legend.hidden = false;
-    } else {
-      legend.hidden = true;
-    }
-
-    const emptyEl = document.getElementById("map-empty");
-    if (emptyEl) emptyEl.hidden = anyCreditVisible;
-
-    // Subway-map route drawing (desktop) + text fallback (mobile)
-    drawRoute(career);
-  }
-
-  // ---- Career route overlay (Option B: subway-map lines)
-  // Draws two layers in the SVG overlay on the pathway-columns grid:
-  //   1. Solid orange polyline connecting must-have course tiles in
-  //      chronological order (must_have array order).
-  //   2. Dashed neutral branches from the nearest must-have tile to
-  //      each supporting tile.
-  // Skips freshman-row must-haves (those sit outside this SVG's parent);
-  // they still get the ring highlight via .tile--match.
-  const svg = document.getElementById("career-route");
-  const svgNS = "http://www.w3.org/2000/svg";
-  const mobileNote = document.getElementById("career-route-mobile");
-
-  function drawRoute(career) {
-    // Clear any prior paths
-    while (svg.firstChild) svg.removeChild(svg.firstChild);
-    mobileNote.hidden = true;
-    mobileNote.innerHTML = "";
-    if (!career) return;
-
-    const wrap = svg.parentElement; // .pathway-columns-wrap
-    if (!wrap) return;
-    const wrapRect = wrap.getBoundingClientRect();
-    svg.setAttribute("viewBox", `0 0 ${wrapRect.width} ${wrapRect.height}`);
-    svg.setAttribute("width", wrapRect.width);
-    svg.setAttribute("height", wrapRect.height);
-
-    // Find tiles inside the pathway columns for each slug in must_have
-    // and supporting (ignoring freshman tiles outside this SVG's parent).
-    function tileIn(slug) {
-      return wrap.querySelector(`.tile[data-slug="${CSS.escape(slug)}"]`);
-    }
-    function anchor(tile, side) {
-      const r = tile.getBoundingClientRect();
-      const x = r.left + r.width / 2 - wrapRect.left;
-      const y = side === "top"
-        ? r.top - wrapRect.top
-        : r.bottom - wrapRect.top;
-      return { x, y };
-    }
-
-    const mustTiles = (career.must_have || [])
-      .map(slug => ({ slug, el: tileIn(slug) }))
-      .filter(x => x.el);
-    const supTiles = (career.supporting || [])
-      .map(slug => ({ slug, el: tileIn(slug) }))
-      .filter(x => x.el);
-
-    // --- Text fallback for mobile (always populated; CSS shows only on narrow viewports)
-    const mustNames = mustTiles.map(x => x.el.querySelector(".tile__title").textContent).filter(Boolean);
-    const supNames = supTiles.map(x => x.el.querySelector(".tile__title").textContent).filter(Boolean);
-    mobileNote.hidden = false;
-    mobileNote.innerHTML =
-      `<strong>Route to ${escapeHtml(career.title)}:</strong> ` +
-      (mustNames.length ? `must-take &mdash; ${mustNames.map(escapeHtml).join(" &rarr; ")}. ` : "") +
-      (supNames.length ? `Supporting &mdash; ${supNames.map(escapeHtml).join(", ")}.` : "");
-
-    // --- Main must-take polyline (solid orange)
-    if (mustTiles.length >= 1) {
-      // Chronological order = order in must_have array. Connect each tile
-      // to the next with a right-angle path: out the bottom of A, across,
-      // into the top of B.
-      let d = "";
-      for (let i = 0; i < mustTiles.length - 1; i++) {
-        const a = anchor(mustTiles[i].el, "bottom");
-        const b = anchor(mustTiles[i + 1].el, "top");
-        const midY = (a.y + b.y) / 2;
-        if (i === 0) d += `M ${a.x} ${a.y} `;
-        if (Math.abs(a.x - b.x) < 2) {
-          // Same column — straight line
-          d += `L ${b.x} ${b.y} `;
-        } else {
-          // Different columns — right angle via midpoint
-          d += `L ${a.x} ${midY} L ${b.x} ${midY} L ${b.x} ${b.y} `;
-        }
-      }
-      if (d) {
-        const path = document.createElementNS(svgNS, "path");
-        path.setAttribute("class", "route-main");
-        path.setAttribute("d", d);
-        svg.appendChild(path);
-      }
-      // Start node + end node markers
-      const start = anchor(mustTiles[0].el, "bottom");
-      const startDot = document.createElementNS(svgNS, "circle");
-      startDot.setAttribute("class", "route-node route-node--start");
-      startDot.setAttribute("cx", start.x);
-      startDot.setAttribute("cy", start.y);
-      startDot.setAttribute("r", 6);
-      svg.appendChild(startDot);
-      if (mustTiles.length > 1) {
-        const end = anchor(mustTiles[mustTiles.length - 1].el, "top");
-        const endDot = document.createElementNS(svgNS, "circle");
-        endDot.setAttribute("class", "route-node");
-        endDot.setAttribute("cx", end.x);
-        endDot.setAttribute("cy", end.y);
-        endDot.setAttribute("r", 5);
-        svg.appendChild(endDot);
-      }
-    }
-
-    // --- Dashed branches from nearest must-have to each supporting course
-    function nearestMust(sx, sy) {
-      let best = null, bestD = Infinity;
-      for (const m of mustTiles) {
-        const r = m.el.getBoundingClientRect();
-        const cx = r.left + r.width / 2 - wrapRect.left;
-        const cy = r.top + r.height / 2 - wrapRect.top;
-        const d = Math.hypot(cx - sx, cy - sy);
-        if (d < bestD) { bestD = d; best = m.el; }
-      }
-      return best;
-    }
-
-    for (const s of supTiles) {
-      const sr = s.el.getBoundingClientRect();
-      const sx = sr.left + sr.width / 2 - wrapRect.left;
-      const sy = sr.top + sr.height / 2 - wrapRect.top;
-      const mustEl = nearestMust(sx, sy);
-      if (!mustEl) continue;
-      const mr = mustEl.getBoundingClientRect();
-      const mx = mr.left + mr.width / 2 - wrapRect.left;
-      const my = mr.top + mr.height / 2 - wrapRect.top;
-      // Entry point on supporting tile: nearest edge (top or left depending on relative position)
-      const entrySide = sy > my ? "top" : "bottom";
-      const entry = anchor(s.el, entrySide);
-      // Exit point on must tile
-      const exitSide = entrySide === "top" ? "bottom" : "top";
-      const exit = anchor(mustEl, exitSide);
-      // Simple curve: quadratic Bezier with control point at midpoint
-      const cx = (exit.x + entry.x) / 2;
-      const cy = (exit.y + entry.y) / 2;
-      const path = document.createElementNS(svgNS, "path");
-      path.setAttribute("class", "route-branch");
-      path.setAttribute("d", `M ${exit.x} ${exit.y} Q ${cx} ${cy} ${entry.x} ${entry.y}`);
-      svg.appendChild(path);
-    }
-  }
-
-  // Redraw on resize (debounced)
-  let resizeT = null;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeT);
-    resizeT = setTimeout(() => {
-      const career = (D.careers || []).find(c => c.slug === state.career);
-      drawRoute(career);
-    }, 150);
-  });
-
-  // ---- Small multiples: 11 miniature career schematics ----
-  // Each card shows the whole 9-pathway + freshman layout at tiny scale,
-  // with dot markers on must-take (solid) and supporting (outlined) cells.
-  // Clicking a card selects that career in the main map above.
-  const PATHWAY_ORDER = ["cs", "engineering", "woods", "metals", "math", "autos", "industrial-design", "vehicular", "architecture"];
-  const FRESHMAN_SLUGS = ["computer-skills", "woods-1", "metals-1"];
-
-  function renderMiniMap(career) {
-    const mustSet = new Set(career.must_have || []);
-    const supSet  = new Set(career.supporting || []);
-
-    function cellCls(course, pathwayKey) {
-      const cls = ["mini-cell"];
-      if (pathwayKey) cls.push("p-" + pathwayKey);
-      if (!course) return cls;
-      if (mustSet.has(course.slug)) cls.push("mini-cell--must");
-      else if (supSet.has(course.slug)) cls.push("mini-cell--support");
-      else cls.push("mini-cell--off");
-      return cls;
-    }
-
-    // Freshman row: three cells, purple, with potential dot overlays
-    const fresh = FRESHMAN_SLUGS.map(slug => {
-      const c = courseBySlug(slug);
-      const cls = ["mini-cell", "mini-cell--freshman"];
-      if (mustSet.has(slug)) cls.push("mini-cell--must");
-      else if (supSet.has(slug)) cls.push("mini-cell--support");
-      else cls.push("mini-cell--off");
-      return `<span class="${cls.join(" ")}" title="${escapeHtml(c.title)}"></span>`;
-    }).join("");
-
-    // Pathway columns: for each pathway, stack its courses as mini-cells
-    const cols = PATHWAY_ORDER.map(pid => {
-      const p = D.pathways[pid];
-      const courses = (p.courses || []).map(courseBySlug).filter(Boolean);
-      const cells = courses.map(c => {
-        const cls = cellCls(c, pid);
-        return `<span class="${cls.join(" ")}" title="${escapeHtml(c.title)}"></span>`;
-      }).join("");
-      return `<div class="mini-map__col" data-pathway="${escapeHtml(pid)}">${cells}</div>`;
-    }).join("");
-
-    return `
-      <div class="mini-map" aria-hidden="true">
-        <p class="mini-map__section-label">9th</p>
-        <div class="mini-map__row mini-map__row--freshman">${fresh}</div>
-        <p class="mini-map__section-label">10th &ndash; 12th</p>
-        <div class="mini-map__row mini-map__row--pathways">${cols}</div>
-      </div>
-    `;
-  }
-
-  const DOMAIN_LABEL = {
-    "trades": "TRADES",
-    "computing": "COMPUTING",
-    "engineering": "ENGINEERING",
-    "design": "DESIGN",
-    "emerging": "EMERGING",
-    "construction": "CONSTRUCTION",
-  };
-
-  function renderMiniCard(career) {
-    const mustN = (career.must_have || []).length;
-    const supN  = (career.supporting || []).length;
-    return `
-      <a class="mini-career-card" data-career="${escapeHtml(career.slug)}" href="#map"
-         aria-label="Load the ${escapeHtml(career.title)} route into the main map">
-        <p class="mini-career-card__eyebrow">${escapeHtml(DOMAIN_LABEL[career.domain] || career.domain)}</p>
-        <h3 class="mini-career-card__title">${escapeHtml(career.title)}</h3>
-        ${renderMiniMap(career)}
-        <p class="mini-career-card__stats">
-          ${mustN} must-take &middot; ${supN} supporting
-        </p>
-      </a>
-    `;
-  }
-
-  const smallMultiples = document.getElementById("small-multiples");
-  if (smallMultiples && D.careers) {
-    smallMultiples.innerHTML = D.careers.map(renderMiniCard).join("");
-
-    // Clicking a mini-card: set the main career state, scroll to the main
-    // map section so the user sees the full route with their choice loaded.
-    smallMultiples.querySelectorAll(".mini-career-card").forEach(card => {
-      card.addEventListener("click", (e) => {
-        e.preventDefault();
-        const slug = card.dataset.career;
-        state.career = slug;
-        // Update the main career chip active state
-        document.querySelectorAll(`.map-filters .chip[data-career]`).forEach(b => {
-          const active = b.dataset.career === slug;
-          b.classList.toggle("is-active", active);
-          b.classList.toggle("chip--solid", active);
-        });
-        applyState();
-        // Smooth-scroll to the main map section
-        const mapSection = document.getElementById("map");
-        if (mapSection) mapSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-  }
-
-  // Credit filter chips (unchanged mechanism)
-  document.querySelectorAll(".map-filters .chip[data-filter]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.credit = btn.dataset.value;
-      document.querySelectorAll(`.map-filters .chip[data-filter="credit"]`).forEach(b => {
-        const active = b.dataset.value === state.credit;
-        b.classList.toggle("is-active", active);
-        b.classList.toggle("chip--solid", active);
-      });
-      applyState();
-    });
-  });
-
-  // Career selector chips (new)
-  document.querySelectorAll(".map-filters .chip[data-career]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.career = btn.dataset.career;
-      document.querySelectorAll(`.map-filters .chip[data-career]`).forEach(b => {
-        const active = b.dataset.career === state.career;
-        b.classList.toggle("is-active", active);
-        b.classList.toggle("chip--solid", active);
-      });
-      applyState();
-    });
-  });
-
-  // ---- Mode toggle: By pathway / By career
-  // Default = "pathway": plain catalog, no career chips visible, no
-  // route overlay. "career" mode reveals the career chip row and
-  // enables the highlight + subway-route behavior.
-  const mapSection = document.getElementById("map");
-  function setMode(mode) {
-    if (mode !== "pathway" && mode !== "career") mode = "pathway";
-    mapSection.setAttribute("data-mode", mode);
-    document.querySelectorAll(".mode-toggle__btn").forEach(btn => {
-      const active = btn.dataset.mode === mode;
-      btn.classList.toggle("is-active", active);
-      btn.setAttribute("aria-selected", active ? "true" : "false");
-    });
-    if (mode === "pathway") {
-      // Leaving career mode — reset career state + clear overlay + clear
-      // tile highlight. Credit filter state is preserved across modes.
-      state.career = "all";
-      document.querySelectorAll(`.map-filters .chip[data-career]`).forEach(b => {
-        const active = b.dataset.career === "all";
-        b.classList.toggle("is-active", active);
-        b.classList.toggle("chip--solid", active);
-      });
-    }
-    applyState();
-  }
-  document.querySelectorAll(".mode-toggle__btn").forEach(btn => {
-    btn.addEventListener("click", () => setMode(btn.dataset.mode));
-  });
-  // Initialize in pathway mode
-  setMode("pathway");
-
-  // When a mini-multiple is clicked, switch into career mode so the
-  // selection actually produces the route the user just requested.
-  document.querySelectorAll(".mini-career-card").forEach(card => {
-    card.addEventListener("click", () => setMode("career"), { capture: true });
-  });
 })();
 </script>
 
