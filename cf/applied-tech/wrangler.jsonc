@@ -1,0 +1,10 @@
+{
+  // Written by sys-publish; GOVERNING from here on. Site source: git archive HEAD of applied-tech-site (run cf/deploy.sh)
+  "name": "applied-tech",
+  "compatibility_date": "2026-10-30",
+  "main": "worker.js",
+  "workers_dev": true,
+  "assets": { "directory": "./public", "binding": "ASSETS", "html_handling": "auto-trailing-slash",
+              "not_found_handling": "404-page", "run_worker_first": ["/*.mp4", "/**/*.mp4"] },
+  "routes": [ { "pattern": "promptaisolutions.com/applied-tech*", "zone_name": "promptaisolutions.com" } ]
+}
