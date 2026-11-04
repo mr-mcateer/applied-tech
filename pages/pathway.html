@@ -148,12 +148,12 @@
           <section>
             <h2 class="h2">Starting point</h2>
             <p class="body-sm ink-soft" style="margin-top: var(--space-8);">
-              Freshman-level entry courses that lead into this pathway.
+              Entry courses that lead into this pathway.
             </p>
             <div class="grid grid-2" style="margin-top: var(--space-24);">
               ${entryCourses.map(c => `
                 <a class="tile tile--neutral" href="course.html?slug=${encodeURIComponent(c.slug)}">
-                  <p class="tile__overline">Freshman row</p>
+                  <p class="tile__overline">Entry course</p>
                   <h3 class="tile__title">${escapeHtml(c.title)}</h3>
                   <p class="tile__desc">${escapeHtml(firstSentence(c.description))}</p>
                   <div class="tile__meta">${courseMetaLine(c)}</div>

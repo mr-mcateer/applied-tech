@@ -72,14 +72,14 @@
   <section class="section section--ruled">
     <header class="section-header">
       <p class="section-header__eyebrow"><span class="idx">02</span><span>Don&rsquo;t know yet?</span></p>
-      <h2 class="section-header__title">That&rsquo;s fine. The freshman row is broad on purpose.</h2>
+      <h2 class="section-header__title">That&rsquo;s fine. The entry row is broad on purpose.</h2>
       <p class="section-header__lede">
-        If you&rsquo;re in 9th grade and not sure, start with one or more of
-        the freshman courses &mdash; they open up every pathway. You can take all
-        three freshman year if you want to try everything.
+        If you&rsquo;re not sure, start with one or more of the entry courses.
+        They open up every pathway, whatever grade you are in, and you can take
+        more than one if you want to try everything.
       </p>
     </header>
-    <div class="grid grid-3" id="freshman-tiles"></div>
+    <div class="grid grid-4" id="freshman-tiles"></div>
   </section>
 
   <section class="section section--ruled">
@@ -190,13 +190,13 @@
   });
 
   // Freshman tiles (neutral) — the "don't know yet" on-ramp
-  const freshman = ["computer-skills", "woods-1", "metals-1"].map(courseBySlug).filter(Boolean);
+  const freshman = ["computer-skills", "woods-1", "metals-1", "intro-to-engineering"].map(courseBySlug).filter(Boolean);
   document.getElementById("freshman-tiles").innerHTML = freshman.map(co => `
     <a class="tile tile--neutral" href="pages/course.html?slug=${encodeURIComponent(co.slug)}">
-      <p class="tile__overline">9th grade</p>
+      <p class="tile__overline">Entry course</p>
       <h3 class="tile__title">${escapeHtml(co.title)}</h3>
       <p class="tile__desc">${escapeHtml(firstSentence(co.description))}</p>
-      <div class="tile__meta">${escapeHtml(fmtGrade(co.grade))} &middot; 1 CTE</div>
+      <div class="tile__meta">${escapeHtml(fmtGrade(co.grade))} &middot; ${escapeHtml(window.APP.fmtCredit(co.credit))}</div>
     </a>
   `).join("");
 })();
