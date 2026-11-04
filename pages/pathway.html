@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Pathway — Applied Tech</title>
-<meta name="description" content="Pathway detail — starting point, course sequence, and teachers." />
+<title>Pathway · Applied Tech</title>
+<meta name="description" content="Pathway detail: starting point, course sequence, and teachers." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -80,7 +80,7 @@
   const p = id ? pathway(id) : null;
 
   if (!p) {
-    document.title = "Pathway not found — Applied Tech";
+    document.title = "Pathway not found · Applied Tech";
     root.innerHTML = `
       <section class="hero">
         <p class="hero__overline">404 / Pathway</p>
@@ -94,7 +94,7 @@
     return;
   }
 
-  document.title = `${p.title} pathway — Applied Tech`;
+  document.title = `${p.title} pathway · Applied Tech`;
 
   const entryCourses = (p.entry || []).map(courseBySlug).filter(Boolean);
   const courses = coursesInPathway(p.id);
@@ -139,8 +139,8 @@
           <p class="overline">Pipeline note</p>
           <p class="body" style="margin-top: var(--space-8); max-width: 65ch; color: var(--ink-soft);">
             ${isLadder
-              ? "This pathway is a year-by-year sequence &mdash; each course builds directly on the one before it. No hard prerequisites, but the ordering matters for how the skills stack. A counselor can help a student who wants to jump in partway through."
-              : "These courses are peers, not steps. A student can take any of them in any order that fits their schedule &mdash; there are no hard prerequisites between them, and none of them assumes you&rsquo;ve taken the others first."}
+              ? "This pathway is a year-by-year sequence; each course builds directly on the one before it. No hard prerequisites, but the ordering matters for how the skills stack. A counselor can help a student who wants to jump in partway through."
+              : "These courses are peers, not steps. A student can take any of them in any order that fits their schedule; there are no hard prerequisites between them, and none of them assumes you&rsquo;ve taken the others first."}
           </p>
         </section>
 

@@ -1,4 +1,4 @@
-// Applied Tech v2 — shared rendering helpers.
+// Applied Tech v2: shared rendering helpers.
 // Public surface on window.APP is kept STABLE from v1 so sibling builders
 // don't have to coordinate. New helpers added; none renamed or removed.
 
@@ -23,7 +23,7 @@
   }
 
   function fmtGrade(grade) {
-    if (!grade || !grade.length) return "—";
+    if (!grade || !grade.length) return "any";
     if (grade.length === 1) return `${grade[0]}th`;
     return `${grade[0]}–${grade[grade.length - 1]}th`;
   }
@@ -54,7 +54,7 @@
     return `<span class="chip chip--pathway p-${pathwayId}">${escapeHtml(p.title)}</span>`;
   }
 
-  // ---------- v1 compatibility shims (old names — kept so existing HTML works
+  // ---------- v1 compatibility shims (old names: kept so existing HTML works
   // until siblings rewrite their pages) ----------
   function siteBadge(site)        { return siteChip(site); }
   function creditBadges(credit)   { return creditChips(credit); }
@@ -116,7 +116,7 @@
     });
   }
 
-  // Mobile nav toggle (progressive enhancement — nav works without JS,
+  // Mobile nav toggle (progressive enhancement: nav works without JS,
   // this just opens/closes on tap at mobile widths).
   function bindNavToggle() {
     const toggle = document.querySelector(".site-header__toggle");
@@ -159,7 +159,7 @@
     courseBySlug, pathway, teacher, careerBySlug,
     // formatters
     fmtCredit, fmtGrade, siteLabel,
-    // badges (v1 names — still work)
+    // badges (v1 names: still work)
     siteBadge, creditBadges, statusBadge,
     // chips (v2 names)
     siteChip, creditChips, statusChip, pathwayChip,

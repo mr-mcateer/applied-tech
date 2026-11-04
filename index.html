@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Applied Tech — Pathway map (CVHS &amp; CHS)</title>
+<title>Applied Tech: Pathway map (CVHS &amp; CHS)</title>
 <meta name="description" content="Hands-on pathways through the trades, design, and code. A three-year course of study at Crescent Valley and Corvallis High." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,7 +33,7 @@
     <p class="hero__overline">Applied Tech &middot; CVHS &amp; CHS</p>
     <h1 class="hero__title display-lg">Hands-on pathways through the trades, design, and code.</h1>
     <p class="hero__subdeck">
-      A three-year course of study at Crescent Valley and Corvallis High &mdash;
+      A three-year course of study at Crescent Valley and Corvallis High,
       built with teachers, mapped for counselors, shaped for what students
       actually want to do after graduation.
     </p>
@@ -189,7 +189,7 @@
   document.getElementById("freshman-row").innerHTML =
     freshmanOrder.map(s => freshmanTile(courseBySlug(s))).join("");
 
-  // ---- Pathway columns (plain — no arrows, no chips, no overlays)
+  // ---- Pathway columns (plain: no arrows, no chips, no overlays)
   const columnOrder = [
     "cs", "engineering", "woods", "metals", "math",
     "autos", "industrial-design", "vehicular", "architecture",
@@ -236,7 +236,7 @@
   // ---- Career filter: dim tiles that aren't in the selected career ----
   // When a chip is clicked, add .tile--nomatch to every course tile whose
   // slug isn't in the career's must_have or supporting list. No ring
-  // outlines or route overlays — just a clean grey-out of the courses
+  // outlines or route overlays: just a clean grey-out of the courses
   // that don't apply. Pathway header tiles stay unchanged (they aren't
   // courses).
   function applyCareerDim(careerSlug) {

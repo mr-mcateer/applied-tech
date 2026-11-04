@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>For counselors — Applied Tech</title>
+<title>For counselors · Applied Tech</title>
 <meta name="description" content="Pre-filtered views and quick-reference tables for the advising questions counselors get asked most about Applied Tech at CVHS and CHS." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,7 +35,7 @@
     <p class="hero__subdeck">
       Pre-filtered views and quick-reference tables for the questions
       counselors get asked most. Built from the same data as the rest of
-      the site &mdash; just faster to get to.
+      the site, just faster to get to.
     </p>
   </section>
 
@@ -54,7 +54,7 @@
       <p class="section-header__lede">
         A 10th-grader wanting to end senior year in Capstone CS would typically
         take the path below. Computer Skills in 9th is <em>recommended</em>, not required.
-        Order is negotiable &mdash; a student who already programs can skip Computer Skills
+        Order is negotiable; a student who already programs can skip Computer Skills
         and start at Intro to CS in 10th, or take Intro to CS in 11th instead.
       </p>
       <div class="cluster" style="margin-top: var(--space-16);">
@@ -66,7 +66,7 @@
       <li class="card">
         <p class="tile__overline">9th &middot; recommended</p>
         <h3 class="h3" style="font-size:1.25rem; margin-top: var(--space-8);">Computer Skills</h3>
-        <p class="body-sm" style="margin-top: var(--space-12);">CHS / CVHS &middot; Randy Macdonald. The soft on-ramp &mdash; strongly recommended, not a hard prereq.</p>
+        <p class="body-sm" style="margin-top: var(--space-12);">CHS / CVHS &middot; Randy Macdonald. The soft on-ramp: strongly recommended, not a hard prereq.</p>
       </li>
       <li class="card">
         <p class="tile__overline">10th</p>
@@ -97,7 +97,7 @@
     </header>
     <div class="card">
       <p class="body" style="max-width: 70ch;">
-        A student may take one course per year at the other building &mdash;
+        A student may take one course per year at the other building;
         the program treats cross-site enrollment as a normal option, not an
         exception. Scheduling is a real constraint, though: bell times,
         transport, and period availability all have to line up. Talk to the
@@ -111,7 +111,7 @@
       <p class="section-header__eyebrow"><span class="idx">04</span><span>Full course list</span></p>
       <h2 class="section-header__title">Every Applied Tech course.</h2>
       <p class="section-header__lede">
-        Same data as <a href="courses.html">the full courses page</a> &mdash; readable here for quick reference.
+        Same data as <a href="courses.html">the full courses page</a>, readable here for quick reference.
       </p>
     </header>
 
@@ -187,15 +187,19 @@
       title: "CTE courses with a science credit",
       body: (function () {
         const c = D.courses.find(x => x.slug === "engineering-science");
+        const idea = D.courses.find(x => x.slug === "intro-to-engineering");
         const teachers = c.teachers.map(id => D.teachers[id].name).join(" or ");
         const grade = window.APP.fmtGrade(c.grade);
         return `
           <p class="body" style="margin-top: var(--space-12);">
-            <strong>Engineering Science</strong> &mdash; CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, 0.5 CTE + 0.5 science.
+            <strong>Engineering Science</strong>: CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, ${escapeHtml(window.APP.fmtCredit(c.credit))}.
+          </p>
+          <p class="body" style="margin-top: var(--space-12);">
+            <strong>IDEA</strong>: CVHS, ${escapeHtml(window.APP.fmtCredit(idea.credit))}, open to any grade with no prerequisite.
           </p>
           <p class="body-sm" style="margin-top: var(--space-12);">
-            Grades 11&ndash;12 only &mdash; not available to 10th-graders. Intro to Engineering is the suggested prerequisite.
-            A second science-credit course is under discussion.
+            Engineering Science is grades 11&ndash;12 only; IDEA is the suggested first step.
+            Product Science (science credit, CVHS) is proposed and not yet scheduled.
           </p>`;
       })(),
       cta: { href: "pages/course.html?slug=engineering-science", label: "Full details &rarr;" }
@@ -209,7 +213,7 @@
         const grade = window.APP.fmtGrade(c.grade);
         return `
           <p class="body" style="margin-top: var(--space-12);">
-            <strong>Real World Math</strong> &mdash; CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, 0.5 CTE + 0.5 math.
+            <strong>Real World Math</strong>: CVHS, ${escapeHtml(teachers)}, grades ${escapeHtml(grade)}, 0.5 CTE + 0.5 math.
           </p>`;
       })(),
       cta: { href: "pages/course.html?slug=real-world-math", label: "Full details &rarr;" }

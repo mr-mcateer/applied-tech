@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Career — Applied Tech</title>
+<title>Career · Applied Tech</title>
 <meta name="description" content="How Applied Tech at CVHS and CHS prepares students for specific career destinations." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -80,7 +80,7 @@
   const c = slug ? careerBySlug(slug) : null;
 
   if (!c) {
-    document.title = "Career not found — Applied Tech";
+    document.title = "Career not found · Applied Tech";
     root.innerHTML = `
       <section class="hero">
         <p class="hero__overline">404 / Career</p>
@@ -94,7 +94,7 @@
     return;
   }
 
-  document.title = `${c.title} — Applied Tech`;
+  document.title = `${c.title} · Applied Tech`;
 
   const mustHave = (c.must_have || []).map(courseBySlug).filter(Boolean);
   const supporting = (c.supporting || []).map(courseBySlug).filter(Boolean);
@@ -161,7 +161,7 @@
         <section>
           <h2 class="h2">Useful supporting courses</h2>
           <p class="body-sm ink-soft" style="margin-top: var(--space-8); max-width: 60ch;">
-            Not required, but worth taking if your schedule allows &mdash; they strengthen the core.
+            Not required, but worth taking if your schedule allows; they strengthen the core.
           </p>
           <div class="grid grid-2" style="margin-top: var(--space-24);">
             ${supporting.map(co => courseTile(co, true)).join("")}

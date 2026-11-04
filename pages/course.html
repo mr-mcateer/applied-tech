@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Course — Applied Tech</title>
-<meta name="description" content="Course detail — description, proficiencies, prerequisites, and teachers." />
+<title>Course · Applied Tech</title>
+<meta name="description" content="Course detail: description, proficiencies, prerequisites, and teachers." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -81,7 +81,7 @@
   const c = slug ? courseBySlug(slug) : null;
 
   if (!c) {
-    document.title = "Course not found — Applied Tech";
+    document.title = "Course not found · Applied Tech";
     root.innerHTML = `
       <section class="hero">
         <p class="hero__overline">404 / Course</p>
@@ -95,7 +95,7 @@
     return;
   }
 
-  document.title = `${c.title} — Applied Tech`;
+  document.title = `${c.title} · Applied Tech`;
 
   const p = pathway(c.pathway);
   const teachers = (c.teachers || []).map(teacher).filter(Boolean);
@@ -129,7 +129,7 @@
   const editUrl =
     `https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js`;
   const mailto =
-    `mailto:mcateerandy@gmail.com?subject=${encodeURIComponent("Applied Tech site edit — " + c.slug)}`;
+    `mailto:mcateerandy@gmail.com?subject=${encodeURIComponent("Applied Tech site edit: " + c.slug)}`;
 
   root.innerHTML = `
     <section class="hero ${p ? "p-" + escapeAttr(p.id) : ""}" style="padding-bottom: var(--space-32);">
@@ -152,7 +152,7 @@
         </section>
 
         ${(() => {
-          // "Points to these careers" — derive from the careers collection.
+          // "Points to these careers": derive from the careers collection.
           // Show ALL careers that reference this course, no cap. Split into
           // must-have (primary) and supporting (secondary).
           const careers = D.careers || [];
@@ -247,7 +247,7 @@
             <dd>
               ${p
                 ? `<a href="pathway.html?id=${encodeURIComponent(p.id)}">${escapeHtml(p.title)}</a>`
-                : "&mdash;"}
+                : "none listed"}
             </dd>
 
             <dt>Teachers</dt>
@@ -260,7 +260,7 @@
                     <span class="mono-meta" style="display:block;">${escapeHtml(siteLabel(t.site))} &middot; ${escapeHtml(t.focus)}</span>
                   </span>
                 </div>
-              `).join("") : "&mdash;"}
+              `).join("") : "none listed"}
             </dd>
 
             ${c.source ? `

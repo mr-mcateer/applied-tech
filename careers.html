@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Careers — Applied Tech</title>
+<title>Careers · Applied Tech</title>
 <meta name="description" content="Eleven career destinations the Applied Tech program at CVHS and CHS prepares students for. Find the one you want and see the courses that point there." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,7 +33,7 @@
     <p class="hero__overline">00 / Careers</p>
     <h1 class="hero__title display-lg">Where do you want to end up?</h1>
     <p class="hero__subdeck">
-      Applied Tech isn&rsquo;t a major &mdash; it&rsquo;s a set of year-long courses you
+      Applied Tech isn&rsquo;t a major. It&rsquo;s a set of year-long courses you
       pick <em>&agrave; la carte</em>. Find the career you&rsquo;re aiming at and we&rsquo;ll show
       you which courses point there, what certifications you&rsquo;d earn, and what
       the step after high school typically looks like.
@@ -97,7 +97,7 @@
       <a class="persona-door" href="explore.html">
         <span class="persona-door__overline">By what you like to make</span>
         <h3 class="persona-door__title">Interest explorer</h3>
-        <p class="persona-door__body">&ldquo;I like cars&rdquo;, &ldquo;I like buildings&rdquo;, &ldquo;I like software&rdquo; &mdash; nine interest tiles pointing at the pathway you&rsquo;d live in.</p>
+        <p class="persona-door__body">&ldquo;I like cars&rdquo;, &ldquo;I like buildings&rdquo;, &ldquo;I like software&rdquo;: nine interest tiles pointing at the pathway you&rsquo;d live in.</p>
         <span class="persona-door__arrow">&rarr;</span>
       </a>
     </div>
@@ -189,7 +189,7 @@
     });
   });
 
-  // Freshman tiles (neutral) — the "don't know yet" on-ramp
+  // Freshman tiles (neutral): the "don't know yet" on-ramp
   const freshman = ["computer-skills", "woods-1", "metals-1", "intro-to-engineering"].map(courseBySlug).filter(Boolean);
   document.getElementById("freshman-tiles").innerHTML = freshman.map(co => `
     <a class="tile tile--neutral" href="pages/course.html?slug=${encodeURIComponent(co.slug)}">

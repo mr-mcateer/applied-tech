@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Teacher — Applied Tech</title>
-<meta name="description" content="Teacher detail — bio, courses taught, and proficiencies across their courses." />
+<title>Teacher · Applied Tech</title>
+<meta name="description" content="Teacher detail: bio, courses taught, and proficiencies across their courses." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -80,7 +80,7 @@
   const t = id ? teacher(id) : null;
 
   if (!t) {
-    document.title = "Teacher not found — Applied Tech";
+    document.title = "Teacher not found · Applied Tech";
     root.innerHTML = `
       <section class="hero">
         <p class="hero__overline">404 / Teacher</p>
@@ -94,7 +94,7 @@
     return;
   }
 
-  document.title = `${t.name} — Applied Tech`;
+  document.title = `${t.name} · Applied Tech`;
 
   // Courses this teacher appears on.
   const courses = D.courses.filter(c => (c.teachers || []).includes(t.id));
@@ -132,7 +132,7 @@
   const editUrl =
     `https://github.com/mr-mcateer/applied-tech/edit/main/js/data.js`;
   const mailto =
-    `mailto:mcateerandy@gmail.com?subject=${encodeURIComponent("Applied Tech site edit — teacher:" + t.id)}`;
+    `mailto:mcateerandy@gmail.com?subject=${encodeURIComponent("Applied Tech site edit: teacher:" + t.id)}`;
 
   root.innerHTML = `
     <section class="hero" style="padding-bottom: var(--space-32);">

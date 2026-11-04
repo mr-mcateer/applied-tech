@@ -1,5 +1,5 @@
 /* =============================================================
-   Applied Tech — v2 design system
+   Applied Tech: v2 design system
    Complete replacement. See v2-work/design-spec.md for the source.
    Structure:
      1. Tokens
@@ -37,7 +37,7 @@
   --accent-1: #111118;
   --accent-2: #ffda00;
 
-  /* Pathways — frozen in data */
+  /* Pathways: frozen in data */
   --p-cs: #3b82f6;
   --p-engineering: #10b981;
   --p-architecture: #f59e0b;
@@ -418,7 +418,7 @@ hr {
   box-shadow: 0 0.5rem 1.5rem rgba(17, 17, 24, 0.12);
 }
 
-/* Compact "persona door" tile — homepage only */
+/* Compact "persona door" tile: homepage only */
 .persona-door {
   display: flex;
   flex-direction: column;
@@ -470,7 +470,7 @@ hr {
   border-color: var(--ink);
 }
 
-/* Neutral card — detail pages, sidebars */
+/* Neutral card: detail pages, sidebars */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -623,7 +623,7 @@ hr {
 /* Pathway chip pulls color from a data attribute on self or parent */
 .chip--pathway { color: var(--panel-bg, var(--ink)); }
 
-/* v1 compatibility — keep .badge class rendering something reasonable
+/* v1 compatibility: keep .badge class rendering something reasonable
    (used by existing templates until siblings rewrite them). */
 .badge {
   display: inline-flex;
@@ -955,7 +955,7 @@ hr {
   opacity: 0.65;
 }
 
-/* "Flexible order" / "no hard prereq" chip. Neutral, quiet — lives on
+/* "Flexible order" / "no hard prereq" chip. Neutral, quiet: lives on
    multi-course pathway column headers, pathway-detail heroes, and any
    place the site would otherwise imply a fixed ladder. */
 .chip--flex {
@@ -969,9 +969,9 @@ hr {
 /* Career-highlight states on homepage pathway map.
    - .tile--match      : must-have course for the selected career.
                          Bright ring + subtle lift.
-   - .tile--match-soft : supporting course — softer ring, still readable.
+   - .tile--match-soft : supporting course: softer ring, still readable.
    - .tile--nomatch    : course that doesn't relate to the selected
-                         career — muted so the matches pop, but still
+                         career: muted so the matches pop, but still
                          visible/clickable (NOT a hard filter).
    Applied over .tile (which already has pathway fill). Transitions keep
    the state changes from feeling jumpy. */
@@ -1117,10 +1117,10 @@ hr {
   display: none !important;
 }
 #map[data-mode="pathway"] .section-header__lede::after {
-  /* No subtle caption needed — header says 'Browse by subject or by career' */
+  /* No subtle caption needed: header says 'Browse by subject or by career' */
 }
 
-/* Career route SVG overlay — sits on top of the pathway columns grid
+/* Career route SVG overlay: sits on top of the pathway columns grid
    and draws a subway-map-style path connecting must-take courses in
    industrial orange, with dashed neutral branches to supporting
    courses. See drawRoute() in index.html for the path math. */
@@ -1162,7 +1162,7 @@ hr {
 }
 
 /* Below 720px the tiles stack and the SVG coordinates don't translate
-   cleanly — hide the overlay and reveal a text-based route summary. */
+   cleanly: hide the overlay and reveal a text-based route summary. */
 @media (max-width: 720px) {
   .career-route {
     display: none;
@@ -1179,7 +1179,7 @@ hr {
 
 /* ---- Small multiples: 11 mini career maps below the main map ----
    Each card is a compact schematic of the 9-pathway + freshman-row
-   grid. Course cells are colored by pathway (no text — too small to
+   grid. Course cells are colored by pathway (no text: too small to
    read). Must-take courses get a solid ink dot overlay; supporting
    courses get an open ink dot. Clicking a card selects that career
    in the main map above. */
@@ -1276,7 +1276,7 @@ hr {
   background: var(--surface-alt);
   overflow: visible;
 }
-/* Pathway color fills — reuse the pathway CSS custom properties */
+/* Pathway color fills: reuse the pathway CSS custom properties */
 .mini-cell.p-cs                { background: var(--p-cs); }
 .mini-cell.p-engineering       { background: var(--p-engineering); }
 .mini-cell.p-architecture      { background: var(--p-architecture); }
@@ -1347,7 +1347,7 @@ hr {
 .mini-legend__dot--support { background: var(--surface); border: 2px solid var(--ink-soft); }
 .mini-legend__dot--off { background: var(--surface-alt); border: 1px solid var(--border); }
 
-/* Freshman tile — slightly distinct treatment (neutral background, ink text) */
+/* Freshman tile: slightly distinct treatment (neutral background, ink text) */
 .tile--freshman {
   background: var(--surface);
   color: var(--ink);
@@ -1358,7 +1358,7 @@ hr {
 .tile--freshman .tile__desc,
 .tile--freshman .tile__meta { opacity: 1; color: var(--ink-soft); }
 
-/* Dimmed tile — excluded by active filters */
+/* Dimmed tile: excluded by active filters */
 .tile--dim {
   opacity: 0.28;
   pointer-events: none;
@@ -1417,7 +1417,7 @@ hr {
   max-width: 65ch;
 }
 
-/* Detail page hooks — grid areas on .detail (already defined) */
+/* Detail page hooks: grid areas on .detail (already defined) */
 .detail-main {
   min-width: 0;
   display: flex;
@@ -1431,7 +1431,7 @@ hr {
   min-width: 0;
 }
 
-/* Teacher avatar — circular initials badge used in course/teacher cards */
+/* Teacher avatar: circular initials badge used in course/teacher cards */
 .teacher-avatar {
   display: inline-flex;
   align-items: center;
