@@ -107,6 +107,18 @@
   const isLadder = p.type === "ladder";
   const isCollection = p.type === "collection" || !p.type;
 
+  // Soft ordering inside a peer pathway: a course that names another course in
+  // this same pathway as a suggested (not required) prerequisite. Drives the
+  // chip and the pipeline note so a recommendation never reads as "any order".
+  const recs = [];
+  courses.forEach(c => (c.suggestedPrereqs || []).forEach(slug => {
+    const pre = courses.find(x => x.slug === slug);
+    if (pre) recs.push({ pre, course: c });
+  }));
+  const recSentence = recs.length
+    ? recs.map(r => `${r.pre.title} before ${r.course.title}`).join("; ")
+    : "";
+
   function courseMetaLine(c) {
     const bits = [fmtGrade(c.grade) + " grade"];
     const credit = fmtCredit(c.credit);
@@ -128,7 +140,11 @@
       <div class="cluster" style="margin-top: var(--space-24);">
         <span class="chip chip--flex">${isLadder
           ? "Year-by-year sequence &middot; each course builds on the previous"
-          : "Peer courses &middot; pick what interests you, any order"}</span>
+          : (recs.length === 1
+            ? `Flexible order &middot; ${escapeHtml(recs[0].pre.title)} first is recommended`
+            : recs.length
+              ? "Flexible order &middot; levels build on each other, no hard prerequisites"
+              : "Peer courses &middot; pick what interests you, any order")}</span>
       </div>` : ""}
     </section>
 
@@ -140,7 +156,9 @@
           <p class="body" style="margin-top: var(--space-8); max-width: 65ch; color: var(--ink-soft);">
             ${isLadder
               ? "This pathway is a year-by-year sequence; each course builds directly on the one before it. No hard prerequisites, but the ordering matters for how the skills stack. A counselor can help a student who wants to jump in partway through."
-              : "These courses are peers, not steps. A student can take any of them in any order that fits their schedule; there are no hard prerequisites between them, and none of them assumes you&rsquo;ve taken the others first."}
+              : (recs.length
+                ? `These courses are peers, not steps, with a recommended order: ${escapeHtml(recSentence)}. That is advice, not a rule; there are no hard prerequisites, and a student can start wherever it fits their schedule.`
+                : "These courses are peers, not steps. A student can take any of them in any order that fits their schedule; there are no hard prerequisites between them, and none of them assumes you&rsquo;ve taken the others first.")}
           </p>
         </section>
 
@@ -171,7 +189,9 @@
             ${courses.length > 1
               ? (isLadder
                 ? "Shown in the order students typically take them. Each course builds on the previous. A counselor can help a student jump in partway through if needed."
-                : "Peer courses in the same area. Take any of them in any order that fits your schedule.")
+                : (recs.length
+                  ? `Peer courses in the same area. ${escapeHtml(recSentence)} is the recommended order; the rest fit wherever your schedule allows.`
+                  : "Peer courses in the same area. Take any of them in any order that fits your schedule."))
               : "One course in this pathway."}
           </p>
           <ul class="stack" style="margin-top: var(--space-24); list-style: none; padding: 0;">
